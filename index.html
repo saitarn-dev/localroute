@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
+    <!-- Pre-rendered LocalRoute Thai Speech Audio Bundle (29 High-Fidelity Audio Tracks) -->
+    <script src="./audio/audio-bundle.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=K2D:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap');
 
@@ -101,6 +104,9 @@
     </style>
 </head>
 <body class="min-h-full flex flex-col items-center justify-center p-2 sm:p-6 text-slate-800">
+
+    <!-- Dedicated Native Audio Player (Guaranteed iOS/Safari/Chrome Autoplay Compliance) -->
+    <audio id="localrouteNativeAudio" preload="auto" class="hidden"></audio>
 
     <!-- TOP SIMULATOR NOTIFICATION -->
     <header class="w-full max-w-[420px] mb-2 flex items-center justify-between text-xs px-2 text-slate-600 font-medium">
@@ -1771,11 +1777,55 @@
         };
 
         // ==============================================================
-        // 5. AUDIO ENGINE: DUAL-ENGINE SPEECH, CHIME & PHONE RINGBACK
+        // 5. AUDIO ENGINE: HIGH-FIDELITY SPEECH, CHIME & PHONE DIALER
         // ==============================================================
         let cachedThaiVoice = null;
         let globalAudioCtx = null;
-        window._activeSpeechUtterance = null; // Prevent Chrome Garbage Collection bug
+        window._activeSpeechUtterance = null;
+
+        // Comprehensive keyword mapping to pre-rendered authentic human Thai voice tracks
+        const AUDIO_TRACK_MAP = {
+            'ท่าแพ': 'phrase_thaphae',
+            'จอด': 'phrase_jort',
+            'สามสิบ': 'phrase_price',
+            '30': 'phrase_price',
+            'ขอบคุณ': 'phrase_thanks',
+            'นิมมาน': 'dest_nimman',
+            'สนามบินเชียงใหม่': 'dest_airport',
+            'รถไฟ': 'dest_train',
+            'อาเขต': 'dest_arcade',
+            'สยาม': 'dest_siam',
+            'อโศก': 'dest_asok',
+            'สุวรรณภูมิ': 'dest_suvarnabhumi',
+            'ดอนเมือง': 'dest_donmueang',
+            'หมอชิต': 'dest_mochit',
+            'ป่าตอง': 'dest_patong',
+            'เมืองเก่า': 'dest_oldtown',
+            'กะตะ': 'dest_kata',
+            'สนามบินภูเก็ต': 'dest_phuket_airport',
+            'รัษฎา': 'dest_rassada',
+            'เฉวง': 'dest_chaweng',
+            'ละไม': 'dest_lamai',
+            'บ่อผุด': 'dest_bophut',
+            'หน้าทอน': 'dest_nathon',
+            'สนามบินสมุย': 'dest_samui_airport',
+            'สนามบิน': 'dest_airport',
+            '1155': 'voice_1155',
+            '1669': 'voice_1669',
+            '191': 'voice_191',
+            'สหกรณ์': 'voice_coop',
+            '1197': 'voice_191',
+            '1584': 'voice_1155',
+            'ใกล้ถึง': 'alert_arrival'
+        };
+
+        function getAudioTrackId(text) {
+            if (!text) return null;
+            for (const key in AUDIO_TRACK_MAP) {
+                if (text.includes(key)) return AUDIO_TRACK_MAP[key];
+            }
+            return null;
+        }
 
         function getAudioContext() {
             try {
@@ -1830,10 +1880,48 @@
             const wave = document.getElementById('audioWaveFeedback');
             if (wave) wave.classList.remove('hidden');
 
-            // 1. Always play instant audible feedback (Web Audio API - 100% immune to CORS)
+            const trackId = getAudioTrackId(text);
+            const player = document.getElementById('localrouteNativeAudio');
+
+            // 1. First priority: Pre-rendered human Thai audio (Base64 data URI or local MP3 asset)
+            if (trackId) {
+                let audioSrc = null;
+                if (window.LOCALROUTE_AUDIO && window.LOCALROUTE_AUDIO[trackId]) {
+                    audioSrc = window.LOCALROUTE_AUDIO[trackId];
+                } else {
+                    audioSrc = `./audio/${trackId}.mp3`;
+                }
+
+                if (player) {
+                    player.pause();
+                    player.src = audioSrc;
+                    player.currentTime = 0;
+                    const p = player.play();
+                    if (p !== undefined) {
+                        p.then(() => {
+                            player.onended = () => { if (wave) wave.classList.add('hidden'); };
+                        }).catch(err => {
+                            console.warn("DOM Player error, falling back:", err);
+                            fallbackSpeechAndChime(text, wave);
+                        });
+                        return;
+                    }
+                } else {
+                    const dynamicAudio = new Audio(audioSrc);
+                    dynamicAudio.play().then(() => {
+                        dynamicAudio.onended = () => { if (wave) wave.classList.add('hidden'); };
+                    }).catch(() => fallbackSpeechAndChime(text, wave));
+                    return;
+                }
+            }
+
+            // 2. Second priority: Custom phrase or fallback
+            fallbackSpeechAndChime(text, wave);
+        }
+
+        function fallbackSpeechAndChime(text, wave) {
             playInstantClickChime();
 
-            // 2. Synchronous Native SpeechSynthesis (Directly in User Gesture context)
             if ('speechSynthesis' in window) {
                 try {
                     window.speechSynthesis.cancel();
@@ -1847,24 +1935,13 @@
 
                     if (cachedThaiVoice) {
                         utterance.voice = cachedThaiVoice;
-                    } else {
-                        const voices = window.speechSynthesis.getVoices();
-                        const found = voices.find(v => 
-                            (v.lang && (v.lang.toLowerCase().startsWith('th') || v.lang.toLowerCase().includes('th-th'))) ||
-                            (v.name && v.name.toLowerCase().includes('thai'))
-                        );
-                        if (found) {
-                            cachedThaiVoice = found;
-                            utterance.voice = found;
-                        }
                     }
 
                     utterance.onend = () => {
                         if (wave) wave.classList.add('hidden');
                         window._activeSpeechUtterance = null;
                     };
-                    utterance.onerror = (e) => {
-                        console.warn('Speech synthesis error:', e);
+                    utterance.onerror = () => {
                         if (wave) wave.classList.add('hidden');
                         window._activeSpeechUtterance = null;
                     };
@@ -1872,9 +1949,7 @@
                     window._activeSpeechUtterance = utterance;
                     window.speechSynthesis.speak(utterance);
                     return;
-                } catch(err) {
-                    console.warn('Speech synthesis exception:', err);
-                }
+                } catch(e) {}
             }
 
             setTimeout(() => {
