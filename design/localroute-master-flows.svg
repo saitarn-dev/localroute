@@ -1,0 +1,415 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3500 2300" width="3500" height="2300" style="background:#ECE4DE; font-family:'Plus Jakarta Sans', 'Prompt', sans-serif;">
+  <defs>
+    <!-- Drop Shadows -->
+    <filter id="shadow-phone" x="-15%" y="-15%" width="130%" height="135%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#B88A72" flood-opacity="0.32" />
+    </filter>
+    <filter id="shadow-card" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#64748B" flood-opacity="0.14" />
+    </filter>
+    <filter id="shadow-dock" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="bg-screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF5EE"/>
+      <stop offset="50%" stop-color="#F5F2FC"/>
+      <stop offset="100%" stop-color="#EDF2FF"/>
+    </linearGradient>
+
+    <linearGradient id="g-purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8C82FC"/>
+      <stop offset="60%" stop-color="#988EFC"/>
+      <stop offset="100%" stop-color="#6E5FF6"/>
+    </linearGradient>
+
+    <linearGradient id="g-orange" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF9870"/>
+      <stop offset="100%" stop-color="#FF5A36"/>
+    </linearGradient>
+
+    <linearGradient id="g-green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <linearGradient id="g-blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <!-- Flow Arrow Marker -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#8C82FC"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#FF5A36"/>
+    </marker>
+  </defs>
+
+  <!-- ======================================================== -->
+  <!-- CANVAS HEADER: DESIGN SYSTEM & FLOW OVERVIEW             -->
+  <!-- ======================================================== -->
+  <g transform="translate(60, 60)">
+    <rect width="3380" height="90" rx="24" fill="#FFFFFF" fill-opacity="0.9" filter="url(#shadow-card)"/>
+    <text x="36" y="44" font-size="26" font-weight="800" fill="#1E1E2D">LocalRoute Thailand · Master UX Design Kit &amp; Complete Flows</text>
+    <text x="36" y="68" font-size="13" font-weight="600" fill="#64748B">14 Comprehensive High-Fidelity Screens · 4 User Journeys · iOS Glassmorphism · Ready for Figma Import</text>
+    <rect x="3060" y="24" width="280" height="42" rx="21" fill="#1E1E2D"/>
+    <text x="3100" y="50" font-size="13" font-weight="800" fill="#FFFFFF">✨ Figma Scale 1:1 (390×844)</text>
+  </g>
+
+  <!-- ================================================================================== -->
+  <!-- ROW 1: FLOW A · SEARCH, DISCOVERY & DYNAMIC GROUP ESTIMATOR                        -->
+  <!-- ================================================================================== -->
+  <g transform="translate(60, 180)">
+    <!-- Flow Title -->
+    <rect width="3380" height="40" rx="14" fill="#8C82FC" fill-opacity="0.15"/>
+    <text x="24" y="26" font-size="16" font-weight="800" fill="#5B4DF0">FLOW A · ROUTE DISCOVERY &amp; DYNAMIC GROUP ESTIMATION</text>
+    <text x="560" y="26" font-size="12" font-weight="600" fill="#64748B">Landing at CNX Airport ➔ Setting Destination ➔ Group Recalculation ➔ Route Map</text>
+
+    <!-- SCREEN A1: HOME TRANSIT FEED (SOLO) -->
+    <g transform="translate(0, 60)">
+      <text x="10" y="-12" font-size="13" font-weight="800" fill="#1E1E2D">SCREEN 01 · HOME FEED (1 PAX)</text>
+      <rect width="390" height="844" rx="46" fill="#1C1C26" filter="url(#shadow-phone)"/>
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="url(#bg-screen)"/>
+      <!-- Header -->
+      <text x="30" y="48" font-size="13" font-weight="700" fill="#1E1E2D">09:41</text>
+      <rect x="135" y="32" width="120" height="24" rx="12" fill="#181822"/>
+      <text x="155" y="48" font-size="9" font-weight="700" fill="#CBD5E1">CNX · 28°C ☀️</text>
+      <!-- Avatar & Greeting -->
+      <rect x="24" y="70" width="42" height="42" rx="16" fill="#FDE68A"/>
+      <text x="33" y="99" font-size="20">👱🏼‍♂️</text>
+      <text x="74" y="88" font-size="15" font-weight="800" fill="#1E1E2D">Hi, Alex! 👋</text>
+      <text x="74" y="104" font-size="11" font-weight="700" fill="#64748B">📍 Chiang Mai</text>
+      <rect x="280" y="76" width="86" height="30" rx="15" fill="#FFFFFF"/>
+      <circle cx="294" cy="91" r="3.5" fill="#10B981"/>
+      <text x="304" y="95" font-size="10" font-weight="800" fill="#1E1E2D">Online</text>
+      <!-- Hero Purple -->
+      <rect x="24" y="126" width="342" height="120" rx="26" fill="url(#g-purple)"/>
+      <text x="40" y="156" font-size="16" font-weight="800" fill="#FFFFFF">Airport ➔ City Transit</text>
+      <text x="40" y="174" font-size="11" font-weight="600" fill="#FFFFFF" opacity="0.9">Compare Songthaew, RTC Bus &amp; Taxi</text>
+      <rect x="40" y="196" width="130" height="26" rx="10" fill="#000000" fill-opacity="0.25"/>
+      <text x="50" y="213" font-size="11" font-weight="700" fill="#FFFFFF">Travelers: 1 Solo</text>
+      <text x="300" y="180" font-size="34">🛺</text>
+      <!-- Search Boxes -->
+      <rect x="24" y="260" width="342" height="96" rx="22" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <rect x="36" y="272" width="318" height="34" rx="12" fill="#F8FAFC"/>
+      <text x="50" y="294" font-size="10" font-weight="700" fill="#1E1E2D">CNX Terminal Gate 1</text>
+      <rect x="36" y="312" width="318" height="34" rx="12" fill="#FFF1EB"/>
+      <text x="50" y="334" font-size="11" font-weight="800" fill="#FF5A36">Tha Phae Gate (Old City)</text>
+      <!-- Cards -->
+      <rect x="24" y="370" width="342" height="78" rx="20" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <rect x="24" y="370" width="6" height="78" rx="3" fill="#FF5A36"/>
+      <text x="44" y="402" font-size="13" font-weight="800" fill="#1E1E2D">🛺 Red Songthaew</text>
+      <text x="44" y="420" font-size="10" font-weight="600" fill="#64748B">Shared truck · Wave to flag</text>
+      <text x="270" y="402" font-size="15" font-weight="800" fill="#FF5A36">฿30 - 40</text>
+      <rect x="44" y="428" width="80" height="14" rx="5" fill="#FFEFEA"/>
+      <text x="50" y="438" font-size="8" font-weight="800" fill="#FF5A36">Fair fare standard</text>
+      <!-- Card 2: RTC Bus -->
+      <rect x="24" y="458" width="342" height="78" rx="20" fill="#FFFFFF" stroke="#8C82FC" stroke-width="1.8" filter="url(#shadow-card)"/>
+      <text x="44" y="490" font-size="13" font-weight="800" fill="#1E1E2D">🚌 RTC City Bus R3</text>
+      <text x="44" y="508" font-size="10" font-weight="600" fill="#64748B">Air-Con ❄️ · Fixed stops</text>
+      <text x="285" y="490" font-size="15" font-weight="800" fill="#7569F7">฿30</text>
+      <!-- Card 3: Taxi -->
+      <rect x="24" y="546" width="342" height="78" rx="20" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <text x="44" y="578" font-size="13" font-weight="800" fill="#1E1E2D">🚕 Airport Taxi</text>
+      <text x="44" y="596" font-size="10" font-weight="600" fill="#64748B">Direct hotel drop-off · Gate 2</text>
+      <text x="260" y="578" font-size="15" font-weight="800" fill="#D97706">฿150 - 160</text>
+      <!-- Bottom Dock -->
+      <rect x="42" y="744" width="306" height="62" rx="31" fill="#1A1A26" filter="url(#shadow-dock)"/>
+      <circle cx="85" cy="775" r="18" fill="url(#g-purple)"/>
+      <text x="78" y="780" font-size="15">🧭</text>
+      <text x="140" y="780" font-size="16">⚖️</text>
+      <text x="200" y="780" font-size="16">💾</text>
+      <text x="260" y="780" font-size="16">🗣️</text>
+    </g>
+
+    <!-- FLOW CONNECTOR ARROW A1 -> A2 -->
+    <path d="M 400 450 L 460 450" stroke="#8C82FC" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+    <rect x="405" y="416" width="80" height="24" rx="6" fill="#FFFFFF" filter="url(#shadow-card)"/>
+    <text x="412" y="432" font-size="10" font-weight="800" fill="#5B4DF0">+4 People</text>
+
+    <!-- SCREEN A2: DYNAMIC GROUP ESTIMATOR (4+ PAX RECALCULATION) -->
+    <g transform="translate(480, 60)">
+      <text x="10" y="-12" font-size="13" font-weight="800" fill="#1E1E2D">SCREEN 02 · GROUP RECALCULATION (4 PAX)</text>
+      <rect width="390" height="844" rx="46" fill="#1C1C26" filter="url(#shadow-phone)"/>
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="url(#bg-screen)"/>
+      <!-- Header -->
+      <rect x="24" y="60" width="342" height="150" rx="26" fill="url(#g-purple)"/>
+      <text x="40" y="94" font-size="17" font-weight="800" fill="#FFFFFF">Group Cost Recalculator</text>
+      <text x="40" y="112" font-size="11" font-weight="600" fill="#FFFFFF" opacity="0.9">Prices update for 4 passengers:</text>
+      <!-- Stepper at 4 -->
+      <rect x="40" y="126" width="160" height="32" rx="12" fill="#000000" fill-opacity="0.3"/>
+      <text x="56" y="148" font-size="16" font-weight="800" fill="#FFFFFF">-</text>
+      <text x="100" y="148" font-size="14" font-weight="800" fill="#FFFFFF">4 Group</text>
+      <text x="168" y="148" font-size="16" font-weight="800" fill="#FFFFFF">+</text>
+      <!-- Recommendation Banner -->
+      <rect x="40" y="168" width="310" height="28" rx="10" fill="#FEF08A"/>
+      <text x="50" y="186" font-size="11" font-weight="800" fill="#854D0E">🔥 4+ Group: Airport Taxi is only ฿37/person!</text>
+      <!-- Songthaew 4 pax cost -->
+      <rect x="24" y="230" width="342" height="82" rx="20" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <text x="44" y="260" font-size="13" font-weight="800" fill="#1E1E2D">🛺 Songthaew (4 seats)</text>
+      <text x="44" y="278" font-size="10" font-weight="600" fill="#64748B">฿30 × 4 passengers</text>
+      <text x="250" y="260" font-size="16" font-weight="800" fill="#FF5A36">฿120 - 160</text>
+      <text x="260" y="276" font-size="9" font-weight="700" fill="#94A3B8">total group fare</text>
+      <!-- Taxi 4 pax cost (Winner) -->
+      <rect x="24" y="324" width="342" height="92" rx="20" fill="#FFFFFF" stroke="#10B981" stroke-width="2.2" filter="url(#shadow-card)"/>
+      <rect x="250" y="324" width="100" height="20" rx="8" fill="#10B981"/>
+      <text x="258" y="338" font-size="9" font-weight="800" fill="#FFFFFF">⭐ BEST VALUE</text>
+      <text x="44" y="356" font-size="14" font-weight="800" fill="#1E1E2D">🚕 Airport Taxi / Tuk-Tuk</text>
+      <text x="44" y="374" font-size="10" font-weight="600" fill="#64748B">Direct door-to-door · Fixed Coupon</text>
+      <text x="44" y="394" font-size="11" font-weight="800" fill="#059669">฿150 flat (Only ฿37 per person!)</text>
+      <!-- RTC Bus 4 pax -->
+      <rect x="24" y="428" width="342" height="78" rx="20" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <text x="44" y="458" font-size="13" font-weight="800" fill="#1E1E2D">🚌 RTC Smart Bus R3</text>
+      <text x="260" y="458" font-size="15" font-weight="800" fill="#7569F7">฿120 total</text>
+      <text x="44" y="476" font-size="10" font-weight="600" fill="#64748B">฿30 per ticket × 4</text>
+      <!-- Bottom Dock -->
+      <rect x="42" y="744" width="306" height="62" rx="31" fill="#1A1A26" filter="url(#shadow-dock)"/>
+      <circle cx="85" cy="775" r="18" fill="url(#g-purple)"/>
+      <text x="78" y="780" font-size="15">🧭</text>
+      <text x="140" y="780" font-size="16">⚖️</text>
+      <text x="200" y="780" font-size="16">💾</text>
+      <text x="260" y="780" font-size="16">🗣️</text>
+    </g>
+
+    <!-- FLOW CONNECTOR ARROW A2 -> A3 -->
+    <path d="M 880 450 L 940 450" stroke="#8C82FC" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+    <rect x="885" y="416" width="80" height="24" rx="6" fill="#FFFFFF" filter="url(#shadow-card)"/>
+    <text x="892" y="432" font-size="10" font-weight="800" fill="#5B4DF0">Tap Search</text>
+
+    <!-- SCREEN A3: SEARCH & HOTSPOTS AUTOCOMPLETE MODAL -->
+    <g transform="translate(960, 60)">
+      <text x="10" y="-12" font-size="13" font-weight="800" fill="#1E1E2D">SCREEN 03 · SEARCH &amp; HOTSPOTS MODAL</text>
+      <rect width="390" height="844" rx="46" fill="#1C1C26" filter="url(#shadow-phone)"/>
+      <!-- Background dimmed -->
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="#0F172A" fill-opacity="0.6"/>
+      <!-- Slide-up Modal Panel -->
+      <rect x="8" y="160" width="374" height="676" rx="36" fill="#FFFFFF"/>
+      <rect x="175" y="174" width="40" height="5" rx="2.5" fill="#CBD5E1"/>
+      <text x="28" y="212" font-size="16" font-weight="800" fill="#1E1E2D">Where do you want to go?</text>
+      <!-- Search Input Active -->
+      <rect x="24" y="228" width="342" height="46" rx="16" fill="#FFF1EB" stroke="#FF5A36" stroke-width="1.8"/>
+      <circle cx="44" cy="251" r="5" fill="#FF5A36"/>
+      <text x="60" y="256" font-size="13" font-weight="800" fill="#1E1E2D">Nimman Soi 9|</text>
+      <text x="336" y="256" font-size="14" fill="#64748B">✕</text>
+      <!-- Hotspots Category -->
+      <text x="28" y="304" font-size="11" font-weight="800" fill="#94A3B8" letter-spacing="0.5">POPULAR DESTINATIONS</text>
+      <!-- Item 1: Tha Phae -->
+      <rect x="24" y="318" width="342" height="56" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="40" y="352" font-size="20">🏯</text>
+      <text x="72" y="344" font-size="13" font-weight="800" fill="#1E1E2D">Tha Phae Gate (Old City)</text>
+      <text x="72" y="360" font-size="10" font-weight="600" fill="#64748B">ประตูท่าแพ · Historical Plaza · 3.8 km</text>
+      <!-- Item 2: Nimman (Selected) -->
+      <rect x="24" y="382" width="342" height="56" rx="16" fill="#F5F3FF" stroke="#8C82FC" stroke-width="1.8"/>
+      <text x="40" y="416" font-size="20">☕</text>
+      <text x="72" y="408" font-size="13" font-weight="800" fill="#1E1E2D">Nimman Soi 9</text>
+      <text x="72" y="424" font-size="10" font-weight="600" fill="#8C82FC">ถนนนิมมานเหมินท์ · Cafes &amp; Shopping · 4.2 km</text>
+      <!-- Item 3: Doi Suthep -->
+      <rect x="24" y="446" width="342" height="56" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="40" y="480" font-size="20">⛰️</text>
+      <text x="72" y="472" font-size="13" font-weight="800" fill="#1E1E2D">Wat Phra That Doi Suthep</text>
+      <text x="72" y="488" font-size="10" font-weight="600" fill="#64748B">วัดพระธาตุดอยสุเทพ · Mountain Peak · 18 km</text>
+      <!-- Item 4: Warorot Market -->
+      <rect x="24" y="510" width="342" height="56" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="40" y="544" font-size="20">🛍️</text>
+      <text x="72" y="536" font-size="13" font-weight="800" fill="#1E1E2D">Warorot Market (Kad Luang)</text>
+      <text x="72" y="552" font-size="10" font-weight="600" fill="#64748B">ตลาดวโรรส · Local Food &amp; Souvenirs · 5.1 km</text>
+    </g>
+
+    <!-- FLOW CONNECTOR ARROW A3 -> A4 -->
+    <path d="M 1360 450 L 1420 450" stroke="#8C82FC" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+    <rect x="1365" y="416" width="80" height="24" rx="6" fill="#FFFFFF" filter="url(#shadow-card)"/>
+    <text x="1375" y="432" font-size="10" font-weight="800" fill="#5B4DF0">Select Place</text>
+
+    <!-- SCREEN A4: FULL REAL INTERACTIVE LEAFLET MAP MODAL -->
+    <g transform="translate(1440, 60)">
+      <text x="10" y="-12" font-size="13" font-weight="800" fill="#1E1E2D">SCREEN 04 · INTERACTIVE MAP ROUTE MODAL</text>
+      <rect width="390" height="844" rx="46" fill="#1C1C26" filter="url(#shadow-phone)"/>
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="#E8EEF5"/>
+      <!-- Simulated Leaflet Map with Grid & Roads -->
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="#E0F2FE"/>
+      <!-- River Ping Detailed -->
+      <path d="M 280 8 Q 230 300 290 836" stroke="#7DD3FC" stroke-width="28" fill="none" stroke-linecap="round"/>
+      <!-- Roads Network -->
+      <path d="M 8 300 L 382 310" stroke="#FFFFFF" stroke-width="12" fill="none"/>
+      <path d="M 120 8 L 120 836" stroke="#FFFFFF" stroke-width="10" fill="none"/>
+      <path d="M 8 500 Q 200 480 382 510" stroke="#FFFFFF" stroke-width="8" fill="none"/>
+      <!-- Route Polyline from Airport to Nimman -->
+      <path d="M 100 680 C 100 500 130 380 200 240" stroke="#8C82FC" stroke-width="6" stroke-dasharray="10,6" fill="none"/>
+      <!-- Origin Marker CNX -->
+      <circle cx="100" cy="680" r="16" fill="#8C82FC" stroke="#FFFFFF" stroke-width="3"/>
+      <text x="91" y="686" font-size="16">✈️</text>
+      <rect x="60" y="704" width="80" height="20" rx="8" fill="#1E1E2D"/>
+      <text x="68" y="718" font-size="9" font-weight="800" fill="#FFFFFF">CNX Airport</text>
+      <!-- Destination Marker Nimman -->
+      <circle cx="200" cy="240" r="18" fill="#FF5A36" stroke="#FFFFFF" stroke-width="3.5"/>
+      <text x="191" y="247" font-size="18">📍</text>
+      <rect x="150" y="266" width="100" height="22" rx="8" fill="#FF5A36"/>
+      <text x="158" y="281" font-size="10" font-weight="800" fill="#FFFFFF">Nimman Soi 9</text>
+      <!-- Floating Map Card Summary -->
+      <rect x="24" y="660" width="342" height="150" rx="26" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+      <text x="40" y="694" font-size="16" font-weight="800" fill="#1E1E2D">CNX Airport ➔ Nimman Soi 9</text>
+      <text x="40" y="712" font-size="11" font-weight="600" fill="#64748B">Distance: 4.2 km · Est. Time: ~15-20 mins</text>
+      <rect x="40" y="726" width="140" height="34" rx="14" fill="#8C82FC"/>
+      <text x="56" y="747" font-size="11" font-weight="800" fill="#FFFFFF">Red Songthaew: ฿30</text>
+      <rect x="190" y="726" width="160" height="34" rx="14" fill="#1E1E2D"/>
+      <text x="206" y="747" font-size="11" font-weight="800" fill="#FFFFFF">↗ Open Google Maps</text>
+      <!-- Close Map button -->
+      <circle cx="346" cy="46" r="16" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <text x="340" y="52" font-size="14" font-weight="800">✕</text>
+    </g>
+  </g>
+
+
+  <!-- ================================================================================== -->
+  <!-- ROW 2: FLOW B · IN-TRIP EXECUTION, ANTI-SCAM FLASHCARD & AUDIO                     -->
+  <!-- ================================================================================== -->
+  <g transform="translate(60, 1140)">
+    <!-- Flow Title -->
+    <rect width="3380" height="40" rx="14" fill="#FF5A36" fill-opacity="0.15"/>
+    <text x="24" y="26" font-size="16" font-weight="800" fill="#C2410C">FLOW B · IN-TRIP EXECUTION, DRIVER FLASHCARD &amp; NATIVE VOICE</text>
+    <text x="640" y="26" font-size="12" font-weight="600" fill="#64748B">Tap Transit Card ➔ Step-by-Step Wayfinding ➔ Show Flashcard to Driver ➔ Play Native Thai Voice</text>
+
+    <!-- SCREEN B1: STEP-BY-STEP WAYFINDING DRAWER -->
+    <g transform="translate(0, 60)">
+      <text x="10" y="-12" font-size="13" font-weight="800" fill="#1E1E2D">SCREEN 05 · STEP-BY-STEP WAYFINDING</text>
+      <rect width="390" height="844" rx="46" fill="#1C1C26" filter="url(#shadow-phone)"/>
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="#0F172A" fill-opacity="0.5"/>
+      <!-- Slide-up Drawer -->
+      <rect x="8" y="140" width="374" height="696" rx="36" fill="#FFFFFF"/>
+      <rect x="175" y="152" width="40" height="5" rx="2.5" fill="#CBD5E1"/>
+      <!-- Drawer Header -->
+      <rect x="28" y="176" width="46" height="46" rx="16" fill="#FFEAE5"/>
+      <text x="37" y="207" font-size="24">🛺</text>
+      <text x="84" y="196" font-size="14" font-weight="800" fill="#1E1E2D">Red Songthaew (Rot Daeng)</text>
+      <text x="84" y="214" font-size="11" font-weight="600" fill="#64748B">Standard Fare: 30 THB · ~20 mins</text>
+      <!-- Big Flashcard CTA button -->
+      <rect x="24" y="234" width="342" height="52" rx="18" fill="url(#g-orange)" filter="url(#shadow-card)"/>
+      <text x="44" y="266" font-size="22">🪪</text>
+      <text x="76" y="258" font-size="12" font-weight="800" fill="#FFFFFF">Show "Driver Flashcard" to Driver</text>
+      <text x="76" y="272" font-size="9" font-weight="600" fill="#FFFFFF" opacity="0.9">Big Thai text with official 30 THB fare guarantee</text>
+      <!-- Step 1 -->
+      <circle cx="44" cy="326" r="8" fill="#8C82FC"/>
+      <line x1="44" y1="334" x2="44" y2="400" stroke="#CBD5E1" stroke-width="2"/>
+      <text x="62" y="322" font-size="9" font-weight="800" fill="#8C82FC">STEP 1 · DEPARTURE GATE</text>
+      <text x="62" y="338" font-size="12" font-weight="800" fill="#1E1E2D">Exit Airport Gate 1 Public Transit</text>
+      <text x="62" y="354" font-size="10" font-weight="500" fill="#64748B">Walk past taxi counter 35m to the red truck curb.</text>
+      <!-- Step 2 -->
+      <circle cx="44" cy="410" r="8" fill="#FF5A36"/>
+      <line x1="44" y1="418" x2="44" y2="480" stroke="#CBD5E1" stroke-width="2"/>
+      <text x="62" y="406" font-size="9" font-weight="800" fill="#FF5A36">STEP 2 · WHAT TO SAY</text>
+      <text x="62" y="422" font-size="12" font-weight="800" fill="#1E1E2D">Say: "Phaan Tha-Phae Mai Krup?"</text>
+      <text x="62" y="438" font-size="10" font-weight="500" fill="#64748B">If driver nods, get in the back. Do not ask charter price!</text>
+      <!-- Step 3 -->
+      <circle cx="44" cy="490" r="8" fill="#10B981"/>
+      <text x="62" y="486" font-size="9" font-weight="800" fill="#10B981">STEP 3 · ARRIVAL &amp; PAYMENT</text>
+      <text x="62" y="502" font-size="12" font-weight="800" fill="#1E1E2D">Press buzzer &amp; pay 30 THB at front</text>
+      <text x="62" y="518" font-size="10" font-weight="500" fill="#64748B">Step out rear, walk to driver window, pay cash.</text>
+    </g>
+
+    <!-- FLOW CONNECTOR ARROW B1 -> B2 -->
+    <path d="M 400 450 L 460 450" stroke="#FF5A36" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+    <rect x="405" y="416" width="80" height="24" rx="6" fill="#FFFFFF" filter="url(#shadow-card)"/>
+    <text x="412" y="432" font-size="10" font-weight="800" fill="#C2410C">Tap Flashcard</text>
+
+    <!-- SCREEN B2: FULLSCREEN GIANT DRIVER FLASHCARD -->
+    <g transform="translate(480, 60)">
+      <text x="10" y="-12" font-size="13" font-weight="800" fill="#1E1E2D">SCREEN 06 · FULLSCREEN DRIVER FLASHCARD</text>
+      <rect width="390" height="844" rx="46" fill="#161622" filter="url(#shadow-phone)"/>
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="#161622"/>
+      <!-- Header -->
+      <rect x="24" y="60" width="180" height="28" rx="14" fill="#FFFFFF" fill-opacity="0.1"/>
+      <text x="36" y="78" font-size="10" font-weight="800" fill="#FDE047">ยื่นให้คนขับดู (SHOW DRIVER)</text>
+      <circle cx="350" cy="74" r="14" fill="#FFFFFF" fill-opacity="0.15"/>
+      <text x="345" y="79" font-size="14" fill="#FFFFFF">✕</text>
+      <!-- Big Card Border -->
+      <text x="36" y="150" font-size="11" font-weight="800" fill="#94A3B8" letter-spacing="1">DESTINATION / ไปที่:</text>
+      <rect x="24" y="166" width="342" height="260" rx="30" fill="#FFFFFF" fill-opacity="0.08" stroke="#FBBF24" stroke-width="2.5"/>
+      <text x="195" y="250" font-size="38" font-weight="800" fill="#FFFFFF" text-anchor="middle">ประตูท่าแพ</text>
+      <text x="195" y="286" font-size="18" font-weight="700" fill="#FDE047" text-anchor="middle">Tha Phae Gate (Old City)</text>
+      <line x1="80" y1="316" x2="310" y2="316" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="1.5"/>
+      <text x="195" y="356" font-size="24" font-weight="800" fill="#34D399" text-anchor="middle">ราคากลาง 30 บาท</text>
+      <text x="195" y="380" font-size="11" font-weight="600" fill="#94A3B8" text-anchor="middle">Official Standard Fare: 30 THB per seat</text>
+      <!-- Audio Button -->
+      <rect x="24" y="446" width="342" height="54" rx="20" fill="url(#g-orange)" filter="url(#shadow-card)"/>
+      <text x="50" y="479" font-size="20">🔊</text>
+      <text x="84" y="478" font-size="13" font-weight="800" fill="#FFFFFF">Tap to Play Native Thai Audio</text>
+      <!-- Phonetic phrase -->
+      <rect x="24" y="520" width="342" height="74" rx="20" fill="#FFFFFF" fill-opacity="0.06"/>
+      <text x="44" y="546" font-size="10" font-weight="700" fill="#94A3B8">PHONETIC PRONUNCIATION:</text>
+      <text x="44" y="570" font-size="13" font-weight="800" fill="#FFFFFF" font-family="monospace">"Phaan Tha-Phae Mai Krup/Kha?"</text>
+    </g>
+
+    <!-- FLOW CONNECTOR ARROW B2 -> B3 -->
+    <path d="M 880 450 L 940 450" stroke="#FF5A36" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+    <rect x="885" y="416" width="80" height="24" rx="6" fill="#FFFFFF" filter="url(#shadow-card)"/>
+    <text x="895" y="432" font-size="10" font-weight="800" fill="#C2410C">Tap Audio</text>
+
+    <!-- SCREEN B3: ACTIVE AUDIO TTS VOICE WAVEFORM -->
+    <g transform="translate(960, 60)">
+      <text x="10" y="-12" font-size="13" font-weight="800" fill="#1E1E2D">SCREEN 07 · ACTIVE NATIVE AUDIO TTS</text>
+      <rect width="390" height="844" rx="46" fill="#161622" filter="url(#shadow-phone)"/>
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="#161622"/>
+      <text x="195" y="180" font-size="14" font-weight="800" fill="#38BDF8" text-anchor="middle">🔊 SPEAKING THAI NATIVE VOICE...</text>
+      <!-- Big Animated Waveform Circle -->
+      <circle cx="195" cy="300" r="80" fill="#0284C7" fill-opacity="0.2"/>
+      <circle cx="195" cy="300" r="60" fill="#38BDF8" fill-opacity="0.3"/>
+      <circle cx="195" cy="300" r="40" fill="#38BDF8"/>
+      <text x="183" y="308" font-size="28">🗣️</text>
+      <!-- Sound bars -->
+      <g transform="translate(95, 410)">
+        <rect x="20" y="20" width="6" height="40" rx="3" fill="#FDE047"/>
+        <rect x="35" y="10" width="6" height="60" rx="3" fill="#FDE047"/>
+        <rect x="50" y="5" width="6" height="70" rx="3" fill="#FDE047"/>
+        <rect x="65" y="15" width="6" height="50" rx="3" fill="#FDE047"/>
+        <rect x="80" y="0" width="6" height="80" rx="3" fill="#FDE047"/>
+        <rect x="95" y="10" width="6" height="60" rx="3" fill="#FDE047"/>
+        <rect x="110" y="25" width="6" height="30" rx="3" fill="#FDE047"/>
+        <rect x="125" y="5" width="6" height="70" rx="3" fill="#FDE047"/>
+        <rect x="140" y="15" width="6" height="50" rx="3" fill="#FDE047"/>
+        <rect x="155" y="25" width="6" height="30" rx="3" fill="#FDE047"/>
+        <rect x="170" y="10" width="6" height="60" rx="3" fill="#FDE047"/>
+      </g>
+      <text x="195" y="540" font-size="18" font-weight="800" fill="#FFFFFF" text-anchor="middle">"ผ่านประตูท่าแพไหมครับ"</text>
+      <text x="195" y="565" font-size="12" font-weight="600" fill="#94A3B8" text-anchor="middle">Natural Speech Synthesis · 0.85x Friendly Speed</text>
+      <rect x="44" y="620" width="302" height="48" rx="20" fill="#334155"/>
+      <text x="195" y="650" font-size="13" font-weight="800" fill="#FFFFFF" text-anchor="middle">Stop Audio / หยุดเสียง</text>
+    </g>
+
+    <!-- FLOW CONNECTOR ARROW B3 -> B4 -->
+    <path d="M 1360 450 L 1420 450" stroke="#FF5A36" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+    <rect x="1365" y="416" width="80" height="24" rx="6" fill="#FFFFFF" filter="url(#shadow-card)"/>
+    <text x="1375" y="432" font-size="10" font-weight="800" fill="#C2410C">Trip Tools</text>
+
+    <!-- SCREEN B4: IN-TRIP TOOLS (STOP ALERT, SAFETY SHARE, WEATHER) -->
+    <g transform="translate(1440, 60)">
+      <text x="10" y="-12" font-size="13" font-weight="800" fill="#1E1E2D">SCREEN 08 · TRIP TOOLS &amp; SAFETY</text>
+      <rect width="390" height="844" rx="46" fill="#1C1C26" filter="url(#shadow-phone)"/>
+      <rect x="8" y="8" width="374" height="828" rx="40" fill="url(#bg-screen)"/>
+      <!-- Header -->
+      <rect x="24" y="60" width="342" height="80" rx="24" fill="#1E1E2D"/>
+      <text x="44" y="96" font-size="17" font-weight="800" fill="#FFFFFF">🧰 In-Trip Safety Tools</text>
+      <text x="44" y="116" font-size="11" font-weight="600" fill="#94A3B8">Location tracker, buzzer alert &amp; weather</text>
+      <!-- Tool 1: Stop Alert Buzzer -->
+      <rect x="24" y="156" width="342" height="106" rx="22" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <text x="44" y="186" font-size="13" font-weight="800" fill="#1E1E2D">🔔 Drop-off Buzzer Alert</text>
+      <text x="44" y="204" font-size="10" font-weight="500" fill="#64748B">Vibrates phone 150m before your destination stop</text>
+      <rect x="44" y="218" width="302" height="32" rx="12" fill="#10B981"/>
+      <text x="120" y="238" font-size="11" font-weight="800" fill="#FFFFFF">GPS Alert: Armed (3.2 km left)</text>
+      <!-- Tool 2: Share Live Trip -->
+      <rect x="24" y="278" width="342" height="96" rx="22" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <text x="44" y="308" font-size="13" font-weight="800" fill="#1E1E2D">📍 Share Live Route with Friend</text>
+      <text x="44" y="326" font-size="10" font-weight="500" fill="#64748B">Send live tracking link via WhatsApp / LINE / SMS</text>
+      <rect x="44" y="338" width="140" height="26" rx="10" fill="#8C82FC"/>
+      <text x="56" y="355" font-size="10" font-weight="800" fill="#FFFFFF">Share Location Link</text>
+      <!-- Tool 3: Air & Rain forecast -->
+      <rect x="24" y="390" width="342" height="96" rx="22" fill="#FFFFFF" filter="url(#shadow-card)"/>
+      <text x="44" y="420" font-size="13" font-weight="800" fill="#1E1E2D">🌫️ Weather &amp; Open-air Notice</text>
+      <text x="44" y="440" font-size="10" font-weight="600" fill="#E11D48">PM2.5: 68 µg/m³ · Rain Chance: 40%</text>
+      <text x="44" y="460" font-size="9" font-weight="500" fill="#64748B">Songthaew sides are open; wear mask or take air-con bus</text>
+    </g>
+  </g>
+
+</svg>

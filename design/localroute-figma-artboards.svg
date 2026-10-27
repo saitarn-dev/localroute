@@ -1,0 +1,536 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1760 920" width="1760" height="920" style="background:#F3EBE6; font-family:'Plus Jakarta Sans', 'Prompt', sans-serif;">
+  <defs>
+    <!-- Shadows & Filters -->
+    <filter id="shadow-card" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#64748B" flood-opacity="0.14" />
+    </filter>
+    <filter id="shadow-phone" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#C28E72" flood-opacity="0.3" />
+    </filter>
+    <filter id="shadow-dock" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="grad-phone-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF5EE"/>
+      <stop offset="50%" stop-color="#F5F2FC"/>
+      <stop offset="100%" stop-color="#EDF2FF"/>
+    </linearGradient>
+
+    <linearGradient id="grad-purple-hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8C82FC"/>
+      <stop offset="60%" stop-color="#988EFC"/>
+      <stop offset="100%" stop-color="#6E5FF6"/>
+    </linearGradient>
+
+    <linearGradient id="grad-orange-hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF9870"/>
+      <stop offset="100%" stop-color="#FF5A36"/>
+    </linearGradient>
+
+    <linearGradient id="grad-green-hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <linearGradient id="grad-red-strip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FF6B6B"/>
+      <stop offset="100%" stop-color="#FF8E53"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ======================================================== -->
+  <!-- ARTBOARD 1: TRANSIT FEED & LIVE MAP (Screen 1)           -->
+  <!-- ======================================================== -->
+  <g id="Screen-1-Transit-Feed" transform="translate(40, 30)">
+    <!-- Title Label for Figma -->
+    <text x="10" y="-12" font-size="14" font-weight="800" fill="#64748B" letter-spacing="0.5">01 · TRANSIT FEED &amp; LIVE ESTIMATOR</text>
+    
+    <!-- Phone Bezel & Outer Frame -->
+    <rect width="390" height="844" rx="48" fill="#1C1C26" filter="url(#shadow-phone)" />
+    <!-- Screen Surface -->
+    <rect x="8" y="8" width="374" height="828" rx="42" fill="url(#grad-phone-bg)" />
+
+    <!-- Status Bar & Dynamic Island -->
+    <g transform="translate(24, 20)">
+      <text x="12" y="14" font-size="13" font-weight="700" fill="#1E1E2D">09:41</text>
+      <!-- Island -->
+      <rect x="110" y="0" width="110" height="24" rx="12" fill="#181822" />
+      <circle cx="122" cy="12" r="3.5" fill="#EF4444" />
+      <text x="134" y="16" font-size="9" font-weight="700" fill="#CBD5E1">CNX · 28°C ☀️</text>
+      <!-- Signal / Wifi / Battery -->
+      <path d="M 285 6 Q 292 2 300 6" stroke="#1E1E2D" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M 288 10 Q 292 7 297 10" stroke="#1E1E2D" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="292.5" cy="14" r="1.5" fill="#1E1E2D"/>
+      <rect x="306" y="5" width="22" height="12" rx="3" fill="none" stroke="#1E1E2D" stroke-width="1.8"/>
+      <rect x="308" y="7" width="14" height="8" rx="1.5" fill="#1E1E2D"/>
+    </g>
+
+    <!-- Header: Avatar & Language & Offline -->
+    <g transform="translate(24, 60)">
+      <!-- Avatar -->
+      <rect x="0" y="0" width="44" height="44" rx="16" fill="#FDE68A" stroke="#FFFFFF" stroke-width="2"/>
+      <text x="10" y="30" font-size="22">👱🏼‍♂️</text>
+      <circle cx="38" cy="38" r="5" fill="#10B981" stroke="#FFFFFF" stroke-width="1.5"/>
+
+      <!-- Greeting -->
+      <text x="54" y="18" font-size="15" font-weight="800" fill="#1E1E2D">Hi, Alex! 👋</text>
+      <text x="54" y="35" font-size="11" font-weight="700" fill="#64748B">📍 Chiang Mai</text>
+
+      <!-- Language Toggle Pill -->
+      <rect x="220" y="6" width="62" height="28" rx="14" fill="#FFFFFF" opacity="0.85" stroke="#FFFFFF" stroke-width="1"/>
+      <rect x="222" y="8" width="28" height="24" rx="12" fill="#1E1E2D"/>
+      <text x="231" y="24" font-size="10" font-weight="800" fill="#FFFFFF">EN</text>
+      <text x="257" y="24" font-size="10" font-weight="700" fill="#64748B">ไทย</text>
+
+      <!-- Offline Pill -->
+      <rect x="288" y="6" width="70" height="28" rx="14" fill="#FFFFFF" opacity="0.85" stroke="#FFFFFF" stroke-width="1"/>
+      <circle cx="299" cy="20" r="3.5" fill="#10B981"/>
+      <text x="308" y="24" font-size="10" font-weight="800" fill="#1E1E2D">Online</text>
+    </g>
+
+    <!-- Hero Card -->
+    <g transform="translate(24, 118)">
+      <rect width="342" height="136" rx="28" fill="url(#grad-purple-hero)" filter="url(#shadow-card)"/>
+      <rect x="14" y="14" width="144" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.25"/>
+      <text x="22" y="28" font-size="9" font-weight="800" fill="#FFFFFF" letter-spacing="0.3">✨ FAIR PRICE GUARANTEE</text>
+      <text x="14" y="58" font-size="17" font-weight="800" fill="#FFFFFF">Airport ➔ City Transit</text>
+      <text x="14" y="76" font-size="11" font-weight="600" fill="#F1F5F9" fill-opacity="0.9">Compare Songthaew, RTC Bus &amp; Taxi</text>
+      <text x="290" y="65" font-size="34">🛺</text>
+
+      <!-- Passenger count bar -->
+      <line x1="14" y1="94" x2="328" y2="94" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="1"/>
+      <text x="14" y="116" font-size="11" font-weight="700" fill="#FFFFFF">Travelers:</text>
+      <rect x="74" y="102" width="78" height="24" rx="10" fill="#000000" fill-opacity="0.25"/>
+      <text x="86" y="118" font-size="14" font-weight="800" fill="#FFFFFF">-</text>
+      <text x="110" y="118" font-size="12" font-weight="800" fill="#FFFFFF">1</text>
+      <text x="136" y="118" font-size="14" font-weight="800" fill="#FFFFFF">+</text>
+      <rect x="175" y="102" width="150" height="24" rx="10" fill="#000000" fill-opacity="0.3"/>
+      <text x="185" y="118" font-size="10" font-weight="700" fill="#FDE047">💡 Solo: Red Truck ฿30</text>
+    </g>
+
+    <!-- Search / Location Picker Box -->
+    <g transform="translate(24, 268)">
+      <rect width="342" height="114" rx="24" fill="#FFFFFF" fill-opacity="0.92" filter="url(#shadow-card)"/>
+      <!-- Pickup Input -->
+      <rect x="10" y="10" width="322" height="40" rx="16" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <circle cx="26" cy="30" r="5" fill="#8C82FC"/>
+      <text x="42" y="24" font-size="8" font-weight="800" fill="#94A3B8">STARTING POINT</text>
+      <text x="42" y="38" font-size="11" font-weight="700" fill="#1E1E2D">CNX Airport Terminal (Gate 1)</text>
+
+      <!-- Destination Input -->
+      <rect x="10" y="58" width="322" height="44" rx="16" fill="#FFF1EB" stroke="#FFD8CB" stroke-width="1"/>
+      <circle cx="26" cy="80" r="5" fill="#FF5A36"/>
+      <text x="42" y="72" font-size="8" font-weight="800" fill="#FF5A36">WHERE TO? (DESTINATION)</text>
+      <text x="42" y="88" font-size="12" font-weight="800" fill="#1E1E2D">Tha Phae Gate (Old City)</text>
+      <rect x="268" y="66" width="56" height="28" rx="12" fill="#FF5A36"/>
+      <text x="278" y="84" font-size="10" font-weight="800" fill="#FFFFFF">Change</text>
+    </g>
+
+    <!-- Map Preview -->
+    <g transform="translate(24, 394)">
+      <rect width="342" height="120" rx="24" fill="#E8EEF5" stroke="#FFFFFF" stroke-width="1.5"/>
+      <!-- Map Roads -->
+      <path d="M 0 90 Q 150 75 342 85" stroke="#FFFFFF" stroke-width="8" fill="none"/>
+      <path d="M 80 0 L 80 120" stroke="#FFFFFF" stroke-width="6" fill="none"/>
+      <!-- River Ping -->
+      <path d="M 260 0 Q 230 60 270 120" stroke="#BAE6FD" stroke-width="14" fill="none" stroke-linecap="round"/>
+      <!-- Trajectory Route Line -->
+      <path d="M 50 90 C 120 85 160 45 250 50" stroke="#FF5A36" stroke-width="4" stroke-dasharray="6,6" fill="none"/>
+      <!-- Origin Pin -->
+      <circle cx="50" cy="90" r="10" fill="#8C82FC" stroke="#FFFFFF" stroke-width="2"/>
+      <text x="44" y="94" font-size="10">✈️</text>
+      <!-- Dest Pin -->
+      <circle cx="250" cy="50" r="12" fill="#FF5A36" stroke="#FFFFFF" stroke-width="2.5"/>
+      <text x="244" y="55" font-size="12">📍</text>
+      <rect x="225" y="66" width="52" height="16" rx="6" fill="#1E1E2D"/>
+      <text x="231" y="78" font-size="9" font-weight="800" fill="#FFFFFF">Tha Phae</text>
+    </g>
+
+    <!-- Transit Option Card 1: Red Songthaew -->
+    <g transform="translate(24, 526)">
+      <rect width="342" height="88" rx="24" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+      <rect x="0" y="0" width="6" height="88" rx="3" fill="url(#grad-red-strip)"/>
+      <rect x="18" y="16" width="46" height="46" rx="16" fill="#FFEAE5"/>
+      <text x="27" y="47" font-size="24">🛺</text>
+      <text x="74" y="34" font-size="13" font-weight="800" fill="#1E1E2D">Red Songthaew</text>
+      <rect x="186" y="21" width="44" height="17" rx="8" fill="#FFEAE5"/>
+      <text x="194" y="33" font-size="9" font-weight="700" fill="#FF5A36">Iconic</text>
+      <text x="74" y="52" font-size="11" font-weight="600" fill="#64748B">Shared Red Truck · Wave to hop on</text>
+
+      <text x="270" y="34" font-size="15" font-weight="800" fill="#FF5A36">฿30 - 40</text>
+      <text x="260" y="49" font-size="9" font-weight="700" fill="#94A3B8">per seat (~$0.90)</text>
+
+      <!-- Sub pills -->
+      <line x1="74" y1="62" x2="326" y2="62" stroke="#F1F5F9" stroke-width="1"/>
+      <rect x="74" y="68" width="105" height="16" rx="6" fill="#FFF1EB"/>
+      <text x="80" y="79" font-size="8" font-weight="800" fill="#FF5A36">🛡️ Fair ฿30 standard</text>
+      <rect x="186" y="68" width="70" height="16" rx="6" fill="#F8FAFC"/>
+      <text x="192" y="79" font-size="8" font-weight="700" fill="#64748B">⏱️ ~20-25m</text>
+    </g>
+
+    <!-- Transit Option Card 2: RTC Bus -->
+    <g transform="translate(24, 624)">
+      <rect width="342" height="88" rx="24" fill="#FFFFFF" fill-opacity="0.95" stroke="#8C82FC" stroke-width="1.8" filter="url(#shadow-card)"/>
+      <rect x="18" y="16" width="46" height="46" rx="16" fill="#ECE9FE"/>
+      <text x="27" y="47" font-size="24">🚌</text>
+      <text x="74" y="34" font-size="13" font-weight="800" fill="#1E1E2D">RTC Smart Bus R3</text>
+      <rect x="200" y="21" width="54" height="17" rx="8" fill="#ECE9FE"/>
+      <text x="206" y="33" font-size="9" font-weight="700" fill="#7569F7">Air-Con ❄️</text>
+      <text x="74" y="52" font-size="11" font-weight="600" fill="#64748B">Fixed stops · Board outside Gate 1</text>
+
+      <text x="282" y="34" font-size="15" font-weight="800" fill="#7569F7">฿30</text>
+      <text x="272" y="49" font-size="9" font-weight="700" fill="#94A3B8">exact fare</text>
+
+      <line x1="74" y1="62" x2="326" y2="62" stroke="#F1F5F9" stroke-width="1"/>
+      <rect x="74" y="68" width="90" height="16" rx="6" fill="#F5F3FF"/>
+      <text x="80" y="79" font-size="8" font-weight="800" fill="#7569F7">💳 Visa / Rabbit OK</text>
+      <rect x="170" y="68" width="85" height="16" rx="6" fill="#F8FAFC"/>
+      <text x="176" y="79" font-size="8" font-weight="700" fill="#64748B">🧳 Big Luggage OK</text>
+    </g>
+
+    <!-- Bottom Navigation Bar (Floating Dock) -->
+    <g transform="translate(42, 740)">
+      <rect width="306" height="64" rx="32" fill="#1A1A26" fill-opacity="0.95" filter="url(#shadow-dock)"/>
+      <!-- Active Item: Routes -->
+      <circle cx="45" cy="32" r="20" fill="url(#grad-purple-hero)"/>
+      <text x="36" y="37" font-size="16">🧭</text>
+      <text x="28" y="58" font-size="8" font-weight="800" fill="#8C82FC">Routes</text>
+
+      <!-- Matrix -->
+      <text x="110" y="36" font-size="18" fill="#94A3B8">⚖️</text>
+      <text x="100" y="54" font-size="8" font-weight="700" fill="#94A3B8">Matrix</text>
+
+      <!-- Offline -->
+      <text x="186" y="36" font-size="18" fill="#94A3B8">💾</text>
+      <text x="177" y="54" font-size="8" font-weight="700" fill="#94A3B8">Offline</text>
+
+      <!-- Tips -->
+      <text x="260" y="36" font-size="18" fill="#94A3B8">🗣️</text>
+      <text x="254" y="54" font-size="8" font-weight="700" fill="#94A3B8">Voice</text>
+    </g>
+    <!-- Home bar -->
+    <rect x="135" y="818" width="120" height="4" rx="2" fill="#94A3B8" opacity="0.4"/>
+  </g>
+
+
+  <!-- ======================================================== -->
+  <!-- ARTBOARD 2: PRICE MATRIX COMPARISON (Screen 2)           -->
+  <!-- ======================================================== -->
+  <g id="Screen-2-Price-Matrix" transform="translate(470, 30)">
+    <text x="10" y="-12" font-size="14" font-weight="800" fill="#64748B" letter-spacing="0.5">02 · PRICE TRANSPARENCY MATRIX</text>
+    
+    <rect width="390" height="844" rx="48" fill="#1C1C26" filter="url(#shadow-phone)" />
+    <rect x="8" y="8" width="374" height="828" rx="42" fill="url(#grad-phone-bg)" />
+
+    <!-- Status Bar -->
+    <g transform="translate(24, 20)">
+      <text x="12" y="14" font-size="13" font-weight="700" fill="#1E1E2D">09:41</text>
+      <rect x="110" y="0" width="110" height="24" rx="12" fill="#181822" />
+      <circle cx="122" cy="12" r="3.5" fill="#EF4444" />
+      <text x="134" y="16" font-size="9" font-weight="700" fill="#CBD5E1">CNX · 28°C ☀️</text>
+    </g>
+
+    <!-- Header Hero: Orange Matrix -->
+    <g transform="translate(24, 60)">
+      <rect width="342" height="110" rx="28" fill="url(#grad-orange-hero)" filter="url(#shadow-card)"/>
+      <rect x="14" y="12" width="110" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.25"/>
+      <text x="22" y="26" font-size="9" font-weight="800" fill="#FFFFFF">⚖️ FAIR PRICE MATRIX</text>
+      <text x="14" y="54" font-size="17" font-weight="800" fill="#FFFFFF">Cost vs Time Comparison</text>
+      <text x="14" y="72" font-size="11" font-weight="600" fill="#F1F5F9" fill-opacity="0.9">Compare luggage, air-con &amp; haggling risk</text>
+      <rect x="14" y="82" width="168" height="18" rx="6" fill="#000000" fill-opacity="0.2"/>
+      <text x="20" y="94" font-size="8" font-weight="700" fill="#FDE047">Verified Chiang Mai Provincial Rates</text>
+    </g>
+
+    <!-- Visual Bar Chart Card -->
+    <g transform="translate(24, 182)">
+      <rect width="342" height="170" rx="24" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+      <text x="16" y="26" font-size="12" font-weight="800" fill="#1E1E2D">TRADE-OFF VISUALIZER (SOLO)</text>
+      
+      <!-- Songthaew Bar -->
+      <text x="16" y="52" font-size="11" font-weight="700" fill="#1E1E2D">🛺 Red Songthaew</text>
+      <text x="260" y="52" font-size="11" font-weight="800" fill="#FF5A36">฿30 · 20m</text>
+      <rect x="16" y="58" width="310" height="10" rx="5" fill="#F1F5F9"/>
+      <rect x="16" y="58" width="75" height="10" rx="5" fill="#FF5A36"/>
+
+      <!-- RTC Bus Bar -->
+      <text x="16" y="90" font-size="11" font-weight="700" fill="#1E1E2D">🚌 RTC Smart Bus R3</text>
+      <text x="260" y="90" font-size="11" font-weight="800" fill="#7569F7">฿30 · 35m</text>
+      <rect x="16" y="96" width="310" height="10" rx="5" fill="#F1F5F9"/>
+      <rect x="16" y="96" width="75" height="10" rx="5" fill="#7569F7"/>
+
+      <!-- Airport Taxi Bar -->
+      <text x="16" y="128" font-size="11" font-weight="700" fill="#1E1E2D">🚕 Airport Taxi / Tuk-Tuk</text>
+      <text x="245" y="128" font-size="11" font-weight="800" fill="#D97706">฿150 · 12m (⚡)</text>
+      <rect x="16" y="134" width="310" height="10" rx="5" fill="#F1F5F9"/>
+      <rect x="16" y="134" width="260" height="10" rx="5" fill="#F59E0B"/>
+    </g>
+
+    <!-- Matrix Table Card -->
+    <g transform="translate(24, 366)">
+      <rect width="342" height="210" rx="24" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+      <text x="16" y="24" font-size="12" font-weight="800" fill="#1E1E2D">PARAMETERS MATRIX</text>
+      
+      <!-- Table Header -->
+      <rect x="10" y="34" width="322" height="24" rx="8" fill="#F8FAFC"/>
+      <text x="16" y="50" font-size="9" font-weight="800" fill="#64748B">VEHICLE</text>
+      <text x="110" y="50" font-size="9" font-weight="800" fill="#64748B">FARE</text>
+      <text x="170" y="50" font-size="9" font-weight="800" fill="#64748B">LUGGAGE</text>
+      <text x="240" y="50" font-size="9" font-weight="800" fill="#64748B">AIR-CON</text>
+
+      <!-- Row 1: Songthaew -->
+      <text x="16" y="82" font-size="11" font-weight="800" fill="#1E1E2D">🛺 Songthaew</text>
+      <text x="110" y="82" font-size="11" font-weight="800" fill="#FF5A36">฿30-40</text>
+      <text x="170" y="82" font-size="10" font-weight="600" fill="#475569">Backpack</text>
+      <text x="240" y="82" font-size="10" font-weight="700" fill="#E11D48">Natural 💨</text>
+      <line x1="16" y1="96" x2="326" y2="96" stroke="#F1F5F9" stroke-width="1"/>
+
+      <!-- Row 2: RTC Bus -->
+      <text x="16" y="122" font-size="11" font-weight="800" fill="#1E1E2D">🚌 RTC Bus</text>
+      <text x="110" y="122" font-size="11" font-weight="800" fill="#7569F7">฿30 Flat</text>
+      <text x="170" y="122" font-size="10" font-weight="700" fill="#059669">Suitcases ✅</text>
+      <text x="240" y="122" font-size="10" font-weight="700" fill="#059669">Cold Air ❄️</text>
+      <line x1="16" y1="136" x2="326" y2="136" stroke="#F1F5F9" stroke-width="1"/>
+
+      <!-- Row 3: Airport Taxi -->
+      <text x="16" y="162" font-size="11" font-weight="800" fill="#1E1E2D">🚕 Taxi</text>
+      <text x="110" y="162" font-size="11" font-weight="800" fill="#D97706">฿150-160</text>
+      <text x="170" y="162" font-size="10" font-weight="700" fill="#059669">Full Trunk ✅</text>
+      <text x="240" y="162" font-size="10" font-weight="700" fill="#059669">Cold Air ❄️</text>
+      <line x1="16" y1="176" x2="326" y2="176" stroke="#F1F5F9" stroke-width="1"/>
+
+      <!-- Row 4: Grab -->
+      <text x="16" y="198" font-size="11" font-weight="800" fill="#1E1E2D">📱 Grab / Bolt</text>
+      <text x="110" y="198" font-size="11" font-weight="800" fill="#059669">฿120-180</text>
+      <text x="170" y="198" font-size="10" font-weight="700" fill="#059669">Full Trunk ✅</text>
+      <text x="240" y="198" font-size="10" font-weight="700" fill="#059669">Cold Air ❄️</text>
+    </g>
+
+    <!-- Anti-scam Guarantee banner -->
+    <g transform="translate(24, 590)">
+      <rect width="342" height="120" rx="24" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+      <text x="16" y="32" font-size="20">🛡️</text>
+      <text x="44" y="30" font-size="12" font-weight="800" fill="#92400E">Official ฿30 Local Fare Law</text>
+      <text x="16" y="55" font-size="10" font-weight="600" fill="#B45309" width="310">
+        In Chiang Mai, the municipal standard rate for shared Red
+      </text>
+      <text x="16" y="70" font-size="10" font-weight="600" fill="#B45309">
+        Songthaew within city limits is 30 THB per seat. If a driver
+      </text>
+      <text x="16" y="85" font-size="10" font-weight="600" fill="#B45309">
+        quotes 150-200 THB, they consider you a private charter.
+      </text>
+      <text x="16" y="102" font-size="10" font-weight="800" fill="#B45309">
+        👉 Pro Tip: Wave for the next truck!
+      </text>
+    </g>
+
+    <!-- Nav Bar -->
+    <g transform="translate(42, 740)">
+      <rect width="306" height="64" rx="32" fill="#1A1A26" fill-opacity="0.95" filter="url(#shadow-dock)"/>
+      <text x="36" y="36" font-size="18" fill="#94A3B8">🧭</text>
+      <text x="28" y="54" font-size="8" font-weight="700" fill="#94A3B8">Routes</text>
+      <!-- Active Item: Matrix -->
+      <circle cx="118" cy="32" r="20" fill="url(#grad-orange-hero)"/>
+      <text x="110" y="37" font-size="16">⚖️</text>
+      <text x="106" y="58" font-size="8" font-weight="800" fill="#FF5A36">Matrix</text>
+      <text x="186" y="36" font-size="18" fill="#94A3B8">💾</text>
+      <text x="177" y="54" font-size="8" font-weight="700" fill="#94A3B8">Offline</text>
+      <text x="260" y="36" font-size="18" fill="#94A3B8">🗣️</text>
+      <text x="254" y="54" font-size="8" font-weight="700" fill="#94A3B8">Voice</text>
+    </g>
+    <rect x="135" y="818" width="120" height="4" rx="2" fill="#94A3B8" opacity="0.4"/>
+  </g>
+
+
+  <!-- ======================================================== -->
+  <!-- ARTBOARD 3: OFFLINE PASS & EMERGENCY CALLS (Screen 3)    -->
+  <!-- ======================================================== -->
+  <g id="Screen-3-Offline-Mode" transform="translate(900, 30)">
+    <text x="10" y="-12" font-size="14" font-weight="800" fill="#64748B" letter-spacing="0.5">03 · OFFLINE PASS &amp; EMERGENCY CALLS</text>
+    
+    <rect width="390" height="844" rx="48" fill="#1C1C26" filter="url(#shadow-phone)" />
+    <rect x="8" y="8" width="374" height="828" rx="42" fill="url(#grad-phone-bg)" />
+
+    <!-- Status Bar (Offline Icon) -->
+    <g transform="translate(24, 20)">
+      <text x="12" y="14" font-size="13" font-weight="700" fill="#1E1E2D">09:41</text>
+      <rect x="110" y="0" width="110" height="24" rx="12" fill="#D97706" />
+      <text x="126" y="16" font-size="9" font-weight="800" fill="#FFFFFF">📶 OFFLINE MODE</text>
+    </g>
+
+    <!-- Header Hero: Green Offline -->
+    <g transform="translate(24, 60)">
+      <rect width="342" height="100" rx="28" fill="url(#grad-green-hero)" filter="url(#shadow-card)"/>
+      <rect x="14" y="12" width="130" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.25"/>
+      <text x="22" y="26" font-size="9" font-weight="800" fill="#FFFFFF">💾 100% OFFLINE READY</text>
+      <text x="14" y="54" font-size="17" font-weight="800" fill="#FFFFFF">Island &amp; Mountain Pass</text>
+      <text x="14" y="72" font-size="11" font-weight="600" fill="#F1F5F9" fill-opacity="0.9">No 4G/5G? Timetables &amp; SOS calls cached</text>
+    </g>
+
+    <!-- Emergency Calls Grid (Real Phone Tap) -->
+    <g transform="translate(24, 174)">
+      <text x="6" y="14" font-size="12" font-weight="800" fill="#1E1E2D">ONE-TAP EMERGENCY CALLS (NO DATA NEEDED)</text>
+      
+      <!-- Button 1: Tourist Police -->
+      <g transform="translate(0, 24)">
+        <rect width="165" height="74" rx="20" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+        <rect x="10" y="15" width="44" height="44" rx="14" fill="#EFF6FF"/>
+        <text x="18" y="44" font-size="22">👮‍♂️</text>
+        <text x="62" y="32" font-size="9" font-weight="800" fill="#64748B">TOURIST POLICE</text>
+        <text x="62" y="54" font-size="17" font-weight="800" fill="#2563EB">1155</text>
+      </g>
+
+      <!-- Button 2: Ambulance -->
+      <g transform="translate(177, 24)">
+        <rect width="165" height="74" rx="20" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+        <rect x="10" y="15" width="44" height="44" rx="14" fill="#FFF1F2"/>
+        <text x="18" y="44" font-size="22">🚑</text>
+        <text x="62" y="32" font-size="9" font-weight="800" fill="#64748B">AMBULANCE SOS</text>
+        <text x="62" y="54" font-size="17" font-weight="800" fill="#E11D48">1669</text>
+      </g>
+
+      <!-- Button 3: General Police -->
+      <g transform="translate(0, 110)">
+        <rect width="165" height="74" rx="20" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+        <rect x="10" y="15" width="44" height="44" rx="14" fill="#F8FAFC"/>
+        <text x="18" y="44" font-size="22">🚔</text>
+        <text x="62" y="32" font-size="9" font-weight="800" fill="#64748B">POLICE DEPT</text>
+        <text x="62" y="54" font-size="17" font-weight="800" fill="#1E1E2D">191</text>
+      </g>
+
+      <!-- Button 4: Songthaew Co-op -->
+      <g transform="translate(177, 110)">
+        <rect width="165" height="74" rx="20" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+        <rect x="10" y="15" width="44" height="44" rx="14" fill="#FFFBEB"/>
+        <text x="18" y="44" font-size="22">🛺</text>
+        <text x="62" y="32" font-size="9" font-weight="800" fill="#64748B">SONGTHAEW CO-OP</text>
+        <text x="62" y="52" font-size="12" font-weight="800" fill="#D97706">053-272018</text>
+      </g>
+    </g>
+
+    <!-- Last Departure Timetable Warnings -->
+    <g transform="translate(24, 386)">
+      <rect width="342" height="190" rx="24" fill="#FFFFFF" fill-opacity="0.95" filter="url(#shadow-card)"/>
+      <text x="16" y="26" font-size="12" font-weight="800" fill="#1E1E2D">⏰ LAST DEPARTURE WARNINGS (DON'T MISS!)</text>
+
+      <!-- Item 1 -->
+      <rect x="12" y="38" width="318" height="42" rx="14" fill="#F8FAFC"/>
+      <text x="22" y="56" font-size="11" font-weight="800" fill="#1E1E2D">RTC Bus Line R3 (Airport ➔ City)</text>
+      <text x="22" y="70" font-size="9" font-weight="600" fill="#64748B">Departs Gate 1 every 25 mins</text>
+      <rect x="238" y="46" width="82" height="26" rx="8" fill="#FFF1F2"/>
+      <text x="246" y="63" font-size="10" font-weight="800" fill="#E11D48">LAST: 21:00</text>
+
+      <!-- Item 2 -->
+      <rect x="12" y="88" width="318" height="42" rx="14" fill="#F8FAFC"/>
+      <text x="22" y="106" font-size="11" font-weight="800" fill="#1E1E2D">Songthaew to Doi Suthep Peak</text>
+      <text x="22" y="120" font-size="9" font-weight="600" fill="#64748B">Front of CMU Stand</text>
+      <rect x="238" y="96" width="82" height="26" rx="8" fill="#FFF1F2"/>
+      <text x="246" y="113" font-size="10" font-weight="800" fill="#E11D48">LAST: 17:00</text>
+
+      <!-- Item 3 -->
+      <rect x="12" y="138" width="318" height="42" rx="14" fill="#F8FAFC"/>
+      <text x="22" y="156" font-size="11" font-weight="800" fill="#1E1E2D">Minivan to Chom Thong (Inthanon)</text>
+      <text x="22" y="170" font-size="9" font-weight="600" fill="#64748B">Chiang Mai Gate Stand</text>
+      <rect x="238" y="146" width="82" height="26" rx="8" fill="#FFF1F2"/>
+      <text x="246" y="163" font-size="10" font-weight="800" fill="#E11D48">LAST: 16:30</text>
+    </g>
+
+    <!-- Nav Bar -->
+    <g transform="translate(42, 740)">
+      <rect width="306" height="64" rx="32" fill="#1A1A26" fill-opacity="0.95" filter="url(#shadow-dock)"/>
+      <text x="36" y="36" font-size="18" fill="#94A3B8">🧭</text>
+      <text x="28" y="54" font-size="8" font-weight="700" fill="#94A3B8">Routes</text>
+      <text x="110" y="36" font-size="18" fill="#94A3B8">⚖️</text>
+      <text x="100" y="54" font-size="8" font-weight="700" fill="#94A3B8">Matrix</text>
+      <!-- Active Item: Offline -->
+      <circle cx="190" cy="32" r="20" fill="url(#grad-green-hero)"/>
+      <text x="182" y="37" font-size="16">💾</text>
+      <text x="178" y="58" font-size="8" font-weight="800" fill="#10B981">Offline</text>
+      <text x="260" y="36" font-size="18" fill="#94A3B8">🗣️</text>
+      <text x="254" y="54" font-size="8" font-weight="700" fill="#94A3B8">Voice</text>
+    </g>
+    <rect x="135" y="818" width="120" height="4" rx="2" fill="#94A3B8" opacity="0.4"/>
+  </g>
+
+
+  <!-- ======================================================== -->
+  <!-- ARTBOARD 4: DRIVER FLASHCARD & AUDIO PRONUNCIATION (04)  -->
+  <!-- ======================================================== -->
+  <g id="Screen-4-Driver-Flashcard" transform="translate(1330, 30)">
+    <text x="10" y="-12" font-size="14" font-weight="800" fill="#64748B" letter-spacing="0.5">04 · DRIVER FLASHCARD &amp; NATIVE VOICE</text>
+    
+    <rect width="390" height="844" rx="48" fill="#161622" filter="url(#shadow-phone)" />
+    <!-- Dark Mode Interior -->
+    <rect x="8" y="8" width="374" height="828" rx="42" fill="#161622" />
+
+    <!-- Status Bar (White in Dark mode) -->
+    <g transform="translate(24, 20)">
+      <text x="12" y="14" font-size="13" font-weight="700" fill="#FFFFFF">09:41</text>
+      <rect x="110" y="0" width="110" height="24" rx="12" fill="#252538" />
+      <text x="126" y="16" font-size="9" font-weight="700" fill="#CBD5E1">DRIVER MODE</text>
+    </g>
+
+    <!-- Flashcard Header -->
+    <g transform="translate(24, 70)">
+      <rect x="0" y="0" width="180" height="28" rx="14" fill="#FFFFFF" fill-opacity="0.1"/>
+      <text x="12" y="18" font-size="10" font-weight="800" fill="#FDE047">ยื่นให้คนขับดู (SHOW TO DRIVER)</text>
+      <circle cx="330" cy="14" r="14" fill="#FFFFFF" fill-opacity="0.15"/>
+      <text x="325" y="19" font-size="14" fill="#FFFFFF">✕</text>
+    </g>
+
+    <!-- Giant Flashcard Box -->
+    <g transform="translate(24, 130)">
+      <text x="12" y="20" font-size="11" font-weight="800" fill="#94A3B8" letter-spacing="1">DESTINATION / ไปที่:</text>
+      
+      <!-- Bordered Giant Card -->
+      <rect y="36" width="342" height="250" rx="32" fill="#FFFFFF" fill-opacity="0.08" stroke="#FBBF24" stroke-width="2.5"/>
+      <!-- Big Thai Characters -->
+      <text x="171" y="125" font-size="38" font-weight="800" fill="#FFFFFF" text-anchor="middle">ประตูท่าแพ</text>
+      <!-- English Name -->
+      <text x="171" y="165" font-size="18" font-weight="700" fill="#FDE047" text-anchor="middle">Tha Phae Gate (Old City)</text>
+      
+      <line x1="80" y1="195" x2="262" y2="195" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="1.5"/>
+
+      <!-- Guaranteed Fare -->
+      <text x="171" y="235" font-size="24" font-weight="800" fill="#34D399" text-anchor="middle">ราคากลาง 30 บาท</text>
+      <text x="171" y="258" font-size="11" font-weight="600" fill="#94A3B8" text-anchor="middle">Official Standard Fare: 30 THB per seat</text>
+    </g>
+
+    <!-- Real Audio Trigger Button -->
+    <g transform="translate(24, 450)">
+      <rect width="342" height="54" rx="20" fill="url(#grad-orange-hero)" filter="url(#shadow-card)"/>
+      <text x="30" y="34" font-size="20">🔊</text>
+      <text x="65" y="33" font-size="13" font-weight="800" fill="#FFFFFF">Tap to Play Native Thai Audio</text>
+    </g>
+
+    <!-- Spoken Phrase Box -->
+    <g transform="translate(24, 526)">
+      <rect width="342" height="74" rx="20" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="1"/>
+      <text x="18" y="28" font-size="10" font-weight="700" fill="#94A3B8">PHONETIC PRONUNCIATION:</text>
+      <text x="18" y="52" font-size="13" font-weight="800" fill="#FFFFFF" font-family="monospace">"Phaan Tha-Phae Mai Krup/Kha?"</text>
+    </g>
+
+    <!-- Quick Audio Phrase Cheat Sheet -->
+    <g transform="translate(24, 620)">
+      <text x="6" y="16" font-size="11" font-weight="800" fill="#94A3B8">OTHER FREQUENT PHRASES (TAP 🔊):</text>
+      
+      <rect y="26" width="342" height="42" rx="14" fill="#FFFFFF" fill-opacity="0.08"/>
+      <text x="16" y="51" font-size="11" font-weight="700" fill="#FFFFFF">"จอดตรงนี้ด้วยครับ" (Stop here)</text>
+      <text x="306" y="52" font-size="14">🔊</text>
+
+      <rect y="76" width="342" height="42" rx="14" fill="#FFFFFF" fill-opacity="0.08"/>
+      <text x="16" y="101" font-size="11" font-weight="700" fill="#FFFFFF">"สามสิบบาทใช่ไหมครับ" (30 THB, right?)</text>
+      <text x="306" y="102" font-size="14">🔊</text>
+    </g>
+
+    <!-- Bottom Done Button -->
+    <g transform="translate(24, 760)">
+      <rect width="342" height="48" rx="20" fill="#334155"/>
+      <text x="171" y="30" font-size="13" font-weight="800" fill="#FFFFFF" text-anchor="middle">Close / เสร็จสิ้น</text>
+    </g>
+    <rect x="135" y="818" width="120" height="4" rx="2" fill="#64748B" opacity="0.4"/>
+  </g>
+
+</svg>

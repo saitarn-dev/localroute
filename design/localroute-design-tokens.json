@@ -1,0 +1,55 @@
+{
+  "project": "LocalRoute Thailand",
+  "version": "3.1.0",
+  "author": "Antigravity UX Design System",
+  "color": {
+    "brand": {
+      "purpleHeroStart": { "value": "#8C82FC", "type": "color", "description": "Primary periwinkle brand color" },
+      "purpleHeroMid": { "value": "#988EFC", "type": "color" },
+      "purpleHeroEnd": { "value": "#6E5FF6", "type": "color" },
+      "orangeHeroStart": { "value": "#FF9870", "type": "color", "description": "Secondary sunset coral color" },
+      "orangeHeroEnd": { "value": "#FF5A36", "type": "color" },
+      "emeraldStart": { "value": "#10B981", "type": "color", "description": "Offline and success green" },
+      "emeraldEnd": { "value": "#059669", "type": "color" }
+    },
+    "surface": {
+      "phoneCanvas": { "value": "#F8EFEA", "type": "color", "description": "Warm peach screen canvas" },
+      "darkDock": { "value": "rgba(26, 26, 38, 0.95)", "type": "color", "description": "iOS Glass Dock" },
+      "glassCard": { "value": "rgba(255, 255, 255, 0.92)", "type": "color", "description": "Frosted glass card surface" },
+      "darkCard": { "value": "#161622", "type": "color", "description": "Driver Flashcard dark surface" }
+    },
+    "text": {
+      "primary": { "value": "#1E1E2D", "type": "color", "description": "Primary high-contrast dark text" },
+      "secondary": { "value": "#64748B", "type": "color", "description": "Subtitles and secondary labels" },
+      "muted": { "value": "#94A3B8", "type": "color", "description": "Placeholder and hints" },
+      "inverse": { "value": "#FFFFFF", "type": "color", "description": "White text on dark/gradient surfaces" }
+    },
+    "transit": {
+      "songthaewRed": { "value": "#FF5A36", "type": "color" },
+      "busPurple": { "value": "#7569F7", "type": "color" },
+      "taxiAmber": { "value": "#D97706", "type": "color" },
+      "grabGreen": { "value": "#059669", "type": "color" }
+    }
+  },
+  "borderRadius": {
+    "phone": { "value": "48px", "type": "borderRadius" },
+    "card": { "value": "24px", "type": "borderRadius" },
+    "hero": { "value": "28px", "type": "borderRadius" },
+    "pill": { "value": "9999px", "type": "borderRadius" },
+    "input": { "value": "16px", "type": "borderRadius" }
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": { "value": "Plus Jakarta Sans", "type": "fontFamilies" },
+      "thai": { "value": "Prompt", "type": "fontFamilies" }
+    },
+    "fontSize": {
+      "heroTitle": { "value": "20px", "type": "fontSizes" },
+      "cardTitle": { "value": "13px", "type": "fontSizes" },
+      "priceTag": { "value": "15px", "type": "fontSizes" },
+      "body": { "value": "11px", "type": "fontSizes" },
+      "caption": { "value": "9px", "type": "fontSizes" },
+      "flashcardThai": { "value": "38px", "type": "fontSizes" }
+    }
+  }
+}
