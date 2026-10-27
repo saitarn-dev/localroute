@@ -360,11 +360,12 @@
                     </div>
 
                     <!-- MRT-STYLE MULTI-STOP ROUTE LINE (แผนผังสถานี/ป้ายสไตล์ MRT) -->
-                    <div class="bg-white/90 rounded-2xl p-3 border border-amber-100 space-y-2.5">
+                    <div id="mrtStationCard" class="bg-white/90 rounded-2xl p-3 border border-amber-100 space-y-2.5 transition-all duration-300">
                         <div class="flex items-center justify-between text-[11px] font-extrabold text-slate-800">
                             <span class="flex items-center gap-1.5">
                                 <span class="text-sm">🚇</span>
-                                <span id="labelMrtLineTitle">แผนผังป้ายจอดสด (MRT-Style Stops)</span>
+                                <span id="labelMrtLineTitle">แผนผังป้ายจอดสด</span>
+                                <span id="activeRouteVehicleBadge" class="bg-indigo-100 text-[#6E5FF6] text-[10px] font-extrabold px-2 py-0.5 rounded-full ml-1 flex items-center gap-1">🛺 รถสองแถวแดง</span>
                             </span>
                             <button onclick="advanceNextStationSim()" class="text-[10px] font-extrabold bg-[#8C82FC] hover:bg-[#786CFB] text-white px-2.5 py-1 rounded-xl shadow-2xs active:scale-95 transition flex items-center gap-1" id="btnNextStopSim">
                                 <span>▶️</span>
@@ -403,8 +404,20 @@
                     </div>
                 </div>
 
+                <!-- MAP SECTION HEADER WITH ACCORDION TOGGLE -->
+                <div class="flex items-center justify-between pt-1 px-1">
+                    <span class="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
+                        <span>🗺️</span>
+                        <span id="labelMapTitle">แผนที่ดาวเทียม &amp; เส้นทางสด</span>
+                    </span>
+                    <button onclick="toggleMapCollapse()" class="text-[10px] font-extrabold text-slate-600 bg-white/90 hover:bg-white px-2.5 py-1 rounded-xl shadow-2xs border border-slate-200/80 active:scale-95 transition flex items-center gap-1">
+                        <span>📐</span>
+                        <span id="textToggleMap">ย่อ/ขยายแผนที่</span>
+                    </button>
+                </div>
+
                 <!-- REAL INTERACTIVE MAP + FAIL-SAFE VECTOR FALLBACK (NO BLANK MAP!) -->
-                <div class="h-48 w-full rounded-[2rem] overflow-hidden relative shadow-sm border border-white" id="mapCardContainer">
+                <div class="h-48 w-full rounded-[2rem] overflow-hidden relative shadow-sm border border-white transition-all duration-300" id="mapCardContainer">
                     
                     <!-- 1. Real Leaflet Map -->
                     <div id="liveLeafletMap" class="w-full h-full z-0"></div>
@@ -1538,7 +1551,7 @@
                 alertInactive: "ปิดเตือน",
                 alertRadiusLabel: "รัศมีเตือน: 500 เมตรก่อนถึง",
                 btnTestAlarmText: "ทดสอบเสียงเตือน",
-                labelMrtLineTitle: "แผนผังป้ายจอดสด (MRT-Style Stops)",
+                labelMrtLineTitle: "แผนผังป้ายจอดสด",
                 titleTransitOptions: "ทางเลือกการเดินทาง",
                 hintTapCard: "แตะการ์ดเพื่อดูวิธีขึ้น",
                 navRoutes: "เส้นทาง",
@@ -1656,7 +1669,7 @@
                 alertInactive: "Alert OFF",
                 alertRadiusLabel: "Trigger radius: 500m before stop",
                 btnTestAlarmText: "Test Alarm",
-                labelMrtLineTitle: "Live Station Track (MRT-Style)",
+                labelMrtLineTitle: "Live Route Stops",
                 titleTransitOptions: "Available Transit Options",
                 hintTapCard: "Tap card for boarding steps",
                 navRoutes: "Routes",
@@ -2069,11 +2082,20 @@
         // ==============================================================
         // 6. MRT-STYLE MULTI-STOP ROUTE TRACKER LOGIC
         // ==============================================================
+        let selectedTransitId = null;
+
         function renderMrtStationLine() {
             const p = provincesData[currentProvinceKey];
             const stops = currentLang === 'th' ? p.mrtStopsTh : p.mrtStopsEn;
             const container = document.getElementById('mrtStationsContainer');
             if (!container) return;
+
+            const isTh = currentLang === 'th';
+            const activeTransit = p.transits.find(t => t.id === selectedTransitId) || p.transits[0];
+            const routeBadge = document.getElementById('activeRouteVehicleBadge');
+            if (routeBadge) {
+                routeBadge.innerText = `${activeTransit.icon} ${isTh ? activeTransit.nameTh.split('(')[0] : activeTransit.nameEn.split('(')[0]}`;
+            }
 
             const total = stops.length;
             const pct = (currentStationIdx / (total - 1)) * 100;
@@ -2094,7 +2116,7 @@
                             isDest ? 'bg-amber-400 text-slate-900 border-2 border-white' :
                             'bg-white text-slate-400 border-2 border-slate-300'
                         }">
-                            ${isCurrent ? p.transits[0].icon : isPassed ? '✓' : isAlertNode ? '🔔' : isDest ? '🎯' : (idx + 1)}
+                            ${isCurrent ? activeTransit.icon : isPassed ? '✓' : isAlertNode ? '🔔' : isDest ? '🎯' : (idx + 1)}
                         </div>
                         <!-- Station Label -->
                         <div class="text-center mt-1.5 max-w-[60px]">
@@ -2140,6 +2162,48 @@
                 setStationIdx(currentStationIdx + 1);
             } else {
                 setStationIdx(0); // Loop back
+            }
+        }
+
+        function selectTransitForRoute(transitId) {
+            selectedTransitId = transitId;
+            const p = provincesData[currentProvinceKey];
+            const transit = p.transits.find(t => t.id === transitId) || p.transits[0];
+            const isTh = currentLang === 'th';
+
+            renderAdaptiveViews();
+            renderMrtStationLine();
+
+            const mrtCard = document.getElementById('mrtStationCard');
+            if (mrtCard) {
+                mrtCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                mrtCard.classList.add('ring-4', 'ring-[#8C82FC]/40');
+                setTimeout(() => mrtCard.classList.remove('ring-4', 'ring-[#8C82FC]/40'), 1000);
+            }
+
+            showToast(
+                `${isTh ? 'เลือกดูผังเส้นทาง:' : 'Viewing Route:'} ${transit.icon} ${isTh ? transit.nameTh.split('(')[0] : transit.nameEn.split('(')[0]}`,
+                isTh ? "อัปเดตไอคอนรถและจุดแวะในแผนผังสดแล้ว" : "Updated route line and vehicle tracker",
+                transit.icon,
+                "bg-[#8C82FC]"
+            );
+        }
+
+        let isMapCollapsed = false;
+        function toggleMapCollapse() {
+            isMapCollapsed = !isMapCollapsed;
+            const mapBox = document.getElementById('mapCardContainer');
+            const text = document.getElementById('textToggleMap');
+            const isTh = currentLang === 'th';
+            if (mapBox) {
+                if (isMapCollapsed) {
+                    mapBox.classList.add('hidden');
+                    if (text) text.innerText = isTh ? "ขยายแผนที่ ➕" : "Expand Map ➕";
+                } else {
+                    mapBox.classList.remove('hidden');
+                    if (text) text.innerText = isTh ? "ย่อแผนที่ ➖" : "Collapse Map ➖";
+                    setTimeout(() => { if (leafletMap) leafletMap.invalidateSize(); }, 200);
+                }
             }
         }
 
@@ -2730,17 +2794,24 @@
             // Transit Cards
             const cardBox = document.getElementById('transitCardsList');
             if (cardBox) {
-                cardBox.innerHTML = p.transits.map(t => `
-                    <div onclick="openRouteSheet('${t.id}')" class="glass-card rounded-[2rem] p-4 hover:border-[#FF7D54] transition active:scale-[0.98] cursor-pointer shadow-xs">
-                        <div class="flex items-start justify-between">
+                cardBox.innerHTML = p.transits.map((t, idx) => {
+                    const isSelected = (selectedTransitId === t.id) || (!selectedTransitId && idx === 0);
+                    return `
+                    <div class="glass-card rounded-[2rem] p-4 transition-all duration-300 shadow-xs ${
+                        isSelected 
+                        ? 'border-2 border-[#8C82FC] bg-gradient-to-r from-purple-50/70 via-indigo-50/40 to-white shadow-md ring-2 ring-[#8C82FC]/20' 
+                        : 'hover:border-indigo-200'
+                    }">
+                        <div class="flex items-start justify-between cursor-pointer" onclick="selectTransitForRoute('${t.id}')">
                             <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 rounded-2xl bg-[#FFEAE5] text-2xl flex items-center justify-center shadow-xs flex-shrink-0 border border-[#FFD8CB]">
+                                <div class="w-12 h-12 rounded-2xl ${isSelected ? 'bg-gradient-to-tr from-[#8C82FC] to-[#6E5FF6] text-white shadow-md scale-105' : 'bg-[#FFEAE5] border border-[#FFD8CB] text-slate-800'} text-2xl flex items-center justify-center shadow-xs flex-shrink-0 transition-all">
                                     ${t.icon}
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-1.5 flex-wrap">
                                         <h4 class="text-xs font-extrabold text-[#1E1E2D]">${isTh ? t.nameTh : t.nameEn}</h4>
-                                        <span class="bg-[#FFEFEA] text-[#FF5A36] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#FFD8CB]">${isTh ? t.badgeTh : t.badgeEn}</span>
+                                        <span class="${isSelected ? 'bg-[#ECE9FE] text-[#6E5FF6] border-[#D9D4FE]' : 'bg-[#FFEFEA] text-[#FF5A36] border-[#FFD8CB]'} text-[10px] font-bold px-2 py-0.5 rounded-full border">${isTh ? t.badgeTh : t.badgeEn}</span>
+                                        ${isSelected ? `<span class="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-1.5 py-0.2 rounded-md">✓ กำลังเลือกดูผัง</span>` : ''}
                                     </div>
                                     <p class="text-[11px] text-slate-500 font-medium mt-0.5">${isTh ? t.descTh : t.descEn}</p>
                                 </div>
@@ -2750,17 +2821,26 @@
                                 <span class="text-[10px] font-bold text-slate-400 block mt-1">${isTh ? t.subTh : t.subEn}</span>
                             </div>
                         </div>
-                        <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px]">
-                            <span class="font-bold text-slate-500 flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                ${isTh ? t.tagTh : t.tagEn}
-                            </span>
-                            <span class="font-extrabold text-[#8C82FC] flex items-center gap-0.5">
-                                ${isTh ? 'ดูวิธีขึ้น' : 'How to ride'} ➔
-                            </span>
+
+                        <!-- Action Controls: Dual Intent Buttons -->
+                        <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2">
+                            <button onclick="selectTransitForRoute('${t.id}')" class="flex-1 py-1.5 px-2.5 rounded-xl text-[11px] font-extrabold flex items-center justify-center gap-1.5 transition active:scale-95 ${
+                                isSelected 
+                                ? 'bg-[#8C82FC] text-white shadow-xs' 
+                                : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                            }">
+                                <span>🗺️</span>
+                                <span>${isTh ? 'ดูผังเส้นทาง & ป้ายจอด' : 'View Stop Route'}</span>
+                            </button>
+
+                            <button onclick="openRouteSheet('${t.id}')" class="py-1.5 px-3 rounded-xl text-[11px] font-extrabold bg-[#FF5A36] hover:bg-[#FF451C] text-white flex items-center justify-center gap-1.5 shadow-xs transition active:scale-95">
+                                <span>💬</span>
+                                <span>${isTh ? 'บัตรบอกคนขับ' : 'Driver Card'}</span>
+                            </button>
                         </div>
                     </div>
-                `).join('');
+                `;
+                }).join('');
             }
 
             // Price Matrix Comparison Bars
