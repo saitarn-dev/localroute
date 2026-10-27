@@ -1773,30 +1773,113 @@
         // ==============================================================
         // 5. AUDIO ENGINE: DUAL-ENGINE SPEECH, CHIME & PHONE RINGBACK
         // ==============================================================
+        let cachedThaiVoice = null;
+        let globalAudioCtx = null;
+        window._activeSpeechUtterance = null; // Prevent Chrome Garbage Collection bug
+
+        function getAudioContext() {
+            try {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContextClass) return null;
+                if (!globalAudioCtx) globalAudioCtx = new AudioContextClass();
+                if (globalAudioCtx.state === 'suspended') {
+                    globalAudioCtx.resume();
+                }
+                return globalAudioCtx;
+            } catch(e) {
+                return null;
+            }
+        }
+
+        function initThaiVoices() {
+            if ('speechSynthesis' in window) {
+                const updateVoices = () => {
+                    const voices = window.speechSynthesis.getVoices();
+                    cachedThaiVoice = voices.find(v => 
+                        (v.lang && (v.lang.toLowerCase().startsWith('th') || v.lang.toLowerCase().includes('th-th'))) ||
+                        (v.name && v.name.toLowerCase().includes('thai'))
+                    ) || null;
+                };
+                window.speechSynthesis.onvoiceschanged = updateVoices;
+                updateVoices();
+            }
+        }
+        initThaiVoices();
+
+        function playInstantClickChime() {
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(659.25, now); // E5
+                osc.frequency.exponentialRampToValueAtTime(880, now + 0.1); // A5
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.2, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } catch(e) {}
+        }
+
         function playGuaranteedThaiSpeech(text) {
             const wave = document.getElementById('audioWaveFeedback');
             if (wave) wave.classList.remove('hidden');
 
-            try {
-                const encoded = encodeURIComponent(text);
-                const googleAudio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=th&client=tw-ob&q=${encoded}`);
-                
-                googleAudio.play().then(() => {
-                    googleAudio.onended = () => { if (wave) wave.classList.add('hidden'); };
-                }).catch(() => {
-                    if ('speechSynthesis' in window) {
-                        const utterance = new SpeechSynthesisUtterance(text);
-                        utterance.lang = 'th-TH';
-                        utterance.rate = 0.9;
-                        utterance.onend = () => { if (wave) wave.classList.add('hidden'); };
-                        window.speechSynthesis.speak(utterance);
+            // 1. Always play instant audible feedback (Web Audio API - 100% immune to CORS)
+            playInstantClickChime();
+
+            // 2. Synchronous Native SpeechSynthesis (Directly in User Gesture context)
+            if ('speechSynthesis' in window) {
+                try {
+                    window.speechSynthesis.cancel();
+                    window.speechSynthesis.resume();
+
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'th-TH';
+                    utterance.rate = 0.88;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+
+                    if (cachedThaiVoice) {
+                        utterance.voice = cachedThaiVoice;
                     } else {
-                        if (wave) wave.classList.add('hidden');
+                        const voices = window.speechSynthesis.getVoices();
+                        const found = voices.find(v => 
+                            (v.lang && (v.lang.toLowerCase().startsWith('th') || v.lang.toLowerCase().includes('th-th'))) ||
+                            (v.name && v.name.toLowerCase().includes('thai'))
+                        );
+                        if (found) {
+                            cachedThaiVoice = found;
+                            utterance.voice = found;
+                        }
                     }
-                });
-            } catch(e) {
-                if (wave) wave.classList.add('hidden');
+
+                    utterance.onend = () => {
+                        if (wave) wave.classList.add('hidden');
+                        window._activeSpeechUtterance = null;
+                    };
+                    utterance.onerror = (e) => {
+                        console.warn('Speech synthesis error:', e);
+                        if (wave) wave.classList.add('hidden');
+                        window._activeSpeechUtterance = null;
+                    };
+
+                    window._activeSpeechUtterance = utterance;
+                    window.speechSynthesis.speak(utterance);
+                    return;
+                } catch(err) {
+                    console.warn('Speech synthesis exception:', err);
+                }
             }
+
+            setTimeout(() => {
+                if (wave) wave.classList.add('hidden');
+            }, 1500);
         }
 
         // Web Audio Airport Chime (Ding-Dong! 🔔)
