@@ -2130,7 +2130,6 @@
             // Update Status Pill
             const curStop = stops[currentStationIdx];
             const nextStop = stops[Math.min(total - 1, currentStationIdx + 1)];
-            const isTh = currentLang === 'th';
 
             if (currentStationIdx === total - 1) {
                 document.getElementById('mrtActiveStationLabel').innerText = isTh ? `🎉 ถึงที่หมายแล้ว: ${curStop.name}` : `🎉 Arrived: ${curStop.name}`;
