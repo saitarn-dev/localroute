@@ -468,6 +468,183 @@
             </div>
 
             <!-- ============================================================== -->
+            <!-- TAB: SMART BUDGET PLANNER (จัดทริปเที่ยวตามงบแบบ REAL-TIME)       -->
+            <!-- ============================================================== -->
+            <div id="view-planner" class="hidden space-y-4 pt-1">
+                
+                <!-- Planner Hero Card -->
+                <div class="w-full rounded-[2.2rem] bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white p-5 sm:p-6 shadow-[0_16px_36px_-8px_rgba(99,102,241,0.4)] flex flex-col gap-2 relative overflow-hidden">
+                    <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-extrabold uppercase text-white shadow-xs" id="plannerTag">
+                            🧭 Smart Budget Planner
+                        </span>
+                        <span class="text-[10px] bg-emerald-400/30 border border-emerald-400/40 text-emerald-100 px-2.5 py-0.5 rounded-full font-bold">
+                            AI คุมงบสด ⚡
+                        </span>
+                    </div>
+                    <h2 class="text-base sm:text-lg font-black text-white thai-title" id="plannerHeroTitle">
+                        จัดทริปเที่ยวตามงบแบบ Real-time
+                    </h2>
+                    <p class="text-xs text-white/95 font-medium thai-sub" id="plannerHeroSub">
+                        คำนวณค่ารถสองแถว ค่าอาหาร และค่าเข้าจริง สลับแผนทันทีเมื่อเงินเริ่มไม่พอ
+                    </p>
+                </div>
+
+                <!-- Budget & Vibe Controls Card -->
+                <div class="glass-card rounded-[2rem] p-4 space-y-3.5 shadow-xs">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-extrabold text-slate-800" id="labelSetDailyBudget">ตั้งงบเที่ยวต่อวัน (บาท):</label>
+                        <span id="plannerBudgetValue" class="text-base font-black text-[#6E5FF6] bg-indigo-50 border border-indigo-200 px-3 py-0.5 rounded-xl shadow-2xs">฿800</span>
+                    </div>
+
+                    <!-- Quick Budget Presets -->
+                    <div class="grid grid-cols-4 gap-1.5 text-center">
+                        <button onclick="setPlannerBudget(500)" class="budget-preset-btn py-1.5 rounded-xl text-[11px] font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-700 transition" data-budget="500">฿500</button>
+                        <button onclick="setPlannerBudget(800)" class="budget-preset-btn py-1.5 rounded-xl text-[11px] font-extrabold bg-[#1E1E2D] text-white transition shadow-xs" data-budget="800">฿800</button>
+                        <button onclick="setPlannerBudget(1200)" class="budget-preset-btn py-1.5 rounded-xl text-[11px] font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-700 transition" data-budget="1200">฿1,200</button>
+                        <button onclick="setPlannerBudget(2000)" class="budget-preset-btn py-1.5 rounded-xl text-[11px] font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-700 transition" data-budget="2000">฿2,000</button>
+                    </div>
+
+                    <!-- Vibe Selector -->
+                    <div class="space-y-1.5 pt-1">
+                        <span class="text-[10px] font-extrabold text-slate-400 uppercase block" id="labelSelectStyle">เลือกสไตล์การเที่ยว:</span>
+                        <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar pb-1">
+                            <button onclick="setPlannerVibe('cafe')" class="vibe-btn px-3 py-1.5 rounded-xl text-[10px] font-extrabold bg-[#6E5FF6] text-white flex-shrink-0 transition" data-vibe="cafe">☕ คาเฟ่ &amp; ชิล</button>
+                            <button onclick="setPlannerVibe('streetfood')" class="vibe-btn px-3 py-1.5 rounded-xl text-[10px] font-bold bg-slate-100 text-slate-700 flex-shrink-0 transition" data-vibe="streetfood">🍜 สตรีทฟู้ด</button>
+                            <button onclick="setPlannerVibe('culture')" class="vibe-btn px-3 py-1.5 rounded-xl text-[10px] font-bold bg-slate-100 text-slate-700 flex-shrink-0 transition" data-vibe="culture">🏛️ วัด &amp; วัฒนธรรม</button>
+                            <button onclick="setPlannerVibe('nature')" class="vibe-btn px-3 py-1.5 rounded-xl text-[10px] font-bold bg-slate-100 text-slate-700 flex-shrink-0 transition" data-vibe="nature">🌿 ธรรมชาติ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Budget Allocation Meter -->
+                <div class="glass-card rounded-[2rem] p-4 space-y-2.5 shadow-xs border border-indigo-100/90">
+                    <div class="flex items-center justify-between text-xs font-bold">
+                        <span class="text-slate-800 flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" id="budgetStatusDot"></span>
+                            <span id="budgetGaugeLabel">สถานะงบประมาณ: ปลอดภัย</span>
+                        </span>
+                        <span id="budgetRemainingDisplay" class="font-black text-emerald-600">เหลือเงินสำรอง ฿240 (30%)</span>
+                    </div>
+
+                    <!-- Multi-Color Breakdown Progress Bar -->
+                    <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex shadow-inner">
+                        <div id="barTransit" class="bg-[#8C82FC] h-full transition-all duration-500" style="width: 20%" title="ค่าเดินทาง"></div>
+                        <div id="barFood" class="bg-amber-400 h-full transition-all duration-500" style="width: 45%" title="ค่าอาหาร"></div>
+                        <div id="barActivity" class="bg-pink-400 h-full transition-all duration-500" style="width: 5%" title="ค่าเข้า/กิจกรรม"></div>
+                        <div id="barReserve" class="bg-emerald-400 h-full transition-all duration-500" style="width: 30%" title="เงินสำรอง"></div>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-1 text-[9px] text-slate-600 font-bold text-center pt-1">
+                        <div class="flex items-center justify-center gap-1"><span class="w-2 h-2 rounded-full bg-[#8C82FC]"></span> รถ: <span id="valTransitCost">฿90</span></div>
+                        <div class="flex items-center justify-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> กิน: <span id="valFoodCost">฿380</span></div>
+                        <div class="flex items-center justify-center gap-1"><span class="w-2 h-2 rounded-full bg-pink-400"></span> เที่ยว: <span id="valActivityCost">฿90</span></div>
+                        <div class="flex items-center justify-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> สำรอง: <span id="valReserveCost">฿240</span></div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Alert Banner: Budget Rebalancing Simulator -->
+                <div id="rebalanceAlertCard" class="p-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 rounded-[1.8rem] text-white shadow-md flex items-center justify-between text-xs border border-amber-300/40">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="text-xl animate-bounce flex-shrink-0">⚡</span>
+                        <div class="min-w-0">
+                            <h5 class="text-[11px] font-extrabold leading-tight truncate" id="rebalanceAlertTitle">ตรวจพบเงินตึงตัวช่วงค่ำ (Smart Pivot)</h5>
+                            <p class="text-[10px] text-white/95 font-medium truncate mt-0.5" id="rebalanceAlertDesc">สลับมื้อเย็นเป็นร้านสตรีทฟู้ดเด็ด + รถสองแถว เซฟ ฿220</p>
+                        </div>
+                    </div>
+                    <button onclick="togglePlanRebalance()" id="btnRebalanceAction" class="bg-white text-orange-900 text-[10px] font-black px-2.5 py-1.5 rounded-xl shadow-xs active:scale-95 transition flex-shrink-0 ml-1">
+                        สลับแผนประหยัด
+                    </button>
+                </div>
+
+                <!-- Timeline Section Header -->
+                <div class="flex items-center justify-between px-1">
+                    <h3 class="text-xs font-extrabold text-slate-800" id="labelPlannerTimelineTitle">แผนการเดินทางประจำวัน (Daily Itinerary)</h3>
+                    <span class="text-[10px] font-bold text-[#6E5FF6] bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100" id="badgeTotalStops">4 จุดแวะ</span>
+                </div>
+
+                <!-- Timeline Itinerary Cards Container -->
+                <div class="space-y-3" id="plannerTimelineContainer">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- TAB: HIDDEN GEMS & DIGITAL STAMP PASSPORT (ร้านลับ & พาสปอร์ต)    -->
+            <!-- ============================================================== -->
+            <div id="view-gems" class="hidden space-y-4 pt-1">
+                
+                <!-- Gems Hero Card -->
+                <div class="w-full rounded-[2.2rem] bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 text-white p-5 sm:p-6 shadow-[0_16px_36px_-8px_rgba(16,185,129,0.4)] flex flex-col gap-2 relative overflow-hidden">
+                    <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+                    <div class="flex items-center justify-between">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-extrabold uppercase text-white shadow-xs" id="gemsTag">
+                            💎 Hidden Gems &amp; Passport
+                        </span>
+                        <span class="text-[10px] bg-white/20 border border-white/30 text-white px-2.5 py-0.5 rounded-full font-bold">
+                            ชุมชนแท้ 100%
+                        </span>
+                    </div>
+                    <h2 class="text-base sm:text-lg font-black text-white thai-title" id="gemsHeroTitle">
+                        ตามหาร้านลับ &amp; สแตมป์ชุมชน
+                    </h2>
+                    <p class="text-xs text-white/95 font-medium thai-sub" id="gemsHeroSub">
+                        ตัดร้านกระแสหลักทิ้ง แนะนำร้านดั้งเดิมในตรอก พร้อมพาสปอร์ตสะสมแต้ม
+                    </p>
+                </div>
+
+                <!-- Digital Stamp Passport Book Card (Vintage Craft Parchment) -->
+                <div class="bg-[#FFFDF7] rounded-[2.2rem] p-4 sm:p-5 border-2 border-[#E7DFCE] shadow-md space-y-3 relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-[#E7DFCE] pb-2.5">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">📔</span>
+                            <div>
+                                <h4 class="text-xs font-black text-amber-950 uppercase tracking-wider" id="passportHeading">LOCAL DIGITAL PASSPORT</h4>
+                                <p class="text-[10px] text-amber-800/80 font-medium" id="passportSub">สมุดตราประทับเช็กอินชุมชน</p>
+                            </div>
+                        </div>
+                        <span id="stampsCountBadge" class="text-xs font-black text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full">
+                            สะสมแล้ว 2/4 ตรา
+                        </span>
+                    </div>
+
+                    <!-- 4 Stamp Slots Grid -->
+                    <div class="grid grid-cols-2 gap-2.5" id="passportStampsGrid">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <!-- Community Impact Bar -->
+                    <div class="bg-amber-100/70 rounded-2xl p-2.5 flex items-center justify-between border border-amber-200/80">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg">🌱</span>
+                            <div>
+                                <span class="text-[10px] text-amber-900 font-bold block" id="labelCommunityImpact">คุณช่วยกระจายรายได้สู่ชุมชนแล้ว:</span>
+                                <span class="text-xs font-black text-emerald-800" id="communityImpactAmount">฿390 บาท</span>
+                            </div>
+                        </div>
+                        <span class="text-[9px] bg-white font-extrabold text-amber-900 px-2 py-1 rounded-lg border border-amber-300 shadow-2xs">
+                            🎖️ นักสำรวจตรอก
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Gem Radar Filter Header -->
+                <div class="flex items-center justify-between px-1">
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-xs font-extrabold text-slate-800" id="labelGemRadar">เรดาร์ร้านลับ &amp; วิสาหกิจชุมชน</span>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-1.5 py-0.2 rounded-full">Anti-Tourist Trap</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-slate-400" id="labelLocalScoreBadge">คะแนนโลคอล 90%+</span>
+                </div>
+
+                <!-- Hidden Gems List Container -->
+                <div class="space-y-3" id="hiddenGemsListContainer">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
             <!-- TAB 2: PRICE MATRIX (FLEXIBLE HEIGHT & 100% TRANSLATED)        -->
             <!-- ============================================================== -->
             <div id="view-matrix" class="hidden space-y-4 pt-1">
@@ -708,36 +885,43 @@
             </div>
         </main>
 
-        <!-- FLOATING BOTTOM DOCK NAVIGATION (IPHONE GLASS DOCK) -->
-        <nav class="absolute bottom-4 left-4 right-4 z-40">
-            <div class="glass-nav-bar rounded-[2.2rem] p-2 flex items-center justify-around">
-                <button onclick="switchTab('transit')" id="nav-transit" class="flex flex-col items-center justify-center w-16 py-1 group">
-                    <div class="nav-icon-box w-9 h-9 rounded-full bg-gradient-to-tr from-[#8C82FC] to-[#6E5FF6] flex items-center justify-center text-white shadow-sm transition">
-                        <span class="text-base">🧭</span>
+        <!-- FLOATING BOTTOM DOCK NAVIGATION (IPHONE GLASS DOCK 5-TAB) -->
+        <nav class="absolute bottom-3 left-3 right-3 z-40">
+            <div class="glass-nav-bar rounded-[2.2rem] p-1.5 flex items-center justify-between">
+                <button onclick="switchTab('transit')" id="nav-transit" class="flex flex-col items-center justify-center flex-1 py-1 group">
+                    <div class="nav-icon-box w-8 h-8 rounded-full bg-gradient-to-tr from-[#8C82FC] to-[#6E5FF6] flex items-center justify-center text-white shadow-sm transition">
+                        <span class="text-sm">🗺️</span>
                     </div>
-                    <span class="nav-label text-[10px] font-extrabold text-[#8C82FC] mt-0.5" id="navLabelRoutes">เส้นทาง</span>
+                    <span class="nav-label text-[9px] font-extrabold text-[#8C82FC] mt-0.5" id="navLabelRoutes">เส้นทาง</span>
                 </button>
 
-                <button onclick="switchTab('matrix')" id="nav-matrix" class="flex flex-col items-center justify-center w-16 py-1 group">
-                    <div class="nav-icon-box w-9 h-9 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition">
-                        <span class="text-base">⚖️</span>
+                <button onclick="switchTab('planner')" id="nav-planner" class="flex flex-col items-center justify-center flex-1 py-1 group">
+                    <div class="nav-icon-box w-8 h-8 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition">
+                        <span class="text-sm">🧭</span>
                     </div>
-                    <span class="nav-label text-[10px] font-semibold text-slate-400 mt-0.5" id="navLabelMatrix">ราคากลาง</span>
+                    <span class="nav-label text-[9px] font-semibold text-slate-400 mt-0.5" id="navLabelPlanner">จัดทริป AI</span>
                 </button>
 
-                <button onclick="switchTab('offline')" id="nav-offline" class="flex flex-col items-center justify-center w-16 py-1 group relative">
-                    <span class="absolute top-1 right-3.5 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-[#1A1A26]"></span>
-                    <div class="nav-icon-box w-9 h-9 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition">
-                        <span class="text-base">☁️</span>
+                <button onclick="switchTab('gems')" id="nav-gems" class="flex flex-col items-center justify-center flex-1 py-1 group relative">
+                    <span class="absolute top-0.5 right-2 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-[#1A1A26] animate-pulse"></span>
+                    <div class="nav-icon-box w-8 h-8 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition">
+                        <span class="text-sm">💎</span>
                     </div>
-                    <span class="nav-label text-[10px] font-semibold text-slate-400 mt-0.5" id="navLabelOffline">ออฟไลน์</span>
+                    <span class="nav-label text-[9px] font-semibold text-slate-400 mt-0.5" id="navLabelGems">ร้านลับ</span>
                 </button>
 
-                <button onclick="switchTab('tips')" id="nav-tips" class="flex flex-col items-center justify-center w-16 py-1 group">
-                    <div class="nav-icon-box w-9 h-9 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition">
-                        <span class="text-base">📱</span>
+                <button onclick="switchTab('matrix')" id="nav-matrix" class="flex flex-col items-center justify-center flex-1 py-1 group">
+                    <div class="nav-icon-box w-8 h-8 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition">
+                        <span class="text-sm">⚖️</span>
                     </div>
-                    <span class="nav-label text-[10px] font-semibold text-slate-400 mt-0.5" id="navLabelTips">เสียงพูด</span>
+                    <span class="nav-label text-[9px] font-semibold text-slate-400 mt-0.5" id="navLabelMatrix">ราคากลาง</span>
+                </button>
+
+                <button onclick="switchTab('tips')" id="nav-tips" class="flex flex-col items-center justify-center flex-1 py-1 group">
+                    <div class="nav-icon-box w-8 h-8 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition">
+                        <span class="text-sm">💬</span>
+                    </div>
+                    <span class="nav-label text-[9px] font-semibold text-slate-400 mt-0.5" id="navLabelTips">เสียงพูด</span>
                 </button>
             </div>
         </nav>
@@ -2900,6 +3084,8 @@
                     </div>
                 `).join('');
             }
+            if (typeof renderPlannerItinerary === 'function') renderPlannerItinerary();
+            if (typeof renderHiddenGemsView === 'function') renderHiddenGemsView();
         }
 
         // ==============================================================
@@ -3033,6 +3219,42 @@
             document.getElementById('labelLandmark').innerText = dict.labelLandmark;
             document.getElementById('btnCloseDriver').innerText = dict.btnCloseDriver;
 
+            // Planner & Gems Translations
+            const elPlannerHeroTitle = document.getElementById('plannerHeroTitle');
+            if (elPlannerHeroTitle) elPlannerHeroTitle.innerText = isTh ? "จัดทริปเที่ยวตามงบแบบ Real-time" : "Real-time AI Budget Trip Planner";
+            const elPlannerHeroSub = document.getElementById('plannerHeroSub');
+            if (elPlannerHeroSub) elPlannerHeroSub.innerText = isTh ? "คำนวณค่ารถสองแถว ค่าอาหาร และค่าเข้าจริง สลับแผนทันทีเมื่อเงินเริ่มไม่พอ" : "Live transit, food & entry calculations with instant smart rebalancing";
+            const elLabelSetDailyBudget = document.getElementById('labelSetDailyBudget');
+            if (elLabelSetDailyBudget) elLabelSetDailyBudget.innerText = isTh ? "ตั้งงบเที่ยวต่อวัน (บาท):" : "Daily Travel Budget (THB):";
+            const elLabelSelectStyle = document.getElementById('labelSelectStyle');
+            if (elLabelSelectStyle) elLabelSelectStyle.innerText = isTh ? "เลือกสไตล์การเที่ยว:" : "Select Travel Vibe:";
+            const elLabelPlannerTimelineTitle = document.getElementById('labelPlannerTimelineTitle');
+            if (elLabelPlannerTimelineTitle) elLabelPlannerTimelineTitle.innerText = isTh ? "แผนการเดินทางประจำวัน (Daily Itinerary)" : "Daily Smart Itinerary";
+
+            const elGemsHeroTitle = document.getElementById('gemsHeroTitle');
+            if (elGemsHeroTitle) elGemsHeroTitle.innerText = isTh ? "ตามหาร้านลับ & สแตมป์ชุมชน" : "Hidden Gems & Stamp Passport";
+            const elGemsHeroSub = document.getElementById('gemsHeroSub');
+            if (elGemsHeroSub) elGemsHeroSub.innerText = isTh ? "ตัดร้านกระแสหลักทิ้ง แนะนำร้านดั้งเดิมในตรอก พร้อมพาสปอร์ตสะสมแต้ม" : "Anti-tourist-trap radar for local alley spots with stamp passport";
+            const elPassportHeading = document.getElementById('passportHeading');
+            if (elPassportHeading) elPassportHeading.innerText = isTh ? "LOCAL DIGITAL PASSPORT" : "LOCAL DIGITAL PASSPORT";
+            const elPassportSub = document.getElementById('passportSub');
+            if (elPassportSub) elPassportSub.innerText = isTh ? "สมุดตราประทับเช็กอินชุมชน" : "Community Check-In Stamp Book";
+            const elLabelCommunityImpact = document.getElementById('labelCommunityImpact');
+            if (elLabelCommunityImpact) elLabelCommunityImpact.innerText = isTh ? "คุณช่วยกระจายรายได้สู่ชุมชนแล้ว:" : "Your Community Impact Contribution:";
+            const elLabelGemRadar = document.getElementById('labelGemRadar');
+            if (elLabelGemRadar) elLabelGemRadar.innerText = isTh ? "เรดาร์ร้านลับ & วิสาหกิจชุมชน" : "Hidden Gem Radar & Local Enterprises";
+
+            const elNavRoutes = document.getElementById('navLabelRoutes');
+            if (elNavRoutes) elNavRoutes.innerText = isTh ? "เส้นทาง" : "Routes";
+            const elNavPlanner = document.getElementById('navLabelPlanner');
+            if (elNavPlanner) elNavPlanner.innerText = isTh ? "จัดทริป AI" : "AI Planner";
+            const elNavGems = document.getElementById('navLabelGems');
+            if (elNavGems) elNavGems.innerText = isTh ? "ร้านลับ" : "Gems";
+            const elNavMatrix = document.getElementById('navLabelMatrix');
+            if (elNavMatrix) elNavMatrix.innerText = isTh ? "ราคากลาง" : "Fare Matrix";
+            const elNavTips = document.getElementById('navLabelTips');
+            if (elNavTips) elNavTips.innerText = isTh ? "เสียงพูด" : "Voice";
+
             renderAdaptiveViews();
             renderMrtStationLine();
             selectLocation(currentDestKey);
@@ -3126,21 +3348,42 @@
 
         function switchTab(tab) {
             activeTab = tab;
-            ['transit', 'matrix', 'offline', 'tips'].forEach(t => {
-                document.getElementById(`view-${t}`).classList.add('hidden');
-                const btn = document.getElementById(`nav-${t}`);
-                btn.querySelector('.nav-icon-box').className = "nav-icon-box w-9 h-9 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition";
-                btn.querySelector('.nav-label').className = "nav-label text-[10px] font-semibold text-slate-400 mt-0.5";
+            const allViews = ['transit', 'planner', 'gems', 'matrix', 'offline', 'tips'];
+            const allNavTabs = ['transit', 'planner', 'gems', 'matrix', 'tips'];
+
+            allViews.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) el.classList.add('hidden');
             });
 
-            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            allNavTabs.forEach(t => {
+                const btn = document.getElementById(`nav-${t}`);
+                if (btn) {
+                    const iconBox = btn.querySelector('.nav-icon-box');
+                    if (iconBox) iconBox.className = "nav-icon-box w-8 h-8 rounded-full flex items-center justify-center text-slate-400 group-hover:text-white transition";
+                    const label = btn.querySelector('.nav-label');
+                    if (label) label.className = "nav-label text-[9px] font-semibold text-slate-400 mt-0.5";
+                }
+            });
+
+            const targetView = document.getElementById(`view-${tab}`);
+            if (targetView) targetView.classList.remove('hidden');
+
             const activeBtn = document.getElementById(`nav-${tab}`);
-            activeBtn.querySelector('.nav-icon-box').className = "nav-icon-box w-9 h-9 rounded-full bg-gradient-to-tr from-[#8C82FC] to-[#6E5FF6] flex items-center justify-center text-white shadow-sm transition";
-            activeBtn.querySelector('.nav-label').className = "nav-label text-[10px] font-extrabold text-[#8C82FC] mt-0.5";
+            if (activeBtn) {
+                const iconBox = activeBtn.querySelector('.nav-icon-box');
+                if (iconBox) iconBox.className = "nav-icon-box w-8 h-8 rounded-full bg-gradient-to-tr from-[#8C82FC] to-[#6E5FF6] flex items-center justify-center text-white shadow-sm transition";
+                const label = activeBtn.querySelector('.nav-label');
+                if (label) label.className = "nav-label text-[9px] font-extrabold text-[#8C82FC] mt-0.5";
+            }
 
             document.getElementById('mainScroll').scrollTop = 0;
             if (tab === 'transit' && leafletMap) {
                 setTimeout(() => leafletMap.invalidateSize(), 200);
+            } else if (tab === 'planner') {
+                renderPlannerItinerary();
+            } else if (tab === 'gems') {
+                renderHiddenGemsView();
             }
         }
 
@@ -3151,8 +3394,9 @@
         }
 
         function openPinInfo() {
+            const isTh = currentLang === 'th';
             const p = provincesData[currentProvinceKey];
-            showToast("จุดเริ่มต้น", isTh ? p.originTh : p.originEn, "✈️", "bg-[#8C82FC]");
+            showToast(isTh ? "จุดเริ่มต้น" : "Origin", isTh ? p.originTh : p.originEn, "✈️", "bg-[#8C82FC]");
         }
 
         function toggleOfflineManualOverride() {
@@ -3209,10 +3453,932 @@
             toast.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
         }
 
+        
+        // ==============================================================
+        // 17. SMART BUDGET PLANNER ENGINE (จัดทริปเที่ยวตามงบแบบ REAL-TIME)
+        // ==============================================================
+        let plannerBudget = 800;
+        let plannerVibe = 'cafe';
+        let plannerIsRebalanced = false;
+
+        const plannerDatasets = {
+            cnx: {
+                cafe: [
+                    { time: "09:30", titleTh: "Graph Contemporary & กาแฟเมล็ดดอย", titleEn: "Graph Contemporary Coffee", catTh: "คาเฟ่ & อาหารเช้า", catEn: "Cafe & Breakfast", transitTh: "รถสองแถวแดงสายกาดหลวง", transitEn: "Red Songthaew via Kad Luang", transitCost: 30, foodCost: 110, actCost: 0, icon: "☕", img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80", tipTh: "จิบคั่วกลางเมล็ดอมก๋อย บรรยากาศตึกเก่าวินเทจริมน้ำปิง", tipEn: "Signature Omkoi roast in a vintage Ping riverside building" },
+                    { time: "12:15", titleTh: "ข้าวซอยแม่สาย (เจ้าเก่าในตำนาน)", titleEn: "Khao Soi Mae Sai", catTh: "มื้อเที่ยงโลคอล", catEn: "Local Lunch", transitTh: "เดินเท้า 400 ม. จากถนนห้วยแก้ว", transitEn: "Walk 400m from Huay Kaew Rd", transitCost: 0, foodCost: 65, actCost: 0, icon: "🍜", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "ข้าวซอยไก่ชามโต เส้นสด กรอบนุ่ม น้ำแกงกะทิเข้มข้น", tipEn: "Rich curry noodle with tender braised chicken drumstick" },
+                    { time: "14:45", titleTh: "Kalm Village & หอศิลป์ชุมชนวัดอุโมงค์", titleEn: "Kalm Village & Wat Umong Art Space", catTh: "วัฒนธรรม & เวิร์กช็อป", catEn: "Culture & Workshop", transitTh: "สองแถวแดงสายสุเทพ", transitEn: "Red Songthaew Suthep Line", transitCost: 30, foodCost: 50, actCost: 60, icon: "🎨", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=400&q=80", tipTh: "ชมสถาปัตยกรรมไม้ไผ่พื้นถิ่นและจิบชาสมุนไพรพื้นบ้าน", tipEn: "Admire vernacular woodcraft and sip organic herbal tea" },
+                    { time: "18:00", titleTh: "เฮือนเพ็ญ อาหารเหนือต้นตำรับ", titleEn: "Huen Phen Traditional Dining", catTh: "มื้อค่ำขันโตก", catEn: "Khantoke Dinner", transitTh: "สองแถวแดงคูเมือง", transitEn: "Red Songthaew Old City moat", transitCost: 30, foodCost: 260, actCost: 0, icon: "🍲", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", tipTh: "แกงฮังเลลำแต้ๆ น้ำพริกหนุ่ม แคบหมูในเรือนไม้สัก", tipEn: "Classic Hang Le curry, northern dips, and crispy pork",
+                      pivotTitleTh: "ตลาดโต้รุ่งช้างเผือก (สตรีทฟู้ดมิชลิน)", pivotTitleEn: "Chang Phueak Night Market", pivotFoodCost: 80, pivotTipTh: "สลับเป็นสตรีทฟู้ด ข้าวขาหมูเจ๊โอว & บัวลอย ประหยัดทันที ฿180!", pivotTipEn: "Switched to Chang Phueak food stalls, saving ฿180!" }
+                ],
+                streetfood: [
+                    { time: "08:30", titleTh: "โจ๊กสมเพชร & ขนมจีบแต้จิ๋วโบราณ", titleEn: "Jok Sompet & Teochew Dim Sum", catTh: "อาหารเช้าในคูเมือง", catEn: "Old City Breakfast", transitTh: "สองแถวแดงสายคูเมือง", transitEn: "Red Songthaew Moat Line", transitCost: 30, foodCost: 75, actCost: 0, icon: "🥣", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "โจ๊กหมูเห็ดหอมร้อนๆ เปิด 24 ชม. คู่ชาจีนโบราณ", tipEn: "Steaming pork porridge with authentic Teochew dumplings" },
+                    { time: "12:00", titleTh: "ก๋วยเตี๋ยว 3 บาทหลังปริ้นส์", titleEn: "3-Baht Noodle Behind Prince School", catTh: "มื้อเที่ยงขวัญใจนักเรียน", catEn: "Historic Cheap Eats", transitTh: "สองแถวแดงสายแก้วนวรัฐ", transitEn: "Red Songthaew Kaew Nawarat Line", transitCost: 30, foodCost: 45, actCost: 0, icon: "🍜", img: "https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=400&q=80", tipTh: "ก๋วยเตี๋ยวชามละ 3 บาท กิน 10 ชามแค่ 30 บาท!", tipEn: "Legendary 3-baht noodles; order 10 bowls for just ฿30" },
+                    { time: "15:00", titleTh: "ลูกชิ้นทอดป้าป้อม หน้ายุพราช", titleEn: "Pa Pom Fried Meatballs", catTh: "ของว่างยามบ่าย", catEn: "Afternoon Snack", transitTh: "เดินเท้า 300 ม.", transitEn: "Walk 300m", transitCost: 0, foodCost: 40, actCost: 0, icon: "🍢", img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=400&q=80", tipTh: "น้ำจิ้มมะขามสูตรโบราณ เคี่ยวเตาถ่านกว่า 30 ปี", tipEn: "Charcoal-simmered tamarind dip passed down 30 years" },
+                    { time: "18:30", titleTh: "ตลาดประตูเชียงใหม่ ไส้อั่ว & ลาบปลา", titleEn: "Chiang Mai Gate Night Feast", catTh: "สตรีทฟู้ดรอบดึก", catEn: "Night Street Feast", transitTh: "สองแถวแดง", transitEn: "Red Songthaew", transitCost: 30, foodCost: 190, actCost: 0, icon: "🍡", img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", tipTh: "รวมดาวสตรีทฟู้ดเมืองเหนือ ย่างสดๆ กลิ่นสมุนไพรหอมกรุ่น", tipEn: "Gathering of northern grill masters, fresh spicy sausages",
+                      pivotTitleTh: "ข้าวต้มซอยวัดเกต (มัธยัสถ์)", pivotTitleEn: "Wat Ket Rice Soup", pivotFoodCost: 60, pivotTipTh: "สลับเป็นข้าวต้มกุ๊ยโบราณ ประหยัดเพิ่ม ฿130!", pivotTipEn: "Switched to classic rice soup, saving ฿130!" }
+                ],
+                culture: [
+                    { time: "08:30", titleTh: "วัดพระสิงห์วรมหาวิหาร & ลายคำโบราณ", titleEn: "Wat Phra Singh & Golden Viharn", catTh: "มรดกล้านนา", catEn: "Lanna Heritage", transitTh: "สองแถวแดง", transitEn: "Red Songthaew", transitCost: 30, foodCost: 50, actCost: 50, icon: "🏛️", img: "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=400&q=80", tipTh: "กราบพระพุทธสิหิงค์และจิตรกรรมฝาผนังสุวรรณหงส์", tipEn: "Pay respects to Phra Buddha Sihing and gold leaf murals" },
+                    { time: "11:45", titleTh: "ข้าวซอยอิสลาม ชุมชนฮ่อช้างคลาน", titleEn: "Khao Soi Islam Chang Khlan", catTh: "มื้อเที่ยงประวัติศาสตร์", catEn: "Historic Halal Lunch", transitTh: "สองแถวแดง", transitEn: "Red Songthaew", transitCost: 30, foodCost: 75, actCost: 0, icon: "🍜", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "ข้าวซอยเนื้อนุ่มสูตรจีนยูนนานแท้ เครื่องเทศสูตรลับ", tipEn: "Tender Yunnan beef curry noodle with ancient spice blend" },
+                    { time: "14:15", titleTh: "หอประวัติศาสตร์เมืองเชียงใหม่", titleEn: "Chiang Mai Historical Centre", catTh: "เรียนรู้รากเหง้า", catEn: "City History", transitTh: "เดินเท้า 200 ม.", transitEn: "Walk 200m", transitCost: 0, foodCost: 30, actCost: 40, icon: "📜", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=400&q=80", tipTh: "ชมนิทรรศการผังเมืองพญามังรายและวิถีชีวิตคนเมือง", tipEn: "King Mangrai city layout exhibits and folk artifacts" },
+                    { time: "18:00", titleTh: "ขันโตกมรดกล้านนา ศิลปะการฟ้อนเล็บ", titleEn: "Khantoke Lanna Cultural Dinner", catTh: "การแสดงวัฒนธรรม", catEn: "Cultural Show Dinner", transitTh: "สองแถวแดง", transitEn: "Red Songthaew", transitCost: 30, foodCost: 280, actCost: 50, icon: "🎭", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", tipTh: "ดินเนอร์ขันโตกพร้อมดนตรีสะล้อซอซึง", tipEn: "Traditional Khantoke dinner with Northern folk dance",
+                      pivotTitleTh: "กาดหน้ามอ ชุมชนนักศึกษา", pivotTitleEn: "Kad Na Mor Evening Market", pivotFoodCost: 70, pivotTipTh: "สลับเป็นของกินพื้นเมืองกาดหน้ามอ ประหยัด ฿210!", pivotTipEn: "Switched to local student market bites, saving ฿210!" }
+                ],
+                nature: [
+                    { time: "08:00", titleTh: "อ่างแก้ว มหาวิทยาลัยเชียงใหม่", titleEn: "Ang Kaew Reservoir CMU", catTh: "ธรรมชาติ & วิวดอยสุเทพ", catEn: "Nature & Lake View", transitTh: "สองแถวแดงสาย มช.", transitEn: "Red Songthaew CMU Line", transitCost: 30, foodCost: 45, actCost: 0, icon: "🌲", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", tipTh: "รับลมเย็นยามเช้า เดินรอบอ่างแก้วมองเห็นดอยสุเทพชัดเจน", tipEn: "Crisp morning breeze with pristine views of Doi Suthep" },
+                    { time: "11:30", titleTh: "ส้มตำปูม้าอุดร ซอยวัดอุโมงค์", titleEn: "Somtum & Grilled Chicken Suthep", catTh: "อีสานรสแซ่บใต้ร่มไม้", catEn: "Shaded Isan Lunch", transitTh: "สองแถวแดง", transitEn: "Red Songthaew", transitCost: 30, foodCost: 90, actCost: 0, icon: "🥗", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "ไก่ย่างเตาถ่านหนังกรอบ ส้มตำปลาร้านัวแซ่บ", tipEn: "Charcoal crispy skin grilled chicken with spicy papaya salad" },
+                    { time: "14:00", titleTh: "น้ำตกห้วยแก้ว & วังบัวบาน", titleEn: "Huay Kaew Waterfall", catTh: "ไอเย็นธารน้ำธรรมชาติ", catEn: "Fresh Forest Cascades", transitTh: "สองแถวแดง", transitEn: "Red Songthaew", transitCost: 30, foodCost: 30, actCost: 0, icon: "🌊", img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80", tipTh: "นั่งพักผ่อนริมโขดหิน ฟังเสียงน้ำตกไหลคลายร้อน", tipEn: "Sit on granite rocks listening to calming mountain streams" },
+                    { time: "17:30", titleTh: "จุดชมวิวดอยสุเทพ & ลานชมดาวเมือง", titleEn: "Doi Suthep Sunset Viewpoint", catTh: "ชมพระอาทิตย์ตกดิน", catEn: "Golden Sunset Vista", transitTh: "สองแถวแดงขึ้นดอย", transitEn: "Mountain Red Songthaew", transitCost: 60, foodCost: 150, actCost: 30, icon: "🌅", img: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=400&q=80", tipTh: "ชมแสงไฟระยิบระยับของเมืองเชียงใหม่จากมุมสูง", tipEn: "Glittering city light panorama as dusk settles over Chiang Mai",
+                      pivotTitleTh: "จุดชมวิวกาดรินคำริมคูเมือง", pivotTitleEn: "Rin Kham Night View & Snacks", pivotFoodCost: 55, pivotTipTh: "สลับชมวิวริมเมือง ไม่ต้องขึ้นดอย เซฟค่ารถและอาหาร ฿125!", pivotTipEn: "Switched to city viewpoint, saving ฿125 on fare!" }
+                ]
+            },
+            bkk: {
+                cafe: [
+                    { time: "09:00", titleTh: "Mother Roaster กาแฟดริปตลาดน้อย", titleEn: "Mother Roaster Talat Noi", catTh: "คาเฟ่อะไหล่เก่าริมน้ำ", catEn: "Riverside Historic Cafe", transitTh: "MRT หัวลำโพง ทางออก 1 เดิน 500 ม.", transitEn: "MRT Hua Lamphong Exit 1 (Walk 500m)", transitCost: 26, foodCost: 120, actCost: 0, icon: "☕", img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80", tipTh: "คุณป้าวัย 70 ดริปกาแฟสดท่ามกลางเซียงกงเก่าสุดคลาสสิก", tipEn: "70-year-old barista dripping artisan beans amid historic auto spare parts" },
+                    { time: "12:00", titleTh: "ก๋วยจั๊บนายเอ็ก เยาวราช", titleEn: "Nai Ek Roll Noodles Yaowarat", catTh: "มิชลินไกด์เยาวราช", catEn: "Michelin Guide Lunch", transitTh: "เดินลัดตรอกซอยวานิช 1", transitEn: "Walk through Soi Wanit 1", transitCost: 0, foodCost: 90, actCost: 0, icon: "🍲", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "น้ำซุปพริกไทยดำร้อนถึงใจ หมูกรอบกรอบสนั่น", tipEn: "Fiery black pepper broth with super crispy pork belly" },
+                    { time: "14:30", titleTh: "เรือด่วนเจ้าพระยา ธงส้ม ชมวัดอรุณ", titleEn: "Chao Phraya Express Orange Flag", catTh: "ล่องแม่น้ำเจ้าพระยา", catEn: "River Ferry Sightseeing", transitTh: "เรือด่วนเจ้าพระยา ท่าราชวงศ์", transitEn: "Orange Flag Boat Ratchawong Pier", transitCost: 16, foodCost: 40, actCost: 50, icon: "🚢", img: "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=400&q=80", tipTh: "ชมทัศนียภาพสองฝั่งแม่น้ำเจ้าพระยาในราคาแค่ 16 บาท", tipEn: "Enjoy stunning Chao Phraya river views for just ฿16" },
+                    { time: "18:00", titleTh: "ผัดไทยทิพย์สมัย ประตูผี & น้ำส้มสด", titleEn: "Thipsamai Pad Thai Pratu Phi", catTh: "ผัดไทยไฟเตาถ่าน", catEn: "Charcoal Pad Thai", transitTh: "รถเมล์สาย 508 / สองแถว", transitEn: "Bus 508 / Songthaew", transitCost: 20, foodCost: 240, actCost: 0, icon: "🍳", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", tipTh: "ผัดไทยห่อไข่กุ้งสด เส้นจันท์เหนียวนุ่มหอมกระทะ", tipEn: "Signature egg-wrapped pad thai with jumbo prawns",
+                      pivotTitleTh: "ผัดไทยลุงภา ประตูผี (ประหยัด)", pivotTitleEn: "Lung Pha Pad Thai", pivotFoodCost: 70, pivotTipTh: "สลับเป็นร้านลุงภาสูตรดั้งเดิมข้างเคียง เซฟ ฿170!", pivotTipEn: "Switched to neighbor Lung Pha, saving ฿170!" }
+                ],
+                streetfood: [
+                    { time: "08:30", titleTh: "โจ๊กสามย่าน สาขาดั้งเดิม", titleEn: "Samyan Congee Original", catTh: "อาหารเช้าในตำนาน", catEn: "Legendary Breakfast", transitTh: "MRT สามย่าน", transitEn: "MRT Samyan", transitCost: 24, foodCost: 65, actCost: 0, icon: "🥣", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "หมูก้อนบะช่อหมักเครื่องเทศนุ่มเด้ง ปาท่องโก๋กรอบ", tipEn: "Tender jumbo pork patties with crispy Chinese crullers" },
+                    { time: "12:00", titleTh: "เจ๊โอว ข้าวต้มเป็ด & หมูกรอบทอด", titleEn: "Jeh O Duck Congee & Crispy Pork", catTh: "มื้อเที่ยงบรรทัดทอง", catEn: "Ban That Thong Lunch", transitTh: "เดินเท้า 500 ม.", transitEn: "Walk 500m", transitCost: 0, foodCost: 120, actCost: 0, icon: "🦆", img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", tipTh: "หมูกรอบอันเลื่องชื่อ ยำกุนเชียง และเป็ดพะโล้", tipEn: "World-famous crispy pork and five-spice braised duck" },
+                    { time: "15:00", titleTh: "มนต์นมสด เสาชิงช้า", titleEn: "Mont Nom Sod Giant Swing", catTh: "ขนมปังปิ้งเตาถ่าน", catEn: "Charcoal Toast & Fresh Milk", transitTh: "รถเมล์แอร์สาย 12", transitEn: "AC Bus Line 12", transitCost: 15, foodCost: 75, actCost: 0, icon: "🍞", img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=400&q=80", tipTh: "ขนมปังปิ้งราดสังขยาใบเตยสด คู่กับนมร้อนสูตร 60 ปี", tipEn: "Pandan custard toast paired with warm fresh milk" },
+                    { time: "18:30", titleTh: "ซีฟู้ดต้มยำเยาวราช เจ๊ดา", titleEn: "Jeh Da Seafood Yaowarat", catTh: "ซีฟู้ดริมฟุตบาท", catEn: "Street Seafood Feast", transitTh: "MRT วัดมังกร", transitEn: "MRT Wat Mangkon", transitCost: 26, foodCost: 280, actCost: 0, icon: "🦐", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", tipTh: "กุ้งเผาตัวโต หอยแครงลวกน้ำจิ้มซีฟู้ดแซ่บจี๊ด", tipEn: "Charcoal grilled river prawns with spicy lime dip",
+                      pivotTitleTh: "ก๋วยเตี๋ยวหลอดโบราณเยาวราช", pivotTitleEn: "Yaowarat Steamed Rice Rolls", pivotFoodCost: 65, pivotTipTh: "สลับเป็นก๋วยเตี๋ยวหลอดโบราณ ประหยัดทันที ฿215!", pivotTipEn: "Switched to classic steamed rolls, saving ฿215!" }
+                ],
+                culture: [
+                    { time: "08:30", titleTh: "ชุมชนกุฎีจีน & โบสถ์ซางตาครู้ส", titleEn: "Kudi Chin Heritage Community", catTh: "มรดกสยาม-โปรตุเกส", catEn: "Siam-Portuguese Legacy", transitTh: "เรือข้ามฟากปากคลองตลาด (฿5)", transitEn: "Pak Khlong Ferry (฿5)", transitCost: 10, foodCost: 45, actCost: 0, icon: "⛪", img: "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=400&q=80", tipTh: "เดินลัดเลาะริมแม่น้ำ ชิมขนมฝรั่งกุฎีจีนอบเตาถ่านโบราณ", tipEn: "Walk charming riverside alleys tasting ancient sponge cakes" },
+                    { time: "12:00", titleTh: "ครัวอัปสร เสาชิงช้า", titleEn: "Krua Apsorn Giant Swing", catTh: "อาหารไทยชาววัง", catEn: "Royal Thai Cuisine", transitTh: "รถเมล์สาย 56", transitEn: "Bus Line 56", transitCost: 12, foodCost: 140, actCost: 0, icon: "🍛", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "ไข่ฟูปูเนื้อแน่น แกงเหลืองไหลบัวรสจัดจ้าน", tipEn: "Fluffy crab omelet and spicy southern lotus stem curry" },
+                    { time: "14:30", titleTh: "มิวเซียมสยาม (พิพิธภัณฑ์การเรียนรู้)", titleEn: "Museum Siam Discovery", catTh: "วัฒนธรรมสร้างสรรค์", catEn: "Creative Culture", transitTh: "MRT สนามไชย ทางออก 1", transitEn: "MRT Sanam Chai Exit 1", transitCost: 20, foodCost: 35, actCost: 50, icon: "🏛️", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=400&q=80", tipTh: "ถอดรหัสความเป็นไทยผ่านนิทรรศการอินเตอร์แอคทีฟ", tipEn: "Explore what it means to be Thai in interactive halls" },
+                    { time: "18:00", titleTh: "ชมพระปรางค์วัดอรุณยามค่ำ & ดินเนอร์ริมน้ำ", titleEn: "Wat Arun Night Illuminations", catTh: "วิวระดับโลก", catEn: "World-Class Sunset", transitTh: "เรือข้ามฟากท่าเตียน", transitEn: "Tha Tien Ferry", transitCost: 10, foodCost: 250, actCost: 0, icon: "✨", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", tipTh: "มองเงาพระปรางค์สีทองสะท้อนผิวน้ำเจ้าพระยา", tipEn: "Golden stupa reflections dancing on the river waters",
+                      pivotTitleTh: "โรตีมะตะบะ ถนนพระอาทิตย์", pivotTitleEn: "Roti Mataba Phra Athit", pivotFoodCost: 75, pivotTipTh: "สลับไปนั่งชิมโรตีมะตะบะริมสวนสันติฯ เซฟ ฿175!", pivotTipEn: "Switched to classic roti on Phra Athit, saving ฿175!" }
+                ],
+                nature: [
+                    { time: "07:30", titleTh: "สวนเบญจกิติ & Skywalk ลอยฟ้า", titleEn: "Benchakitti Forest Park Skywalk", catTh: "ป่าในเมืองกรุง", catEn: "Urban Forest Wetland", transitTh: "MRT ศูนย์ฯ สิริกิติ์", transitEn: "MRT Queen Sirikit Center", transitCost: 24, foodCost: 40, actCost: 0, icon: "🌿", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", tipTh: "เดินสะพานไม้ลอยฟ้าชมบึงบัวและนกน้ำกลางตึกระฟ้า", tipEn: "Walk above wetlands with breathtaking skyscraper skyline views" },
+                    { time: "11:30", titleTh: "ข้าวมันไก่เจ๊ยม สวนลุมพินี", titleEn: "Lumpini Hainanese Chicken Rice", catTh: "มื้อเที่ยงใต้ร่มไม้", catEn: "Park-side Lunch", transitTh: "สะพานเขียว (Green Mile) ปั่นจักรยาน", transitEn: "Green Mile Walk/Cycle", transitCost: 0, foodCost: 60, actCost: 0, icon: "🍗", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "ข้าวมันไก่เนื้อน่องฉ่ำๆ น้ำจิ้มเต้าเจี้ยวพริกสดขิงแก่", tipEn: "Juicy chicken rice with ginger chili fermented bean sauce" },
+                    { time: "14:00", titleTh: "ล่องเรือแจวคลองบางหลวง & ชมบ้านศิลปิน", titleEn: "Khlong Bang Luang Artist House", catTh: "วิถีชีวิตริมสายน้ำ", catEn: "Canal Folk Life", transitTh: "MRT บางไผ่ เดินเข้าซอยเพชรเกษม 20", transitEn: "MRT Bang Phai (Phetkasem 20)", transitCost: 32, foodCost: 40, actCost: 40, icon: "🛶", img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80", tipTh: "ร้อยลูกปัดไม้ นั่งมองเรือหางยาวแล่นผ่านเรือนไม้ 100 ปี", tipEn: "Bead craft and watching longtail boats along 100-yr stilt houses" },
+                    { time: "18:00", titleTh: "ตลาดพลู ดินเนอร์กุยช่ายทอด & บะหมี่ต้มยำ", titleEn: "Talat Phlu Night Gourmet", catTh: "ย่านเก่าฝั่งธน", catEn: "Thonburi Night Heritage", transitTh: "สองแถวตลาดพลู", transitEn: "Talat Phlu Songthaew", transitCost: 15, foodCost: 160, actCost: 0, icon: "🥟", img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", tipTh: "กุยช่ายแป้งบางกรอบสูตรเตาถ่านใต้สะพานตลาดพลู", tipEn: "Crispy chive cakes under the historic Talat Phlu bridge",
+                      pivotTitleTh: "กุยช่ายหน้าร้านทอง (ประหยัด)", pivotTitleEn: "Talat Phlu Chive Snacks", pivotFoodCost: 50, pivotTipTh: "สลับเน้นของว่างกุยช่ายและน้ำเก๊กฮวย เซฟ ฿110!", pivotTipEn: "Switched to quick snacks, saving ฿110!" }
+                ]
+            },
+            hkt: {
+                cafe: [
+                    { time: "09:30", titleTh: "Ryn Cafe ตึกเก่าย่านดีบุก", titleEn: "Ryn Cafe Old Phuket Town", catTh: "ชาเขียวมัทฉะ & ชิโนโปรตุกีส", catEn: "Matcha in Sino-Portuguese House", transitTh: "Phuket Smart Bus ลงหอนาฬิกา", transitEn: "Phuket Smart Bus to Clock Tower", transitCost: 50, foodCost: 130, actCost: 0, icon: "🍵", img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80", tipTh: "มัทฉะเกรดพิธีการในบ้านโบราณอายุ 110 ปี", tipEn: "Ceremonial grade matcha in a 110-year-old heritage shophouse" },
+                    { time: "12:15", titleTh: "หมี่ฮกเกี้ยนลกเที้ยน สี่แยกแถวน้ำ", titleEn: "Lok Thian Hokkien Noodles", catTh: "อาหารพื้นเมืองภูเก็ต", catEn: "Phuket Local Noodle", transitTh: "เดินเท้า 250 ม.", transitEn: "Walk 250m", transitCost: 0, foodCost: 75, actCost: 0, icon: "🍜", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "หมี่ผัดไข่หมก ใส่กุ้งสดและหอยติบ หอมกลิ่นกระทะไหม้", tipEn: "Wok-charred Hokkien egg noodles with oysters and fresh prawns" },
+                    { time: "14:45", titleTh: "พิพิธภัณฑ์ภูเก็ตไทยหัว & ตรอกรมณีย์", titleEn: "Phuket Thai Hua Museum & Soi Rommanee", catTh: "ประวัติศาสตร์เหมืองแร่", catEn: "Tin Mining History", transitTh: "เดินเท้า 300 ม.", transitEn: "Walk 300m", transitCost: 0, foodCost: 50, actCost: 50, icon: "🏛️", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=400&q=80", tipTh: "เรียนรู้เรื่องราวชาวเปอรานากันและการอพยพตั้งถิ่นฐาน", tipEn: "Discover Peranakan Baba-Nyonya migration and tin trade history" },
+                    { time: "18:00", titleTh: "ระย้า (Raya) แกงเนื้อปูใบชะพลู", titleEn: "Raya Restaurant Crab Curry", catTh: "ร้านดังระดับตำนาน", catEn: "Legendary Heritage Feast", transitTh: "สองแถวไม้โพถ้อง", transitEn: "Po Thong Wooden Bus", transitCost: 20, foodCost: 380, actCost: 0, icon: "🦀", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", tipTh: "เนื้อปูก้อนโตในน้ำแกงกะทิเข้มข้นรสปักษ์ใต้แท้", tipEn: "Jumbo lump crab in fiery southern coconut betel leaf curry",
+                      pivotTitleTh: "โกเบ๊นซ์ ข้าวต้มแห้งภูเก็ต (มิชลิน)", pivotTitleEn: "Go Benz Dry Congee", pivotFoodCost: 85, pivotTipTh: "สลับเป็นข้าวต้มแห้งโกเบ๊นซ์ ประหยัดทันที ฿295!", pivotTipEn: "Switched to Go Benz Dry Congee, saving ฿295!" }
+                ],
+                streetfood: [
+                    { time: "08:00", titleTh: "โรตีแถวน้ำ ชาชัก & มัสมั่นไก่", titleEn: "Roti Tae Nam & Pulled Tea", catTh: "อาหารเช้าเปอยูน", catEn: "Morning Roti Breakfast", transitTh: "สองแถวไม้โพถ้อง", transitEn: "Po Thong Wooden Bus", transitCost: 20, foodCost: 65, actCost: 0, icon: "🫓", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "โรตีตบกรอบฟู จิ้มแกงมัสมั่นเข้มข้น คู่ชาชักฟองนุ่ม", tipEn: "Crisp hand-slapped roti paired with rich massaman curry" },
+                    { time: "12:00", titleTh: "โลบะบางเหนียว & เกี้ยนทอดกรอบ", titleEn: "Loba Bang Neow Fried Pork Organs", catTh: "ของกินพื้นบ้านภูเก็ต", catEn: "Heritage Pork Tidbits", transitTh: "เดินเท้า 400 ม.", transitEn: "Walk 400m", transitCost: 0, foodCost: 80, actCost: 0, icon: "🥓", img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", tipTh: "หมูและเต้าหู้ทอดพะโล้ จิ้มน้ำจิ้มมะขามเปรี้ยวหวาน", tipEn: "Five-spice fried tofu and pork paired with sweet tamarind dip" },
+                    { time: "14:30", titleTh: "โอ๋วเอ๋ว แป๊ะสาลี่ ตรอกสุ่นอุทิศ", titleEn: "O-Aew Pae Sali Banana Jelly", catTh: "ขนมหวานดับร้อน", catEn: "Shaved Ice Banana Jelly", transitTh: "เดินเท้า 200 ม.", transitEn: "Walk 200m", transitCost: 0, foodCost: 35, actCost: 0, icon: "🍧", img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=400&q=80", tipTh: "วุ้นกล้วยโบราณราดน้ำเชื่อมทับทิมกรอบ เย็นชื่นใจ", tipEn: "Signature banana starch jelly with red syrup and shaved ice" },
+                    { time: "18:00", titleTh: "ตลาดปล่อยของ & ก๋วยเตี๋ยวต้มยำโบราณ", titleEn: "Phuket Indy Night Market", catTh: "สตรีทฟู้ดยามเย็น", catEn: "Local Night Street Bites", transitTh: "สองแถวไม้โพถ้อง", transitEn: "Po Thong Wooden Bus", transitCost: 20, foodCost: 180, actCost: 0, icon: "🍢", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", tipTh: "ของกินเล่นชุมชน ดนตรีเปิดหมวกและงานแฮนด์เมด", tipEn: "Artisan food stalls, live acoustic music and handcrafted gifts",
+                      pivotTitleTh: "ข้าวต้มซอยภูธร (ประหยัด)", pivotTitleEn: "Soi Phuthorn Rice Soup", pivotFoodCost: 55, pivotTipTh: "สลับเป็นข้าวต้มซอยภูธร เซฟไป ฿125!", pivotTipEn: "Switched to local rice soup, saving ฿125!" }
+                ],
+                culture: [
+                    { time: "09:00", titleTh: "ศาลเจ้าจุ้ยตุ่ยเต้าโบ้เก้ง", titleEn: "Jui Tui Taoist Shrine", catTh: "จิตวิญญาณกินผัก", catEn: "Vegetarian Heritage Shrine", transitTh: "สองแถวโพถ้อง", transitEn: "Po Thong Bus", transitCost: 20, foodCost: 40, actCost: 0, icon: "🏮", img: "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=400&q=80", tipTh: "ศาลเจ้าจีนที่เก่าแก่และศักดิ์สิทธิ์ที่สุดของเกาะภูเก็ต", tipEn: "One of the most sacred Taoist shrines on Phuket island" },
+                    { time: "12:00", titleTh: "โกอ่าง ซีฟู้ด สะพานหิน", titleEn: "Go Ang Seafood Saphan Hin", catTh: "อาหารทะเลชาวบ้าน", catEn: "Local Seaside Feast", transitTh: "สองแถวสาย 3", transitEn: "Songthaew Line 3", transitCost: 20, foodCost: 150, actCost: 0, icon: "🐟", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "ปลาทรายทอดขมิ้น และต้มส้มปลากะพงเปรี้ยวหวานกลมกล่อม", tipEn: "Crisp turmeric fried sandfish and tangy seabass sour soup" },
+                    { time: "14:30", titleTh: "บ้านชินประชา มรดกคฤหาสน์ 115 ปี", titleEn: "Chinpracha House Museum", catTh: "คฤหาสน์อั้งม้อหลาว", catEn: "Angmor-lao Mansion", transitTh: "เดินเท้า 500 ม.", transitEn: "Walk 500m", transitCost: 0, foodCost: 35, actCost: 100, icon: "🏡", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=400&q=80", tipTh: "ชมกระเบื้องโบราณจากอิตาลีและเครื่องเรือนฝังมุกแท้", tipEn: "Italian floor tiles and mother-of-pearl inlaid furnishings" },
+                    { time: "18:00", titleTh: "วัดฉลอง (วัดไชยธาราราม) & นมัสการหลวงพ่อแช่ม", titleEn: "Wat Chalong Sunset", catTh: "ศูนย์รวมศรัทธา", catEn: "Spiritual Center", transitTh: "สองแถวสายฉลอง", transitEn: "Chalong Songthaew", transitCost: 30, foodCost: 130, actCost: 0, icon: "🙏", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", tipTh: "ชมพระมหาธาตุเจดีย์พระจอมไทยบารมีประกาศยามอัสดง", tipEn: "Grand pagoda golden spire catching sunset reflections",
+                      pivotTitleTh: "ตลาดโต้รุ่งวัดฉลอง", pivotTitleEn: "Wat Chalong Night Market", pivotFoodCost: 55, pivotTipTh: "สลับกินสตรีทฟู้ดรอบวัด เซฟ ฿75!", pivotTipEn: "Switched to temple stalls, saving ฿75!" }
+                ],
+                nature: [
+                    { time: "08:30", titleTh: "หาดในหาน & ป่าสนธรรมชาติ", titleEn: "Nai Harn Beach Pine Grove", catTh: "ชายหาดธรรมชาติ", catEn: "Pristine Bay & Pine Trees", transitTh: "Phuket Smart Bus (฿100)", transitEn: "Phuket Smart Bus (฿100)", transitCost: 100, foodCost: 60, actCost: 0, icon: "🏖️", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", tipTh: "หาดทรายขาวละเอียด คลื่นสงบ น้ำทะเลสีฟ้าเทอร์ควอยซ์", tipEn: "Powder-soft white sand and calm turquoise waters" },
+                    { time: "12:00", titleTh: "ร้านอาหารพื้นบ้าน หาดราไวย์", titleEn: "Rawai Beachside Local Seafood", catTh: "อาหารทะเลสดริมหาด", catEn: "Fresh Coastal Dining", transitTh: "สองแถวราไวย์", transitEn: "Rawai Songthaew", transitCost: 30, foodCost: 160, actCost: 0, icon: "🦐", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "กุ้งสด หอยหวาน และส้มตำยอดมะพร้าวอ่อนริมสะพานปลา", tipEn: "Sweet clams, prawns and coconut shoot salad by the pier" },
+                    { time: "15:00", titleTh: "จุดชมวิวกังหันลม (Windmill Viewpoint)", titleEn: "Windmill Scenic Viewpoint", catTh: "วิวมุมสูงมองเห็นเกาะมัน", catEn: "Cliff Panorama Vista", transitTh: "เดินเท้า 800 ม. จากหาดยะนุ้ย", transitEn: "Walk 800m from Ya Nui", transitCost: 0, foodCost: 40, actCost: 0, icon: "🌬️", img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80", tipTh: "จุดชมวิวหน้าผาสุดโปร่ง ลมทะเลพัดเย็นสบาย", tipEn: "Breezy cliff overlooking emerald sea and offshore isles" },
+                    { time: "17:45", titleTh: "แหลมพรหมเทพ ชมพระอาทิตย์ตกดิน", titleEn: "Promthep Cape Sunset", catTh: "ไฮไลต์อันดับ 1 ของภูเก็ต", catEn: "#1 Sunset Landmark", transitTh: "สองแถวเหมาหรือ Smart Bus", transitEn: "Local Bus / Smart Bus", transitCost: 40, foodCost: 90, actCost: 0, icon: "🌅", img: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=400&q=80", tipTh: "ชมพระอาทิตย์ดวงกลมโตค่อยๆ จมลงสู่เส้นขอบฟ้าอันดามัน", tipEn: "Watch golden sun sink into the Andaman Sea horizon",
+                      pivotTitleTh: "จุดชมวิวหาดยะนุ้ย (ประหยัดเวลา)", pivotTitleEn: "Ya Nui Beach Sunset", pivotFoodCost: 45, pivotTipTh: "สลับนั่งชมวิวที่หาดยะนุ้ย ไม่ต้องเบียดคนบนแหลม เซฟ ฿45!", pivotTipEn: "Switched to cozy Ya Nui beach sunset, saving ฿45!" }
+                ]
+            },
+            usm: {
+                cafe: [
+                    { time: "09:30", titleTh: "Fisherman's Village บ่อผุด บีชคาเฟ่", titleEn: "Bophut Fisherman's Village Cafe", catTh: "คาเฟ่ริมหาดโบราณ", catEn: "Historic Beachside Cafe", transitTh: "สองแถวรอบเกาะสายแดง", transitEn: "Red Island Songthaew", transitCost: 60, foodCost: 140, actCost: 0, icon: "☕", img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80", tipTh: "บ้านไม้ชาวประมงฝรั่งเศส จิบกาแฟมองเกาะพะงัน", tipEn: "French fisherman shophouse with distant views of Koh Phangan" },
+                    { time: "12:15", titleTh: "ข้าวมันไก่ไหหลำลุงจิ๋ว หน้าทอน", titleEn: "Uncle Jew Hainanese Chicken Nathon", catTh: "มื้อเที่ยงเจ้าเก่า 50 ปี", catEn: "50-Year Hainan Chicken", transitTh: "สองแถวหน้าทอน", transitEn: "Nathon Songthaew", transitCost: 50, foodCost: 70, actCost: 0, icon: "🍗", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "ไก่บ้านเนื้อแน่น น้ำจิ้มเต้าเจี้ยวสูตรชาวเกาะแท้", tipEn: "Free-range chicken with island fermented chili bean dip" },
+                    { time: "14:45", titleTh: "สวนมะพร้าวอินทรีย์ตลิ่งงาม & กะลาคราฟต์", titleEn: "Taling Ngam Organic Coconut Co-op", catTh: "วิสาหกิจชุมชนชาวสวน", catEn: "Coconut Grove Craft", transitTh: "สองแถวท้องถิ่น", transitEn: "Local Songthaew", transitCost: 50, foodCost: 50, actCost: 40, icon: "🥥", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=400&q=80", tipTh: "ดื่มน้ำมะพร้าวสดจากต้น และชมงานแกะสลักกะลามะพร้าว", tipEn: "Sip fresh young coconut juice and admire shell carvings" },
+                    { time: "18:00", titleTh: "โกซีฟู้ด หาดบางรักษ์", titleEn: "Ko Seafood Bangrak Beach", catTh: "อาหารทะเลสดคัดพิเศษ", catEn: "Fresh Seafood Dinner", transitTh: "สองแถว", transitEn: "Songthaew", transitCost: 60, foodCost: 350, actCost: 0, icon: "🦞", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", tipTh: "กุ้งซอสมะขาม แกงส้มยอดมะพร้าวปลากะพงสด", tipEn: "Tamarind king prawns and fiery sour curry with young coconut shoots",
+                      pivotTitleTh: "ตลาดโต้รุ่งท่าเรือหน้าทอน", pivotTitleEn: "Nathon Pier Night Market", pivotFoodCost: 80, pivotTipTh: "สลับเป็นสตรีทฟู้ดท่าเรือหน้าทอน เซฟ ฿270!", pivotTipEn: "Switched to Nathon pier market, saving ฿270!" }
+                ],
+                streetfood: [
+                    { time: "08:00", titleTh: "ขนมจีนน้ำยาปู ป้าทุม บางรักษ์", titleEn: "Pa Thum Crab Rice Noodles", catTh: "อาหารเช้าชาวเกาะ", catEn: "Island Crab Noodles", transitTh: "สองแถวรอบเกาะ", transitEn: "Island Songthaew", transitCost: 50, foodCost: 70, actCost: 0, icon: "🦀", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "น้ำยาปูทะเลเครื่องแกงใต้หอมฟุ้ง ผักเหนาะสดไม่อั้น", tipEn: "Rich crab curry with mountain herbs and crunchy raw greens" },
+                    { time: "12:00", titleTh: "ข้าวหมูแดงป้ากิม ตลาดแม่น้ำ", titleEn: "Pa Kim BBQ Pork Mae Nam", catTh: "หมูแดงเตาถ่านโบราณ", catEn: "Charcoal BBQ Pork Rice", transitTh: "สองแถว", transitEn: "Songthaew", transitCost: 40, foodCost: 60, actCost: 0, icon: "🥩", img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", tipTh: "หมูแดงย่างเตาถ่านหอมกลิ่นน้ำผึ้งป่า", tipEn: "Honey-glazed charcoal roasted pork rice" },
+                    { time: "14:30", titleTh: "กาละแมสมุยโบราณ ยายแจ๋ว ละไม", titleEn: "Yai Jaew Ancient Kalamae Lamai", catTh: "ของหวานกวนกระทะใบบัว", catEn: "Stirred Coconut Candy", transitTh: "สองแถวหาดละไม", transitEn: "Lamai Songthaew", transitCost: 40, foodCost: 45, actCost: 0, icon: "🍬", img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=400&q=80", tipTh: "กาละแมกะทิสดห่อใบตอง เหนียวนุ่มหวานละมุน", tipEn: "Fresh coconut caramel candy wrapped in toasted banana leaf" },
+                    { time: "18:00", titleTh: "สตรีทฟู้ดถนนคนเดินเฉวง", titleEn: "Chaweng Walking Street Stalls", catTh: "อาหารริมทางยามค่ำ", catEn: "Night Food Stalls", transitTh: "สองแถวเฉวง", transitEn: "Chaweng Songthaew", transitCost: 50, foodCost: 190, actCost: 0, icon: "🍢", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", tipTh: "ซีฟู้ดย่างเสียบไม้ ผัดไทย และโรตีกล้วยหอม", tipEn: "Grilled seafood skewers, pad thai and banana pancakes",
+                      pivotTitleTh: "ข้าวต้มปลากะพงตลาดละไม", pivotTitleEn: "Lamai Fish Rice Soup", pivotFoodCost: 65, pivotTipTh: "สลับเป็นข้าวต้มปลากะพงสด เซฟ ฿125!", pivotTipEn: "Switched to fresh fish soup, saving ฿125!" }
+                ],
+                culture: [
+                    { time: "09:00", titleTh: "วัดพระใหญ่ (เกาะฟาน)", titleEn: "Big Buddha Temple Koh Faan", catTh: "สัญลักษณ์ศักดิ์สิทธิ์ของสมุย", catEn: "Sacred Island Landmark", transitTh: "สองแถวสายบางรักษ์", transitEn: "Bangrak Songthaew", transitCost: 50, foodCost: 40, actCost: 0, icon: "☸️", img: "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=400&q=80", tipTh: "พระพุทธรูปปางมารวิชัยสีทององค์ใหญ่สูง 12 เมตรริมทะเล", tipEn: "12-meter golden Buddha perched dramatically over the sea" },
+                    { time: "12:00", titleTh: "ร้านข้าวแกงปักษ์ใต้ป้าส้ม หน้าทอน", titleEn: "Pa Som Southern Curry Nathon", catTh: "แกงไตปลา & คั่วกลิ้ง", catEn: "Authentic Southern Curry", transitTh: "สองแถว", transitEn: "Songthaew", transitCost: 50, foodCost: 65, actCost: 0, icon: "🍛", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "คั่วกลิ้งหมูรสร้อนแรง แกงส้มปลากระบอก และผักสด", tipEn: "Spicy dry minced pork curry and mullet sour soup" },
+                    { time: "14:30", titleTh: "วัดปลายแหลม & เจ้าแม่กวนอิม 18 กร", titleEn: "Wat Plai Laem (18-Arm Guanyin)", catTh: "พุทธศิลป์กลางทะเลสาบ", catEn: "Lake Sanctuary Art", transitTh: "สองแถว", transitEn: "Songthaew", transitCost: 50, foodCost: 35, actCost: 0, icon: "🪷", img: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=400&q=80", tipTh: "ให้อาหารปลาคราฟในทะเลสาบและสักการะเจ้าแม่กวนอิมสีขาว", tipEn: "Feed giant catfish in the serene lake and view the white Guanyin statue" },
+                    { time: "17:30", titleTh: "ชุมชนมุสลิมหัวถนน & มัสยิดนูรุลอิห์ซาน", titleEn: "Hua Thanon Muslim Fishing Village", catTh: "วิถีชีวิตดั้งเดิม", catEn: "Traditional Fishing Life", transitTh: "สองแถวหัวถนน", transitEn: "Hua Thanon Songthaew", transitCost: 50, foodCost: 120, actCost: 0, icon: "⛵", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", tipTh: "เรือประมงกอและหลากสี และปลาหมึกแดดเดียวทอดหอมๆ", tipEn: "Colorful traditional fishing boats and sweet sun-dried calamari",
+                      pivotTitleTh: "โรตีมะตะบะหัวถนน", pivotTitleEn: "Hua Thanon Roti Mataba", pivotFoodCost: 50, pivotTipTh: "สลับเป็นโรตีมะตะบะสูตรชุมชน เซฟ ฿70!", pivotTipEn: "Switched to local roti, saving ฿70!" }
+                ],
+                nature: [
+                    { time: "08:30", titleTh: "หินตาหินยาย หาดละไม", titleEn: "Hin Ta Hin Yai Rock Formations", catTh: "ประติมากรรมธรรมชาติ", catEn: "Nature's Granite Wonders", transitTh: "สองแถวละไม", transitEn: "Lamai Songthaew", transitCost: 50, foodCost: 40, actCost: 0, icon: "🪨", img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", tipTh: "โขดหินแกรนิตรูปร่างแปลกตา ทะเลสีครามคลื่นซัดกระทบฝั่ง", tipEn: "Curious granite formations facing the azure crashing waves" },
+                    { time: "12:00", titleTh: "ส้มตำปูม้าสด ริมหาดละไม", titleEn: "Lamai Beachside Somtum", catTh: "ส้มตำริมหาด", catEn: "Beachside Papaya Salad", transitTh: "เดินเท้า 300 ม.", transitEn: "Walk 300m", transitCost: 0, foodCost: 130, actCost: 0, icon: "🥗", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80", tipTh: "ส้มตำปูม้าสดเนื้อหวาน ไก่ย่าง และข้าวเหนียวร้อนๆ", tipEn: "Sweet blue crab papaya salad with grilled chicken" },
+                    { time: "14:30", titleTh: "น้ำตกหน้าเมือง 1 & ธารน้ำกลางป่า", titleEn: "Na Muang Waterfall 1", catTh: "น้ำตกหินสีม่วง", catEn: "Purple Rock Cascades", transitTh: "สองแถวหน้าเมือง", transitEn: "Na Muang Songthaew", transitCost: 60, foodCost: 35, actCost: 0, icon: "💦", img: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80", tipTh: "น้ำตกกลางหุบเขา ร่มรื่นด้วยแมกไม้และแอ่งน้ำธรรมชาติ", tipEn: "Mountain waterfall flowing over purple-tinted rocks" },
+                    { time: "17:30", titleTh: "จุดชมวิวลาดเกาะ (Lad Koh Viewpoint)", titleEn: "Lad Koh Scenic Viewpoint", catTh: "ชมวิวอ่าวเฉวงมุมกว้าง", catEn: "Chaweng Bay Vista", transitTh: "สองแถว", transitEn: "Songthaew", transitCost: 50, foodCost: 60, actCost: 0, icon: "🌅", img: "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=400&q=80", tipTh: "ทางเดินเลียบหน้าผา มองเห็นน้ำทะเลไล่เฉดสีฟ้าเขียว", tipEn: "Cliff walkway overlooking the graduated emerald-to-navy ocean",
+                      pivotTitleTh: "จุดชมวิวหาดละไมใต้", pivotTitleEn: "South Lamai Viewpoint", pivotFoodCost: 30, pivotTipTh: "สลับเป็นจุดชมวิวท้องถิ่น เซฟ ฿30!", pivotTipEn: "Switched to local quiet lookout, saving ฿30!" }
+                ]
+            }
+        };
+
+        function setPlannerBudget(amount) {
+            plannerBudget = amount;
+            document.querySelectorAll('.budget-preset-btn').forEach(btn => {
+                const b = parseInt(btn.getAttribute('data-budget'));
+                if (b === amount) {
+                    btn.className = "budget-preset-btn py-1.5 rounded-xl text-[11px] font-extrabold bg-[#1E1E2D] text-white transition shadow-xs";
+                } else {
+                    btn.className = "budget-preset-btn py-1.5 rounded-xl text-[11px] font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-700 transition";
+                }
+            });
+            renderPlannerItinerary();
+        }
+
+        function setPlannerVibe(vibe) {
+            plannerVibe = vibe;
+            document.querySelectorAll('.vibe-btn').forEach(btn => {
+                const v = btn.getAttribute('data-vibe');
+                if (v === vibe) {
+                    btn.className = "vibe-btn px-3 py-1.5 rounded-xl text-[10px] font-extrabold bg-[#6E5FF6] text-white flex-shrink-0 transition";
+                } else {
+                    btn.className = "vibe-btn px-3 py-1.5 rounded-xl text-[10px] font-bold bg-slate-100 text-slate-700 flex-shrink-0 transition";
+                }
+            });
+            renderPlannerItinerary();
+        }
+
+        function togglePlanRebalance() {
+            plannerIsRebalanced = !plannerIsRebalanced;
+            playChimeSound();
+            const isTh = currentLang === 'th';
+            if (plannerIsRebalanced) {
+                showToast(isTh ? "สลับแผนประหยัดแล้ว ⚡" : "Smart Pivot Active ⚡", isTh ? "ปรับมื้อเย็นเป็นสตรีทฟู้ดโลคอล เซฟเงินทันที!" : "Switched to local street food; money saved!", "💰", "bg-emerald-500");
+            } else {
+                showToast(isTh ? "คืนค่าแผนเดิมแล้ว" : "Restored Original Plan", isTh ? "กลับสู่เมนูปกติเรียบร้อย" : "Returned to original dining itinerary", "🔄", "bg-[#8C82FC]");
+            }
+            renderPlannerItinerary();
+        }
+
+        function navigateFromPlanner(stopName, transitDesc) {
+            switchTab('transit');
+            const isTh = currentLang === 'th';
+            showToast(isTh ? `นำทางไป "${stopName}"` : `Navigating to "${stopName}"`, isTh ? `เส้นทาง: ${transitDesc}` : `Via: ${transitDesc}`, "🛺", "bg-[#8C82FC]");
+            const mapEl = document.getElementById('map');
+            if (mapEl) mapEl.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderPlannerItinerary() {
+            const pKey = provincesData[currentProvinceKey] ? currentProvinceKey : 'cnx';
+            const pProv = plannerDatasets[pKey] || plannerDatasets['cnx'];
+            const list = pProv[plannerVibe] || pProv['cafe'];
+            const isTh = currentLang === 'th';
+
+            let transitSum = 0;
+            let foodSum = 0;
+            let actSum = 0;
+
+            list.forEach(item => {
+                transitSum += item.transitCost;
+                actSum += item.actCost;
+                if (plannerIsRebalanced && item.pivotFoodCost !== undefined) {
+                    foodSum += item.pivotFoodCost;
+                } else {
+                    foodSum += item.foodCost;
+                }
+            });
+
+            const totalSpent = transitSum + foodSum + actSum;
+            const reserve = plannerBudget - totalSpent;
+            const reservePercent = Math.max(0, Math.round((reserve / plannerBudget) * 100));
+
+            // Budget Controls Display
+            const budValEl = document.getElementById('plannerBudgetValue');
+            if (budValEl) budValEl.innerText = `฿${plannerBudget.toLocaleString()}`;
+
+            // Progress Bar widths
+            const wTransit = Math.min(100, Math.max(0, Math.round((transitSum / plannerBudget) * 100)));
+            const wFood = Math.min(100, Math.max(0, Math.round((foodSum / plannerBudget) * 100)));
+            const wAct = Math.min(100, Math.max(0, Math.round((actSum / plannerBudget) * 100)));
+            const wReserve = Math.max(0, 100 - (wTransit + wFood + wAct));
+
+            const barTransit = document.getElementById('barTransit');
+            if (barTransit) barTransit.style.width = `${wTransit}%`;
+            const barFood = document.getElementById('barFood');
+            if (barFood) barFood.style.width = `${wFood}%`;
+            const barAct = document.getElementById('barActivity');
+            if (barAct) barAct.style.width = `${wAct}%`;
+            const barRes = document.getElementById('barReserve');
+            if (barRes) barRes.style.width = `${wReserve}%`;
+
+            // Numerical Breakdown
+            const elValTransit = document.getElementById('valTransitCost');
+            if (elValTransit) elValTransit.innerText = `฿${transitSum}`;
+            const elValFood = document.getElementById('valFoodCost');
+            if (elValFood) elValFood.innerText = `฿${foodSum}`;
+            const elValAct = document.getElementById('valActivityCost');
+            if (elValAct) elValAct.innerText = `฿${actSum}`;
+            const elValRes = document.getElementById('valReserveCost');
+            if (elValRes) elValRes.innerText = `฿${Math.max(0, reserve)}`;
+
+            // Gauge Status
+            const dot = document.getElementById('budgetStatusDot');
+            const lbl = document.getElementById('budgetGaugeLabel');
+            const remDisplay = document.getElementById('budgetRemainingDisplay');
+
+            if (reserve < 0) {
+                if (dot) dot.className = "w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping";
+                if (lbl) lbl.innerText = isTh ? "สถานะงบประมาณ: เกินงบที่ตั้งไว้!" : "Status: Over Budget!";
+                if (remDisplay) {
+                    remDisplay.className = "font-black text-rose-600";
+                    remDisplay.innerText = isTh ? `ติดลบ ฿${Math.abs(reserve)}` : `Deficit ฿${Math.abs(reserve)}`;
+                }
+            } else if (reserve < 150) {
+                if (dot) dot.className = "w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse";
+                if (lbl) lbl.innerText = isTh ? "สถานะงบประมาณ: เริ่มตึงตัว" : "Status: Tight Budget";
+                if (remDisplay) {
+                    remDisplay.className = "font-black text-amber-600";
+                    remDisplay.innerText = isTh ? `เหลือเงินสำรอง ฿${reserve} (${reservePercent}%)` : `Reserve ฿${reserve} (${reservePercent}%)`;
+                }
+            } else {
+                if (dot) dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-500";
+                if (lbl) lbl.innerText = isTh ? "สถานะงบประมาณ: ปลอดภัยดี" : "Status: Safe & Balanced";
+                if (remDisplay) {
+                    remDisplay.className = "font-black text-emerald-600";
+                    remDisplay.innerText = isTh ? `เหลือเงินสำรอง ฿${reserve} (${reservePercent}%)` : `Reserve ฿${reserve} (${reservePercent}%)`;
+                }
+            }
+
+            // Rebalance Alert Banner State
+            const rebTitle = document.getElementById('rebalanceAlertTitle');
+            const rebDesc = document.getElementById('rebalanceAlertDesc');
+            const rebBtn = document.getElementById('btnRebalanceAction');
+
+            if (plannerIsRebalanced) {
+                if (rebTitle) rebTitle.innerText = isTh ? "เปิดใช้งานแผนประหยัด (Smart Pivot) อยู่ ⚡" : "Smart Pivot Active ⚡";
+                if (rebDesc) rebDesc.innerText = isTh ? "ปรับมื้อเย็นเป็นสตรีทฟู้ดโลคอล เซฟเงินทันที ฿180 - ฿290!" : "Switched dinner to authentic local food stalls, saving cash!";
+                if (rebBtn) {
+                    rebBtn.innerText = isTh ? "คืนค่าแผนเดิม" : "Restore Plan";
+                    rebBtn.className = "bg-white text-emerald-900 text-[10px] font-black px-2.5 py-1.5 rounded-xl shadow-xs active:scale-95 transition flex-shrink-0 ml-1";
+                }
+            } else {
+                if (rebTitle) rebTitle.innerText = isTh ? "ตรวจพบเงินตึงตัวช่วงค่ำ (Smart Pivot)" : "Smart Pivot Opportunity";
+                if (rebDesc) rebDesc.innerText = isTh ? "สลับมื้อเย็นเป็นร้านสตรีทฟู้ดเด็ด + รถสองแถว เซฟทันที" : "Switch dinner to local night market & save instantly";
+                if (rebBtn) {
+                    rebBtn.innerText = isTh ? "สลับแผนประหยัด" : "Switch & Save";
+                    rebBtn.className = "bg-white text-orange-900 text-[10px] font-black px-2.5 py-1.5 rounded-xl shadow-xs active:scale-95 transition flex-shrink-0 ml-1";
+                }
+            }
+
+            // Timeline Stops
+            const badgeStops = document.getElementById('badgeTotalStops');
+            if (badgeStops) badgeStops.innerText = isTh ? `${list.length} จุดแวะ` : `${list.length} Stops`;
+
+            const container = document.getElementById('plannerTimelineContainer');
+            if (!container) return;
+
+            container.innerHTML = list.map((item, idx) => {
+                const isRebalancedItem = plannerIsRebalanced && item.pivotTitleTh !== undefined;
+                const title = isTh ? (isRebalancedItem ? item.pivotTitleTh : item.titleTh) : (isRebalancedItem ? item.pivotTitleEn : item.titleEn);
+                const tip = isTh ? (isRebalancedItem ? item.pivotTipTh : item.tipTh) : (isRebalancedItem ? item.pivotTipEn : item.tipEn);
+                const activeFood = isRebalancedItem ? item.pivotFoodCost : item.foodCost;
+                const cat = isTh ? item.catTh : item.catEn;
+                const transit = isTh ? item.transitTh : item.transitEn;
+
+                return `
+                    <div class="glass-card rounded-[2rem] p-4 space-y-3 shadow-xs relative overflow-hidden transition-all duration-300 hover:shadow-md ${isRebalancedItem ? 'border-2 border-emerald-400/80 bg-emerald-50/20' : ''}">
+                        ${isRebalancedItem ? `
+                            <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[9px] font-black px-3 py-0.5 rounded-bl-xl shadow-2xs">
+                                ⚡ SMART PIVOT REBALANCED
+                            </div>
+                        ` : ''}
+
+                        <div class="flex items-start justify-between gap-2.5">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-full bg-indigo-100 text-[#6E5FF6] font-black text-xs flex items-center justify-center flex-shrink-0 shadow-2xs">
+                                    ${idx + 1}
+                                </span>
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="text-[10px] font-extrabold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-md">${item.time}</span>
+                                        <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100/60">${cat}</span>
+                                    </div>
+                                    <h4 class="text-xs font-black text-slate-900 mt-1 leading-snug">${title}</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tip & Cost Breakdown -->
+                        <p class="text-[11px] text-slate-600 font-medium leading-relaxed bg-slate-50/90 rounded-2xl p-2.5 border border-slate-100/90">
+                            💡 ${tip}
+                        </p>
+
+                        <!-- Multi-Item Live Cost Pills -->
+                        <div class="flex items-center justify-between text-[10px] font-bold pt-0.5">
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                ${item.transitCost > 0 ? `<span class="bg-[#ECE9FE] text-[#6E5FF6] px-2 py-0.5 rounded-lg border border-[#D9D4FE]">🛺 ฿${item.transitCost}</span>` : `<span class="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-lg border border-emerald-200">🚶 ฟรี</span>`}
+                                ${activeFood > 0 ? `<span class="bg-amber-50 text-amber-800 px-2 py-0.5 rounded-lg border border-amber-200">🍜 ฿${activeFood}</span>` : ''}
+                                ${item.actCost > 0 ? `<span class="bg-pink-50 text-pink-700 px-2 py-0.5 rounded-lg border border-pink-200">🎟️ ฿${item.actCost}</span>` : ''}
+                            </div>
+                            <span class="text-xs font-black text-slate-800">รวม ฿${item.transitCost + activeFood + item.actCost}</span>
+                        </div>
+
+                        <!-- Transit Connection & Action Buttons -->
+                        <div class="flex items-center justify-between pt-1 border-t border-slate-100 gap-2">
+                            <div class="text-[10px] text-slate-500 font-medium truncate flex items-center gap-1">
+                                <span>🛺</span>
+                                <span class="truncate">${transit}</span>
+                            </div>
+                            <button onclick="navigateFromPlanner('${title.replace(/'/g, "\\'")}', '${transit.replace(/'/g, "\\'")}')" class="bg-gradient-to-r from-[#8C82FC] to-[#6E5FF6] hover:opacity-95 text-white font-extrabold text-[10px] px-3 py-1.5 rounded-xl shadow-xs active:scale-95 transition flex items-center gap-1 flex-shrink-0">
+                                <span>🗺️</span>
+                                <span>${isTh ? 'นำทางจุดนี้' : 'Navigate'}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==============================================================
+        // 18. HIDDEN GEM & STAMP PASSPORT SYSTEM (ร้านลับ & สแตมป์ชุมชน)
+        // ==============================================================
+        let passportStamps = ['cnx_1', 'cnx_2'];
+        let communityImpactTotal = 390;
+
+        const hiddenGemsData = {
+            cnx: [
+                {
+                    id: 'cnx_1',
+                    nameTh: "ข้าวซอยป้าหอม ตรอกวัดเกต 40 ปี",
+                    nameEn: "Khao Soi Pa Hom (40-Yr Wat Ket Secret)",
+                    localScore: 98,
+                    tagTh: "🍜 ร้านลับในตรอกดั้งเดิม",
+                    tagEn: "🍜 Historic Alley Gem",
+                    descTh: "ร้านข้าวซอยในบ้านไม้โบราณ ไม่มีป้ายหน้าร้านเด่นชัด มีเฉพาะชาวบ้านในชุมชนมากิน เส้นบะหมี่ทำมือวันละ 60 ชามเท่านั้น",
+                    descEn: "Tucked inside a wooden home with no flashy signs. Handcrafted noodles limited to 60 bowls daily.",
+                    addressTh: "ซอยเจริญราษฎร์ 1 ชุมชนวัดเกต",
+                    addressEn: "Soi Charoenrat 1, Wat Ket Community",
+                    transitTipTh: "สองแถวขาวสายสันกำแพง ลงเชิงสะพานนวรัฐแล้วเดิน 120 ม.",
+                    transitTipEn: "White Songthaew to Nawarat Bridge, then walk 120m",
+                    priceTh: "฿50 - ฿65",
+                    priceVal: 55,
+                    stampTitleTh: "วัดเกตการาม คลาสสิก",
+                    stampTitleEn: "Wat Ket Classic",
+                    stampIcon: "🏮",
+                    speechPhrase: "ป้าครับ เอาข้าวซอยไก่พิเศษชามนึงครับ",
+                    badgeColor: "bg-emerald-500"
+                },
+                {
+                    id: 'cnx_2',
+                    nameTh: "กาแฟคั่วกระทะเตาฟืน ลุงสม ล่ามช้าง",
+                    nameEn: "Uncle Som Pan-Roasted Woodfire Coffee",
+                    localScore: 96,
+                    tagTh: "☕ เมล็ดดอยคั่วมือกลิ่นควันไม้",
+                    tagEn: "☕ Woodfire Roasted Beans",
+                    descTh: "ลุงสมวัย 72 ปี คั่วกาแฟเมล็ดแม่ลาน้อยด้วยกระทะใบบัวบนเตาฟืนทุกเช้า หอมกรุ่นกลิ่นควันไม้มะขาม รสเข้มละมุนลึก",
+                    descEn: "72-year-old Uncle Som pan-roasts highland beans over tamarind firewood every morning.",
+                    addressTh: "ตรอกวัดล่ามช้าง ซอย 2",
+                    addressEn: "Wat Lam Chang Soi 2",
+                    transitTipTh: "สองแถวแดงลงปากซอยล่ามช้าง เดินเข้าซอย 80 ม.",
+                    transitTipEn: "Red Songthaew to Lam Chang Soi entrance, walk 80m",
+                    priceTh: "฿35 - ฿45",
+                    priceVal: 40,
+                    stampTitleTh: "คั่วถ่านล่ามช้าง",
+                    stampTitleEn: "Lam Chang Woodfire",
+                    stampIcon: "☕",
+                    speechPhrase: "ลุงครับ ขอโอเลี้ยงหวานน้อยแก้วนึงครับ",
+                    badgeColor: "bg-amber-600"
+                },
+                {
+                    id: 'cnx_3',
+                    nameTh: "โรงคราฟต์กระดาษสา & สมุดข่อยบ้านต้นเปา",
+                    nameEn: "Ton Pao Mulberry Bark Paper Craft",
+                    localScore: 94,
+                    tagTh: "🎨 หัตถกรรมภูมิปัญญาชาวบ้าน",
+                    tagEn: "🎨 Living Folk Craft Heritage",
+                    descTh: "วิสาหกิจชุมชนสืบทอดการต้มเปลือกปอสา ตักเยื่อกระดาษด้วยตะแกรงไม้ไผ่โบราณ ตากแดดธรรมชาติ และแต่งแต้มด้วยกลีบดอกไม้ป่า",
+                    descEn: "Local artisan collective practicing ancient Sa paper pulling with wild flower petal inlays.",
+                    addressTh: "หมู่ 1 บ้านต้นเปา สันกำแพง",
+                    addressEn: "Moo 1 Ton Pao, San Kamphaeng",
+                    transitTipTh: "สองแถวขาวสายบ่อสร้าง (฿25) บอกลงป้ายหน้าวัดต้นเปา",
+                    transitTipEn: "White Bo Sang Songthaew (฿25), drop at Ton Pao Temple",
+                    priceTh: "เข้าชมฟรี / เวิร์กช็อป ฿80",
+                    priceVal: 80,
+                    stampTitleTh: "หัตถกรรมกระดาษสา",
+                    stampTitleEn: "Mulberry Bark Craft",
+                    stampIcon: "📜",
+                    speechPhrase: "สวัสดีครับ อยากลองทำเวิร์กช็อปกระดาษสาครับ",
+                    badgeColor: "bg-indigo-600"
+                },
+                {
+                    id: 'cnx_4',
+                    nameTh: "สวนสมุนไพรแม่ทา & ข้าวแต๋นน้ำแตงโมหยอดน้ำอ้อย",
+                    nameEn: "Mae Tha Organic Herbal & Watermelon Crisp",
+                    localScore: 92,
+                    tagTh: "🌿 เกษตรอินทรีย์กระจายรายได้",
+                    tagEn: "🌿 Community Farm Co-op",
+                    descTh: "กลุ่มแม่บ้านแปรรูปข้าวเหนียวสันป่าตองเป็นข้าวแต๋นทอดกรอบ ราดน้ำอ้อยสดจากไร่ ไม่ใส่วัตถุกันเสีย รายได้หมุนเวียนสู่ผู้สูงอายุในหมู่บ้าน",
+                    descEn: "Village mothers co-op crafting watermelon sticky rice crisps drizzled with fresh cane sugar syrup.",
+                    addressTh: "วิสาหกิจชุมชนลุ่มน้ำแม่ทา",
+                    addressEn: "Mae Tha Watershed Enterprise",
+                    transitTipTh: "รถเมล์เหลืองสายลำพูน-แม่ทา หรือสองแถวท้องถิ่น",
+                    transitTipEn: "Yellow Mae Tha Minibus or local songthaew",
+                    priceTh: "฿40 - ฿60",
+                    priceVal: 45,
+                    stampTitleTh: "แม่ทาออร์แกนิก",
+                    stampTitleEn: "Mae Tha Organic Co-op",
+                    stampIcon: "🌱",
+                    speechPhrase: "ขอซื้อข้าวแต๋นน้ำแตงโม 2 ถุงครับ",
+                    badgeColor: "bg-emerald-600"
+                }
+            ],
+            bkk: [
+                {
+                    id: 'bkk_1',
+                    nameTh: "ขนมฝรั่งกุฎีจีน ป้าเล็ก มรดก 200 ปี",
+                    nameEn: "Pa Lek Kudi Chin Portuguese Cake",
+                    localScore: 97,
+                    tagTh: "🍰 มรดกขนมอบสยาม-โปรตุเกส",
+                    tagEn: "🍰 200-Year Siamese-Portuguese Bake",
+                    descTh: "ขนมอบไข่เป็ดโรยหน้าลูกเกด พลับแห้ง และน้ำตาลทราย อบด้วยเตาถ่านโบราณที่สืบทอดจากชาวโปรตุเกสสมัยกรุงธนบุรี",
+                    descEn: "Ancient duck-egg sponge cake topped with dried persimmon and raisins baked over firewood.",
+                    addressTh: "ซอยกุฎีจีน 3 ริมแม่น้ำเจ้าพระยา",
+                    addressEn: "Soi Kudi Chin 3, Riverside",
+                    transitTipTh: "เรือข้ามฟากปากคลองตลาด (฿5) ลงท่าวัดกัลยาฯ เดิน 150 ม.",
+                    transitTipEn: "Cross-river ferry from Pak Khlong Talat (฿5), walk 150m",
+                    priceTh: "฿35 - ฿60",
+                    priceVal: 50,
+                    stampTitleTh: "กุฎีจีนโบราณ",
+                    stampTitleEn: "Historic Kudi Chin",
+                    stampIcon: "⛪",
+                    speechPhrase: "ป้าครับ ขอซื้อขนมฝรั่งกุฎีจีน 2 ถุงครับ",
+                    badgeColor: "bg-rose-500"
+                },
+                {
+                    id: 'bkk_2',
+                    nameTh: "กาแฟโบราณเตาถ่าน เอ็กเต็งผู่กี่ เยาวราช 100 ปี",
+                    nameEn: "Ek Teng Phu Ki 100-Yr Charcoal Coffee",
+                    localScore: 95,
+                    tagTh: "☕ สภากาแฟแต้จิ๋วร้อยปี",
+                    tagEn: "☕ Century-Old Teochew Parlor",
+                    descTh: "ร้านกาแฟถุงชงโบราณที่เปิดตั้งแต่ปี 1919 ต้มน้ำด้วยเตาถ่านร้อนจัด เสิร์ฟคู่ไข่ลวกเหยาะซีอิ๊วขาว",
+                    descEn: "Traditional sock-brewed coffee parlor operating since 1919 over open charcoal embers.",
+                    addressTh: "สี่แยกเสือป่า ถนนเจริญกรุง",
+                    addressEn: "Sua Pa Junction, Charoen Krung Rd",
+                    transitTipTh: "MRT วัดมังกร ทางออก 3 เดิน 250 ม.",
+                    transitTipEn: "MRT Wat Mangkon Exit 3, walk 250m",
+                    priceTh: "฿30 - ฿45",
+                    priceVal: 35,
+                    stampTitleTh: "เอ็กเต็งผู่กี่ 1919",
+                    stampTitleEn: "Ek Teng Phu Ki 1919",
+                    stampIcon: "☕",
+                    speechPhrase: "ขอชาร้อนกับไข่ลวกชุดนึงครับ",
+                    badgeColor: "bg-amber-600"
+                },
+                {
+                    id: 'bkk_3',
+                    nameTh: "เรือแจวสวนบางกะเจ้า & ธูปหอมสมุนไพร",
+                    nameEn: "Bang Krachao Wooden Boat & Incense Craft",
+                    localScore: 93,
+                    tagTh: "🛶 สวนป่าคุ้งบางกะเจ้า",
+                    tagEn: "🛶 Green Lung Canal Workshop",
+                    descTh: "ล่องเรือแจวสัมผัสวิถีชีวิตชาวสวนคลองลัดโพธิ์ ทำเวิร์กช็อปธูปหอมสมุนไพรตะไคร้หอมไล่ยุง",
+                    descEn: "Paddle wooden boats along shaded canals and craft organic citronella herbal incense.",
+                    addressTh: "คุ้งบางกะเจ้า พระประแดง",
+                    addressEn: "Bang Krachao Green Lung",
+                    transitTipTh: "เรือหางยาวข้ามฟากจากท่าวัดคลองเตยนอก (฿5)",
+                    transitTipEn: "Cross ferry from Wat Khlong Toei Nok Pier (฿5)",
+                    priceTh: "฿60 - ฿100",
+                    priceVal: 80,
+                    stampTitleTh: "คุ้งบางกะเจ้า",
+                    stampTitleEn: "Bang Krachao Oasis",
+                    stampIcon: "🌴",
+                    speechPhrase: "อยากพายเรือแจวชมสวนคลองครับ",
+                    badgeColor: "bg-emerald-600"
+                },
+                {
+                    id: 'bkk_4',
+                    nameTh: "เจ๊ฮ้ง ก๋วยเตี๋ยวคั่วไก่กะทะทองเหลือง ตรอกโรงเลี้ยงเด็ก",
+                    nameEn: "Jeh Hong Brass Wok Fried Chicken Noodles",
+                    localScore: 96,
+                    tagTh: "🍜 คั่วไก่เตาถ่านไฟลุก",
+                    tagEn: "🍜 Flaming Brass Wok Noodle",
+                    descTh: "คั่วเส้นใหญ่กรอบนอกนุ่มในด้วยกะทะทองเหลืองแท้ ไฟลุกท่วมเตาถ่าน หอมกลิ่นกระทะควันไฟ ไร้ความเลี่ยน",
+                    descEn: "Crisp outside, pillowy inside flat rice noodles tossed over roaring brass woks.",
+                    addressTh: "ตรอกโรงเลี้ยงเด็ก ถนนบำรุงเมือง",
+                    addressEn: "Trok Rong Liang Dek, Bamrung Mueang",
+                    transitTipTh: "รถเมล์สาย 47 หรือ 15 ลงป้ายแยกแม้นศรี",
+                    transitTipEn: "Bus Line 47 or 15 to Maen Si Junction",
+                    priceTh: "฿50 - ฿70",
+                    priceVal: 60,
+                    stampTitleTh: "คั่วไก่ทองเหลือง",
+                    stampTitleEn: "Brass Wok Noodle",
+                    stampIcon: "🍳",
+                    speechPhrase: "ป้าครับ เอาคั่วไก่อบไข่ชามนึงครับ",
+                    badgeColor: "bg-orange-600"
+                }
+            ],
+            hkt: [
+                {
+                    id: 'hkt_1',
+                    nameTh: "โอ๋วเอ๋วโบราณ แป๊ะสาลี่ ตรอกสุ่นอุทิศ",
+                    nameEn: "Pae Sali Authentic O-Aew Banana Jelly",
+                    localScore: 98,
+                    tagTh: "🍧 ขนมหวานวุ้นกล้วยฮกเกี้ยน",
+                    tagEn: "🍧 Heritage Hokkien Banana Jelly",
+                    descTh: "ต้นตำรับโอ๋วเอ๋วแท้เจ้าแรกของภูเก็ต คั้นเม็ดโอ๋วเอ๋วผสมกล้วยน้ำว้าสด ราดน้ำเชื่อมโบราณและถั่วแดงต้ม",
+                    descEn: "Phuket's legendary banana starch jelly served with sweet red kidney beans and shaved ice.",
+                    addressTh: "ตรอกสุ่นอุทิศ ถนนเยาวราช เมืองเก่า",
+                    addressEn: "Soi Soon Utis, Old Phuket Town",
+                    transitTipTh: "สองแถวไม้โพถ้อง ลงหน้าตรอกสุ่นอุทิศ",
+                    transitTipEn: "Po Thong bus, drop right at Soi Soon Utis entrance",
+                    priceTh: "฿30 - ฿40",
+                    priceVal: 35,
+                    stampTitleTh: "โอ๋วเอ๋วสุ่นอุทิศ",
+                    stampTitleEn: "Soon Utis O-Aew",
+                    stampIcon: "🍧",
+                    speechPhrase: "ขอโอ๋วเอ๋วถั่วแดงน้ำเชื่อมถ้วยนึงครับ",
+                    badgeColor: "bg-emerald-500"
+                },
+                {
+                    id: 'hkt_2',
+                    nameTh: "หมี่ฮุ้นกระดูกหมู ป้าฉ่อง ซอยภูธร 60 ปี",
+                    nameEn: "Pa Chong Mee Hoon & Pork Bone Soup",
+                    localScore: 96,
+                    tagTh: "🍜 หมี่ฮุ้นผัดซีอิ๊วน้ำซุปยาจีน",
+                    tagEn: "🍜 Herbal Pork Rib Broth & Noodles",
+                    descTh: "หมี่ขาวผัดซีอิ๊วดำโรยหอมเจียวกรอบ เสิร์ฟพร้อมน้ำซุปกระดูกหมูต้มสมุนไพรจีนรสหวานน้ำต้มกระดูก",
+                    descEn: "Stir-fried vermicelli with fragrant shallots served alongside rich Chinese herbal pork bone broth.",
+                    addressTh: "ซอยภูธร ใกล้ตลาดสดเทศบาล",
+                    addressEn: "Soi Phuthorn, Near Municipal Market",
+                    transitTipTh: "เดินเท้า 300 ม. จากวงเวียนน้ำพุ",
+                    transitTipEn: "Walk 300m from Fountain Circle",
+                    priceTh: "฿45 - ฿60",
+                    priceVal: 50,
+                    stampTitleTh: "หมี่ฮุ้นป้าฉ่อง",
+                    stampTitleEn: "Pa Chong Vermicelli",
+                    stampIcon: "🍲",
+                    speechPhrase: "เอาหมี่ฮุ้นกระดูกหมูชุดนึงครับ",
+                    badgeColor: "bg-indigo-600"
+                },
+                {
+                    id: 'hkt_3',
+                    nameTh: "ขนมอาโป๊ง แม่สุณี ซอยสุ่นอุทิศ",
+                    nameEn: "Mae Sunee Apong Pancake Crepe",
+                    localScore: 94,
+                    tagTh: "🥞 แพนเค้กกรอบกะทิโบราณ",
+                    tagEn: "🥞 Traditional Charcoal Crispy Crepe",
+                    descTh: "แป้งหมักกะทิสด หยอดบนกะทะใบเล็กเตาถ่าน 7 เตา ขอบบางกรอบ ตรงกลางนุ่มหวานละมุนลิ้น",
+                    descEn: "Coconut milk pancake swirled over 7 small charcoal woks until golden and crispy.",
+                    addressTh: "ปากซอยสุ่นอุทิศ",
+                    addressEn: "Corner of Soi Soon Utis",
+                    transitTipTh: "เดินลัดจากถนนดีบุก 200 ม.",
+                    transitTipEn: "Walk from Dibuk Rd 200m",
+                    priceTh: "฿25 - ฿35",
+                    priceVal: 30,
+                    stampTitleTh: "อาโป๊งแม่สุณี",
+                    stampTitleEn: "Mae Sunee Apong",
+                    stampIcon: "🥞",
+                    speechPhrase: "ป้าครับ เอาขนมอาโป๊ง 5 ชิ้นครับ",
+                    badgeColor: "bg-amber-600"
+                },
+                {
+                    id: 'hkt_4',
+                    nameTh: "วิสาหกิจผ้าบาติกชุมชนเกาะสิเหร่",
+                    nameEn: "Koh Sirey Community Handmade Batik",
+                    localScore: 92,
+                    tagTh: "🎨 ผ้าบาติกย้อมครามธรรมชาติ",
+                    tagEn: "🎨 Ocean Indigo Hand-Drawn Batik",
+                    descTh: "กลุ่มสตรีชาวเลและชุมชนเกาะสิเหร่ วาดลวดลายใต้ท้องทะเลอันดามันลงบนผ้าฝ้ายด้วยเทียนขี้ผึ้งและครามธรรมชาติ",
+                    descEn: "Local sea gypsy artisan collective painting marine motifs using hot wax and natural indigo.",
+                    addressTh: "บ้านแหลมตุ๊กแก เกาะสิเหร่",
+                    addressEn: "Laem Tukkae, Koh Sirey",
+                    transitTipTh: "สองแถวสายเกาะสิเหร่ (฿20) จากวงเวียนน้ำพุ",
+                    transitTipEn: "Koh Sirey Songthaew (฿20) from Fountain Circle",
+                    priceTh: "฿120 - ฿250",
+                    priceVal: 150,
+                    stampTitleTh: "บาติกเกาะสิเหร่",
+                    stampTitleEn: "Koh Sirey Batik",
+                    stampIcon: "🎨",
+                    speechPhrase: "ขอดูผ้าเช็ดหน้าบาติกลายปลาการ์ตูนครับ",
+                    badgeColor: "bg-cyan-600"
+                }
+            ],
+            usm: [
+                {
+                    id: 'usm_1',
+                    nameTh: "ขนมจีนน้ำยาปู ป้าทุม บางรักษ์ 35 ปี",
+                    nameEn: "Pa Thum 35-Yr Bangrak Crab Rice Noodles",
+                    localScore: 97,
+                    tagTh: "🦀 น้ำยาปูม้าสดชาวประมง",
+                    tagEn: "🦀 Fresh Blue Crab Southern Curry",
+                    descTh: "ป้าทุมรับปูม้าสดๆ จากเรือประมงพื้นบ้านหน้าอ่าวบางรักษ์ทุกเช้า แกะเนื้อปูต้มกับเครื่องแกงตำมือรสร้อนแรง",
+                    descEn: "Fresh blue crabs sourced from local wooden fishing boats, simmered with hand-pounded curry paste.",
+                    addressTh: "ซอยวัดบางรักษ์ เกาะสมุย",
+                    addressEn: "Soi Wat Bangrak, Koh Samui",
+                    transitTipTh: "สองแถวสายรอบเกาะ ลงหน้าปากซอยวัดบางรักษ์",
+                    transitTipEn: "Island Songthaew to Wat Bangrak alley entrance",
+                    priceTh: "฿60 - ฿80",
+                    priceVal: 70,
+                    stampTitleTh: "น้ำยาปูป้าทุม",
+                    stampTitleEn: "Pa Thum Crab Curry",
+                    stampIcon: "🦀",
+                    speechPhrase: "ป้าครับ เอาน้ำยาปูจานนึง เพิ่มไข่ต้มครับ",
+                    badgeColor: "bg-rose-600"
+                },
+                {
+                    id: 'usm_2',
+                    nameTh: "กะลาบาร์ & สวนมะพร้าวอินทรีย์ตลิ่งงาม",
+                    nameEn: "Taling Ngam Organic Coconut & Shell Craft",
+                    localScore: 95,
+                    tagTh: "🥥 ภูมิปัญญาสวนมะพร้าวสมุย",
+                    tagEn: "🥥 Heritage Coconut Grove Craft",
+                    descTh: "สวนมะพร้าวอินทรีย์เก่าแก่ที่ยังใช้วิธีดั้งเดิม แปรรูปกะลามะพร้าวเป็นถ้วย ช้อน และเครื่องประดับสุดประณีต",
+                    descEn: "Ancestral coconut plantation crafting polished tableware and lamps from organic coconut shells.",
+                    addressTh: "บ้านตลิ่งงาม หมู่ 3 เกาะสมุย",
+                    addressEn: "Baan Taling Ngam Moo 3",
+                    transitTipTh: "สองแถวสายตลิ่งงาม-หน้าทอน",
+                    transitTipEn: "Taling Ngam - Nathon Songthaew",
+                    priceTh: "฿50 - ฿120",
+                    priceVal: 60,
+                    stampTitleTh: "กะลาสมุยตลิ่งงาม",
+                    stampTitleEn: "Taling Ngam Coconut",
+                    stampIcon: "🥥",
+                    speechPhrase: "ขอน้ำมะพร้าวสดลูกนึงครับ",
+                    badgeColor: "bg-emerald-600"
+                },
+                {
+                    id: 'usm_3',
+                    nameTh: "ข้าวมันไก่ไหหลำลุงจิ๋ว ตลาดสดหน้าทอน",
+                    nameEn: "Uncle Jew 50-Yr Hainan Chicken Nathon",
+                    localScore: 94,
+                    tagTh: "🍗 สูตรไหหลำดั้งเดิมเกาะสมุย",
+                    tagEn: "🍗 Authentic Hainanese Chicken Rice",
+                    descTh: "สืบทอดสูตรจากชาวจีนไหหลำที่อพยพมาตั้งรกรากบนเกาะสมุย ข้าวหอมมันเรียงเม็ด น้ำจิ้มสูตรเต้าเจี้ยวผสมขิงดอง",
+                    descEn: "Hainanese settlers recipe passed down for 50 years with rich chicken broth-infused rice.",
+                    addressTh: "ตลาดสดหน้าทอน ใกล้ท่าเรือเฟอร์รี่",
+                    addressEn: "Nathon Fresh Market by Ferry Pier",
+                    transitTipTh: "เดินเท้า 200 ม. จากท่าเรือหน้าทอน",
+                    transitTipEn: "Walk 200m from Nathon Pier",
+                    priceTh: "฿50 - ฿65",
+                    priceVal: 55,
+                    stampTitleTh: "ลุงจิ๋วไหหลำ",
+                    stampTitleEn: "Uncle Jew Hainan",
+                    stampIcon: "🍗",
+                    speechPhrase: "เอาข้าวมันไก่เนื้อน่องจานนึงครับ",
+                    badgeColor: "bg-amber-600"
+                },
+                {
+                    id: 'usm_4',
+                    nameTh: "วิสาหกิจน้ำมันมะพร้าวบริสุทธิ์สกัดเย็น ลิปะน้อย",
+                    nameEn: "Lipa Noi Cold-Pressed Virgin Coconut Co-op",
+                    localScore: 93,
+                    tagTh: "🌿 น้ำมันมะพร้าวบริสุทธิ์ 100%",
+                    tagEn: "🌿 100% Cold-Pressed Coconut Oil",
+                    descTh: "กลุ่มสตรีเกษตรกรแปรรูปเนื้อมะพร้าวสดเป็นน้ำมันบริสุทธิ์สกัดเย็น ไม่แต่งกลิ่น รายได้คืนสู่กลุ่มชุมชน 100%",
+                    descEn: "Women's farm co-op cold-pressing organic coconut meat into pure cosmetic and culinary oil.",
+                    addressTh: "หมู่ 2 ต.ลิปะน้อย เกาะสมุย",
+                    addressEn: "Moo 2 Lipa Noi, Koh Samui",
+                    transitTipTh: "สองแถวสายลิปะน้อย",
+                    transitTipEn: "Lipa Noi Songthaew Line",
+                    priceTh: "฿80 - ฿150",
+                    priceVal: 90,
+                    stampTitleTh: "ลิปะน้อยบริสุทธิ์",
+                    stampTitleEn: "Lipa Noi Coconut Oil",
+                    stampIcon: "🧴",
+                    speechPhrase: "ขอซื้อน้ำมันมะพร้าวสกัดเย็นขวดเล็กครับ",
+                    badgeColor: "bg-cyan-600"
+                }
+            ]
+        };
+
+        function initPassportSystem() {
+            try {
+                const saved = localStorage.getItem('localroute_stamps');
+                if (saved) passportStamps = JSON.parse(saved);
+                const impact = localStorage.getItem('localroute_impact');
+                if (impact) communityImpactTotal = parseInt(impact);
+            } catch(e) {}
+        }
+
+        function playStampSoundEffect() {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                if (ctx.state === 'suspended') ctx.resume();
+                const now = ctx.currentTime;
+
+                // Mechanical stamp thud
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(140, now);
+                osc.frequency.exponentialRampToValueAtTime(35, now + 0.12);
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.12);
+
+                // Paper friction snap
+                const noiseOsc = ctx.createOscillator();
+                const noiseGain = ctx.createGain();
+                noiseOsc.type = 'sine';
+                noiseOsc.frequency.setValueAtTime(980, now);
+                noiseOsc.frequency.exponentialRampToValueAtTime(440, now + 0.08);
+                noiseGain.gain.setValueAtTime(0.15, now);
+                noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                noiseOsc.connect(noiseGain);
+                noiseGain.connect(ctx.destination);
+                noiseOsc.start(now);
+                noiseOsc.stop(now + 0.08);
+            } catch(e) {}
+        }
+
+        function stampCheckIn(gemId) {
+            const isTh = currentLang === 'th';
+            const pKey = provincesData[currentProvinceKey] ? currentProvinceKey : 'cnx';
+            const gems = hiddenGemsData[pKey] || hiddenGemsData['cnx'];
+            const gem = gems.find(g => g.id === gemId) || gems[0];
+
+            if (passportStamps.includes(gemId)) {
+                showToast(isTh ? "ประทับตราแล้ว 💮" : "Already Stamped 💮", isTh ? `คุณเคยได้รับตรา "${gem.stampTitleTh}" แล้ว` : `You already collected "${gem.stampTitleEn}"`, "✅", "bg-emerald-500");
+                return;
+            }
+
+            passportStamps.push(gemId);
+            communityImpactTotal += gem.priceVal;
+
+            try {
+                localStorage.setItem('localroute_stamps', JSON.stringify(passportStamps));
+                localStorage.setItem('localroute_impact', communityImpactTotal);
+            } catch(e) {}
+
+            playStampSoundEffect();
+
+            if (navigator.vibrate) {
+                try { navigator.vibrate([40, 60, 40]); } catch(e) {}
+            }
+
+            renderPassportStamps();
+            renderHiddenGemsView();
+
+            showToast(isTh ? "ประทับตราสำเร็จ! 💮" : "Stamped Successfully! 💮", isTh ? `ได้รับตรา "${gem.stampTitleTh}" กระจายรายได้สู่ชุมชน +฿${gem.priceVal}` : `Collected "${gem.stampTitleEn}", impact +฿${gem.priceVal}`, "🎉", "bg-rose-500");
+        }
+
+        function renderPassportStamps() {
+            const pKey = provincesData[currentProvinceKey] ? currentProvinceKey : 'cnx';
+            const gems = hiddenGemsData[pKey] || hiddenGemsData['cnx'];
+            const isTh = currentLang === 'th';
+
+            const collectedCount = gems.filter(g => passportStamps.includes(g.id)).length;
+            const badgeCount = document.getElementById('stampsCountBadge');
+            if (badgeCount) {
+                badgeCount.innerText = isTh ? `สะสมแล้ว ${collectedCount}/${gems.length} ตรา` : `Collected ${collectedCount}/${gems.length}`;
+            }
+
+            const impactEl = document.getElementById('communityImpactAmount');
+            if (impactEl) {
+                impactEl.innerText = `฿${communityImpactTotal.toLocaleString()} บาท`;
+            }
+
+            const grid = document.getElementById('passportStampsGrid');
+            if (!grid) return;
+
+            grid.innerHTML = gems.map(gem => {
+                const isStamped = passportStamps.includes(gem.id);
+                const title = isTh ? gem.stampTitleTh : gem.stampTitleEn;
+
+                if (isStamped) {
+                    return `
+                        <div class="p-3 rounded-2xl bg-[#FFF9EE] border-2 border-dashed border-rose-400 flex flex-col items-center justify-center text-center relative overflow-hidden shadow-2xs group">
+                            <div class="w-full flex items-center justify-between text-[9px] font-black text-rose-700/80 mb-1">
+                                <span>OFFICIAL SEAL</span>
+                                <span>2026</span>
+                            </div>
+                            <!-- Rubber Stamp Circular Mark with slight tilt -->
+                            <div class="w-14 h-14 rounded-full border-2 border-rose-600/90 flex flex-col items-center justify-center p-1 transform -rotate-6 bg-rose-50/70 shadow-xs">
+                                <span class="text-lg leading-none">${gem.stampIcon}</span>
+                                <span class="text-[8px] font-black text-rose-700 uppercase tracking-tighter truncate max-w-[50px]">${title}</span>
+                            </div>
+                            <span class="text-[10px] font-extrabold text-slate-800 mt-1.5 truncate max-w-full">${title}</span>
+                            <span class="text-[9px] font-bold text-emerald-700 bg-emerald-100/90 px-2 py-0.2 rounded-full mt-1 border border-emerald-300">
+                                ✅ ${isTh ? 'ประทับแล้ว' : 'Collected'}
+                            </span>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div onclick="stampCheckIn('${gem.id}')" class="p-3 rounded-2xl bg-amber-50/40 border-2 border-dashed border-amber-200/90 hover:border-amber-400 flex flex-col items-center justify-center text-center cursor-pointer transition active:scale-95 group">
+                            <div class="w-14 h-14 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-300 text-xl group-hover:text-amber-500 group-hover:border-amber-400 transition">
+                                🔒
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-400 mt-1.5 group-hover:text-slate-700 transition truncate max-w-full">${title}</span>
+                            <span class="text-[9px] font-extrabold text-amber-800 bg-amber-100/80 px-2 py-0.2 rounded-full mt-1 border border-amber-200 group-hover:bg-amber-200 transition">
+                                📍 ${isTh ? 'แตะประทับตรา' : 'Tap to Stamp'}
+                            </span>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        function renderHiddenGemsView() {
+            renderPassportStamps();
+
+            const pKey = provincesData[currentProvinceKey] ? currentProvinceKey : 'cnx';
+            const gems = hiddenGemsData[pKey] || hiddenGemsData['cnx'];
+            const isTh = currentLang === 'th';
+
+            const container = document.getElementById('hiddenGemsListContainer');
+            if (!container) return;
+
+            container.innerHTML = gems.map(gem => {
+                const isStamped = passportStamps.includes(gem.id);
+                const name = isTh ? gem.nameTh : gem.nameEn;
+                const tag = isTh ? gem.tagTh : gem.tagEn;
+                const desc = isTh ? gem.descTh : gem.descEn;
+                const address = isTh ? gem.addressTh : gem.addressEn;
+                const transit = isTh ? gem.transitTipTh : gem.transitTipEn;
+                const price = isTh ? gem.priceTh : gem.priceTh;
+
+                return `
+                    <div class="glass-card rounded-[2rem] p-4 space-y-3 shadow-xs border border-emerald-100/80 hover:shadow-md transition">
+                        <!-- Top Header with Local Radar Score -->
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-[10px] font-extrabold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-200">${tag}</span>
+                                    <span class="text-[10px] font-bold text-slate-400">${gem.stampIcon}</span>
+                                </div>
+                                <h4 class="text-xs font-black text-slate-900 mt-1 leading-snug">${name}</h4>
+                            </div>
+                            <div class="flex flex-col items-end flex-shrink-0">
+                                <span class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-2xs flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                    <span>โลคอล ${gem.localScore}%</span>
+                                </span>
+                                <span class="text-[9px] text-slate-400 font-bold mt-0.5">Anti-Tourist Trap</span>
+                            </div>
+                        </div>
+
+                        <!-- Authentic Description Story -->
+                        <p class="text-[11px] text-slate-600 font-medium leading-relaxed bg-slate-50/80 rounded-2xl p-2.5 border border-slate-100">
+                            ${desc}
+                        </p>
+
+                        <!-- Address & Transit Tip -->
+                        <div class="space-y-1 text-[10px] text-slate-500 font-medium pt-0.5">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-slate-400">📍</span>
+                                <span>${address}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-indigo-500 font-black">🛺</span>
+                                <span class="text-slate-700 font-bold">${transit}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-amber-500 font-black">💰</span>
+                                <span class="text-slate-800 font-extrabold">${isTh ? 'ช่วงราคา:' : 'Price:'} ${price}</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Bar: Audio Phrase + Stamp Check-In + Transit Link -->
+                        <div class="flex items-center justify-between pt-1 border-t border-slate-100 gap-2">
+                            <button onclick="playGuaranteedThaiSpeech('${gem.speechPhrase.replace(/'/g, "\\'")}')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-[10px] px-2.5 py-1.5 rounded-xl shadow-2xs active:scale-95 transition flex items-center gap-1 flex-shrink-0" title="ฟังวิธีพูดสั่งกับคนท้องถิ่น">
+                                <span>🔊</span>
+                                <span>${isTh ? 'พูดกับคนขาย' : 'Local Phrase'}</span>
+                            </button>
+
+                            <div class="flex items-center gap-1.5 flex-shrink-0">
+                                <button onclick="navigateFromPlanner('${name.replace(/'/g, "\\'")}', '${transit.replace(/'/g, "\\'")}')" class="bg-indigo-50 hover:bg-indigo-100 text-[#6E5FF6] font-extrabold text-[10px] px-2.5 py-1.5 rounded-xl border border-indigo-200 active:scale-95 transition flex items-center gap-1">
+                                    <span>🛺</span>
+                                    <span>${isTh ? 'นำทาง' : 'Go'}</span>
+                                </button>
+
+                                <button onclick="stampCheckIn('${gem.id}')" class="${isStamped ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-xs hover:opacity-95'} font-extrabold text-[10px] px-3 py-1.5 rounded-xl active:scale-95 transition flex items-center gap-1">
+                                    <span>${isStamped ? '💮' : '📌'}</span>
+                                    <span>${isStamped ? (isTh ? 'ประทับแล้ว' : 'Stamped') : (isTh ? 'เช็กอิน & ประทับตรา' : 'Stamp Check-In')}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+
         // Init on DOM ready
         window.addEventListener('DOMContentLoaded', () => {
             initLeafletMap();
             setLanguage('th');
+            initPassportSystem();
+            renderPlannerItinerary();
+            renderHiddenGemsView();
             
             // Auto network detection
             window.addEventListener('online', () => setOfflineState(false));
